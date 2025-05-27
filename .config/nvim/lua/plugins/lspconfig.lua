@@ -4,7 +4,7 @@ return {
 		event = "LazyFile",
 		dependencies = {
 			"mason.nvim",
-			{ "williamboman/mason-lspconfig.nvim", config = function() end },
+			{ "mason-org/mason-lspconfig.nvim", config = function() end },
 		},
 		opts = function()
 			---@class PluginLspOpts
@@ -119,22 +119,13 @@ return {
 			-- NOTE: Do not use autoformat
 			vim.g.autoformat = false
 
-			-- NOTE: Left here to remember keymap syntax
-			-- local map = function(type, key, value)
-			-- 	vim.api.nvim_buf_set_keymap(0, type, key, value, { noremap = true, silent = true })
-			-- end
-
 			-- setup keymaps
 			LazyVim.lsp.on_attach(function(client, buffer)
 				require("lazyvim.plugins.lsp.keymaps").on_attach(client, buffer)
-				-- NOTE: Left here to remember keymap syntax
-				-- map("n", "<M-r>", "<cmd>lua vim.lsp.buf.references()<CR>")
-				-- map("n", "<M-d>", "<cmd>lua vim.lsp.buf.definition()<CR>")
-				-- map("n", "<leader>ar", "<cmd>lua vim.lsp.buf.rename()<CR>")
 			end)
 
 			LazyVim.lsp.setup()
-			-- LazyVim.lsp.on_dynamic_capability(require("lazyvim.plugins.lsp.keymaps").on_attach)
+			LazyVim.lsp.on_dynamic_capability(require("lazyvim.plugins.lsp.keymaps").on_attach)
 
 			-- diagnostics signs
 			if vim.fn.has("nvim-0.10.0") == 0 then
@@ -223,7 +214,7 @@ return {
 			local have_mason, mlsp = pcall(require, "mason-lspconfig")
 			local all_mslp_servers = {}
 			if have_mason then
-				all_mslp_servers = vim.tbl_keys(require("mason-lspconfig").get_mappings().lspconfig_to_package)
+				all_mslp_servers = vim.tbl_keys(require("mason-lspconfig.mappings.server").lspconfig_to_package)
 			end
 
 			local ensure_installed = {} ---@type string[]
@@ -242,8 +233,6 @@ return {
 			end
 
 			if have_mason then
-				-- NOTE: Maybe comment out due to warning
-				-- automatic_installation field missing
 				mlsp.setup({
 					ensure_installed = vim.tbl_deep_extend(
 						"force",
@@ -252,8 +241,6 @@ return {
 					),
 					handlers = { setup },
 				})
-				-- HACK: Maybe this uses default options?
-				-- mlsp.setup()
 			end
 
 			if LazyVim.lsp.is_enabled("denols") and LazyVim.lsp.is_enabled("vtsls") then

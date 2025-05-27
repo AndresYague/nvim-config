@@ -14,6 +14,9 @@ vim.g.nord_bold = true
 -- optionally enable 24-bit colour
 vim.opt.termguicolors = true
 
+-- Set term to start with fish
+vim.opt.shell = "fish"
+
 -- Custom functions
 
 -- Folding expressions
