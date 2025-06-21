@@ -13,7 +13,7 @@ vim.keymap.set("n", "ºº", "<<")
 vim.keymap.set("n", "ªª", ">>")
 
 -- Terminal keymaps
-vim.keymap.set("t", "<ESC>", "<C-\\><C-n>", {desc = "Enter normal mode from terminal"})
+vim.keymap.set("t", "<ESC><ESC>", "<C-\\><C-n>", {desc = "Enter normal mode from terminal"})
 vim.keymap.set("t", "<C-k>", "<C-\\><C-n><C-w>k", {desc = "Go to upper window"})
 vim.keymap.set("t", "<C-j>", "<C-\\><C-n><C-w>j", {desc = "Go to lower window"})
 vim.keymap.set("t", "<C-l>", "<C-\\><C-n><C-w>l", {desc = "Go to right window"})
