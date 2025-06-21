@@ -8,6 +8,7 @@ reverse_bracket["'"] = "'"
 
 local closing_brackets = "[])}\"']"
 local opening_brackets = "[[({\"']"
+local balanced_pattern = opening_brackets .. ".*" .. closing_brackets
 
 -- Move character in "from" to "to"
 ---@param str string
@@ -68,7 +69,14 @@ local move_match = function(line, col, pattern)
 
 	-- If we do not move it, return false
 	if position_bracket == closing then
-		return false
+		-- If we are stopped due to a balanced bracket, make "position_bracket"
+		-- be equal to the end of the balanced bracket
+		local _, end_balanced = string.find(line, balanced_pattern, closing)
+		if end_balanced then
+			position_bracket = end_balanced
+		else
+			return false
+		end
 	end
 
 	-- Insert the pattern in the new position
