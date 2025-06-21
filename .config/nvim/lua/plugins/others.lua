@@ -11,7 +11,7 @@ return {
 		opts = {
 			signature = { enabled = true },
 			keymap = {
-				preset = "super-tab",
+				preset = "enter",
 			},
 		},
 	},

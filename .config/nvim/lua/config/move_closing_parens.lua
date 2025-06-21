@@ -6,26 +6,20 @@ reverse_bracket["}"] = "%{"
 reverse_bracket['"'] = '"'
 reverse_bracket["'"] = "'"
 
-local correct_match = {}
-correct_match[")"] = "%)"
-correct_match["]"] = "%]"
-correct_match["}"] = "%}"
-correct_match['"'] = '"'
-correct_match["'"] = "'"
-
 local closing_brackets = "[])}\"']"
+local opening_brackets = "[[({\"']"
 
 -- Move character in "from" to "to"
 ---@param str string
 ---@param from integer
 ---@param to integer
 local move_char = function(str, from, to)
-    local str_split = string.sub(str, 1, from - 1)
-    str_split = str_split .. string.sub(str, from + 1, to)
-    str_split = str_split .. string.sub(str, from, from)
-    str_split = str_split .. string.sub(str, to + 1)
+	local str_split = string.sub(str, 1, from - 1)
+	str_split = str_split .. string.sub(str, from + 1, to)
+	str_split = str_split .. string.sub(str, from, from)
+	str_split = str_split .. string.sub(str, to + 1)
 
-    return str_split
+	return str_split
 end
 
 -- Move match with Ctrl+e to encompass next word
@@ -43,6 +37,7 @@ local move_match = function(line, col, pattern)
 
 	-- Find next closing bracket
 	local next_closing = string.find(line, closing_brackets, closing + 1)
+	local next_opening = string.find(line, opening_brackets, closing + 1)
 
 	-- Find the last thing before a space after the closing parenthesis
 	local next_space = string.find(line, "[^%s]%s", closing + 1) or string.find(line, "[^%s]$", closing + 1)
@@ -67,6 +62,9 @@ local move_match = function(line, col, pattern)
 	if next_closing then
 		position_bracket = math.min(next_closing - 1, position_bracket)
 	end
+	if next_opening then
+		position_bracket = math.min(next_opening - 1, position_bracket)
+	end
 
 	-- If we do not move it, return false
 	if position_bracket == closing then
@@ -75,9 +73,9 @@ local move_match = function(line, col, pattern)
 
 	-- Insert the pattern in the new position
 	-- and remove it from the original position
-    line = move_char(line, closing, position_bracket)
+	line = move_char(line, closing, position_bracket)
 
-    -- Write new line
+	-- Write new line
 	vim.api.nvim_set_current_line(line)
 
 	return true
@@ -91,12 +89,6 @@ local move_closing = function()
 	local before_cursor = string.reverse(string.sub(line, 1, col))
 
 	for match in string.gmatch(after_cursor, closing_brackets) do
-		-- If there is another bracket right after the first one,
-		-- do that one instead
-		if string.find(after_cursor, correct_match[match] .. closing_brackets) then
-			goto continue
-		end
-
 		-- Make sure we are inside parentheses
 		if string.find(before_cursor, reverse_bracket[match]) then
 			-- Moved match correctly, exit loop
@@ -104,8 +96,6 @@ local move_closing = function()
 				break
 			end
 		end
-
-		::continue::
 	end
 end
 
