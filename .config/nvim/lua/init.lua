@@ -8,12 +8,6 @@ vim.g.maplocalleader = ","
 -- Lazy setup
 require("config.lazy")
 
--- Nord config
-vim.g.nord_contrast = true
-vim.g.nord_italic = true
-vim.g.nord_uniform_diff_background = true
-vim.g.nord_bold = true
-
 -- optionally enable 24-bit colour
 vim.opt.termguicolors = true
 
