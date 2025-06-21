@@ -2,6 +2,9 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-- Set up maplocalleader before lazyvim
+vim.g.maplocalleader = ","
+
 -- Lazy setup
 require("config.lazy")
 

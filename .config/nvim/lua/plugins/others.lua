@@ -1,7 +1,7 @@
 return {
 	"JuliaEditorSupport/julia-vim",
 
-    "rickhowe/spotdiff.vim",
+	"rickhowe/spotdiff.vim",
 
 	{ "nvim-lua/plenary.nvim", lazy = true },
 

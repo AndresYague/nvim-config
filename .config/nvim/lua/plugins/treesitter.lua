@@ -99,4 +99,21 @@ return {
 			require("nvim-treesitter.configs").setup(opts)
 		end,
 	},
+	{
+		"nvim-telescope/telescope.nvim",
+
+        -- Setup lsp_document_symbols and lsp_workspace_symbols
+		vim.keymap.set(
+			"n",
+			"<leader>ds",
+			require("telescope.builtin").lsp_document_symbols,
+			{ desc = "LSP: Document Symbols" }
+		),
+		vim.keymap.set(
+			"n",
+			"<leader>dw",
+			require("telescope.builtin").lsp_workspace_symbols,
+            { desc = "LSP: Workspace Symbols" }
+		),
+	},
 }
