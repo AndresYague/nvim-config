@@ -1,14 +1,8 @@
 -- Custom keybindings
 
 -- Typing keymaps
-vim.keymap.set("n", "º", "<")
-vim.keymap.set("n", "ª", ">")
-vim.keymap.set("i", "º", "<")
-vim.keymap.set("i", "ª", ">")
-vim.keymap.set("c", "º", "<")
-vim.keymap.set("c", "ª", ">")
-vim.keymap.set("v", "º", "<")
-vim.keymap.set("v", "ª", ">")
+vim.keymap.set({"n", "i", "c", "v"}, "º", "<")
+vim.keymap.set({"n", "i", "c", "v"}, "ª", ">")
 vim.keymap.set("n", "ºº", "<<")
 vim.keymap.set("n", "ªª", ">>")
 
@@ -25,7 +19,7 @@ vim.keymap.set("n", "<C-S-j>", "<C-w>-")
 vim.keymap.set("n", "<C-S-h>", "<C-w><")
 vim.keymap.set("n", "<C-S-l>", "<C-w>>")
 
-vim.keymap.set("i", "<C-C>", "<Cmd>fc<CR>", {desc = "Close floating window"})
+vim.keymap.set({"n", "i"}, "<C-C>", "<Cmd>fc<CR>", {desc = "Close floating window"})
 
 -- Move line up and down, uncomment if needed
 -- vim.keymap.set("n", "<M-j>", "<cmd>execute 'move .+' . v:count1<cr>==", { desc = "Move Down" })

@@ -12,9 +12,6 @@ return {
 		opts = {
 			options = {
 				dim_inactive = true,
-                inverse = {
-                    match_paren = true,
-                },
 				styles = {
 					comments = "italic",
 					strings = "italic",
