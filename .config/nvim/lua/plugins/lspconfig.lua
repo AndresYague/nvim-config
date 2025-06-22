@@ -113,10 +113,7 @@ return {
 		end,
 		---@param opts PluginLspOpts
 		config = function(_, opts)
-			-- setup autoformat
-			LazyVim.format.register(LazyVim.lsp.formatter())
-
-			-- NOTE: Do not use autoformat
+			-- NOTE: Disable format on save
 			vim.g.autoformat = false
 
 			-- setup keymaps
@@ -240,6 +237,7 @@ return {
 						LazyVim.opts("mason-lspconfig.nvim").ensure_installed or {}
 					),
 					handlers = { setup },
+                    automatic_installation = false,
 				})
 			end
 
