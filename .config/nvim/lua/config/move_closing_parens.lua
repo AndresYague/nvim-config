@@ -7,8 +7,6 @@ reverse_bracket["}"] = "{"
 reverse_bracket['"'] = '"'
 reverse_bracket["'"] = "'"
 
-local closing_brackets = "[])}\"']"
-
 -- Move character in "from" to "to"
 ---@param str string
 ---@param from integer
@@ -30,16 +28,16 @@ end
 ---@return boolean
 local is_balanced_pair = function(str, open, close)
 	local balance = 0
-    local same = open == close
+	local same = open == close
 	for i = 1, string.len(str) do
 		local c = string.sub(str, i, i)
 		if c == open then
 			balance = balance + 1
-            -- In the case that the open and closed string are the same,
-            -- just return balanced if the number we see is even
-            if same then
-                balance = balance % 2
-            end
+			-- In the case that the open and closed string are the same,
+			-- just return balanced if the number we see is even
+			if same then
+				balance = balance % 2
+			end
 		elseif c == close then
 			balance = balance - 1
 		end
@@ -79,15 +77,15 @@ end
 ---@param str string
 ---@param cursor integer
 ---@param start integer
----@return integer | nil, string | nil
+---@return integer?, string?
 local find_next = function(str, cursor, start)
 	for i = start, string.len(str) do
 		-- Find the next match
-		local next, _, match = string.find(str, "(" .. closing_brackets .. ")", i)
+		local position, _, match = string.find(str, "([])}\"'])", i)
 
 		-- See if there is an unbalanced string between the cursor
-        -- and the match
-		local substring = string.sub(str, cursor + 1, next)
+		-- and the match
+		local substring = string.sub(str, cursor + 1, position)
 		if is_balanced_pair(substring, reverse_bracket[match], match) then
 			goto continue
 		end
@@ -97,13 +95,11 @@ local find_next = function(str, cursor, start)
 		if is_balanced_pair(substring, reverse_bracket[match], match) then
 			goto continue
 		else
-			return next, match
+			return position, match
 		end
 
 		::continue::
 	end
-
-	return nil, nil
 end
 
 -- Move match with to encompass next word
@@ -113,20 +109,19 @@ end
 ---@param pattern string
 ---@return boolean
 local move_match = function(line, position, pattern)
-	-- If we do not find "closing", exit
+	-- TODO: Remove this if it does not fail in a while
 	local closing = string.find(line, pattern, position)
-	if not closing then
-		return false
-	end
+	assert(closing)
+	assert(closing == position, "Closing not equal to position!")
 
 	-- Find the last thing before a space after the closing parenthesis
-	local next_space = string.find(line, "%S%s", closing + 1) or string.find(line, "%S$", closing + 1)
+	local next_space = string.find(line, "%S%s", position + 1) or string.find(line, "%S$", position + 1)
 
 	-- Find the last thing before a space after the closing parenthesis
-	local next_punctuation = string.find(line, "%p", closing + 1) or string.find(line, "%p$", closing + 1)
+	local next_punctuation = string.find(line, "%p", position + 1) or string.find(line, "%p$", position + 1)
 
 	-- Find the end of the next word
-	local next_word = string.find(line, "%w%W", closing + 1) or string.find(line, "%w$", closing + 1)
+	local next_word = string.find(line, "%w%W", position + 1) or string.find(line, "%w$", position + 1)
 
 	-- Exit if next_space is nil
 	if not next_space then
@@ -147,15 +142,15 @@ local move_match = function(line, position, pattern)
 	-- Put it in position_bracket unless making the inner string unbalanced
 	-- If stopped because of making an unbalanced string, keep moving until the
 	-- string is balanced again
-	-- If position_bracket is in the original space, try to
-	-- move it one space over to start with
-	position_bracket = math.max(position_bracket, closing + 1)
+	-- If position_bracket is in the original space, try to move it one space
+	-- over to start with
+	position_bracket = math.max(position_bracket, position + 1)
 	for i = position_bracket, string.len(line) do
 		-- New line with moved closing bracket
-		local new_line = move_char(line, closing, i)
+		local new_line = move_char(line, position, i)
 
 		-- Check if new line is balanced, if so, write line
-		if is_balanced(string.sub(new_line, closing, i - 1)) then
+		if is_balanced(string.sub(new_line, position, i - 1)) then
 			vim.api.nvim_set_current_line(new_line)
 			return true
 		end
@@ -174,15 +169,16 @@ local move_closing = function()
 		local pos, match = find_next(line, col, i)
 		-- If there is no match, continue to the next loop
 		if not pos then
-            goto continue
+			goto continue
 		end
 
 		-- Otherwise try to move it
+		assert(match)
 		if move_match(line, pos, match) then
 			break
 		end
 
-        ::continue::
+		::continue::
 	end
 end
 
