@@ -102,7 +102,7 @@ return {
 	{
 		"nvim-telescope/telescope.nvim",
 
-        -- Setup lsp_document_symbols and lsp_workspace_symbols
+		-- Setup lsp_document_symbols and lsp_workspace_symbols
 		vim.keymap.set(
 			"n",
 			"<leader>ds",
@@ -113,7 +113,7 @@ return {
 			"n",
 			"<leader>dw",
 			require("telescope.builtin").lsp_workspace_symbols,
-            { desc = "LSP: Workspace Symbols" }
+			{ desc = "LSP: Workspace Symbols" }
 		),
 	},
 }
