@@ -26,5 +26,3 @@ vim.keymap.set({"n", "i"}, "<C-C>", "<Cmd>fc<CR>", {desc = "Close floating windo
 -- vim.keymap.set("n", "<M-k>", "<cmd>execute 'move .-' . (v:count1 + 1)<cr>==", { desc = "Move Up" })
 -- vim.keymap.set("i", "<M-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move Down" })
 -- vim.keymap.set("i", "<M-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move Up" })
-
-require("config.move_closing_parens")

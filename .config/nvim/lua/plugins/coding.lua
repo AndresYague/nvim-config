@@ -20,6 +20,15 @@ return {
 		end,
 	},
 	{
+        "AndresYague/move-enclosing.nvim",
+		opts = {
+			keymap = "<C-E>",
+		},
+		config = function(_, opts)
+			require("move-enclosing").setup(opts)
+		end,
+	},
+	{
 		"folke/ts-comments.nvim",
 		event = "VeryLazy",
 		opts = {},
