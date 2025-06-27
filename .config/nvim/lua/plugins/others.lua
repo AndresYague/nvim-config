@@ -1,44 +1,56 @@
 return {
-	"JuliaEditorSupport/julia-vim",
-
-	"rickhowe/spotdiff.vim",
-
-	{ "nvim-lua/plenary.nvim", lazy = true },
-
-	{
-		"saghen/blink.cmp",
-		---@class PluginLspOpts
-		opts = {
-			signature = { enabled = true },
-			keymap = {
-				preset = "super-tab",
-			},
-		},
-	},
-
-	{
-		"vhyrro/luarocks.nvim",
-		priority = 1000, -- We'd like this plugin to load first out of the rest
-		config = true, -- This automatically runs `require("luarocks-nvim").setup()`
-	},
-
-	{
-		"folke/which-key.nvim",
-		opts = {
-			spec = {
-				{ "<BS>", desc = "Decrement Selection", mode = "x" },
-				{ "<c-space>", desc = "Increment Selection", mode = { "x", "n" } },
-			},
-		},
-	},
-
-	{
-		"akinsho/bufferline.nvim",
-		optional = true,
-		opts = function(_, opts)
-			if (vim.g.colors_name or ""):find("catppuccin") then
-				opts.highlights = require("catppuccin.groups.integrations.bufferline").get()
-			end
-		end,
-	},
+  {
+    'AndresYague/move-enclosing.nvim',
+    opts = { keymap = '<C-E>' },
+  },
+  {
+    'folke/noice.nvim',
+    event = 'VeryLazy',
+    opts = {
+      lsp = {
+        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+        override = {
+          ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+          ['vim.lsp.util.stylize_markdown'] = true,
+          ['cmp.entry.get_documentation'] = true, -- requires hrsh7th/nvim-cmp
+        },
+      },
+      -- you can enable a preset for easier configuration
+      presets = {
+        bottom_search = true, -- use a classic bottom cmdline for search
+        command_palette = true, -- position the cmdline and popupmenu together
+        long_message_to_split = true, -- long messages will be sent to a split
+        inc_rename = false, -- enables an input dialog for inc-rename.nvim
+        lsp_doc_border = false, -- add a border to hover docs and signature help
+      },
+    },
+    dependencies = {
+      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+      'MunifTanjim/nui.nvim',
+      -- OPTIONAL:
+      --   `nvim-notify` is only needed, if you want to use the notification view.
+      --   If not available, we use `mini` as the fallback
+      'rcarriga/nvim-notify',
+    },
+  },
+  {
+    'folke/persistence.nvim',
+    event = 'BufReadPre', -- this will only start session saving when an actual file was opened
+    opts = {
+      -- add any custom options here
+    },
+  },
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    opts = {},
+  },
+  {
+    'akinsho/bufferline.nvim',
+    version = '*',
+    dependencies = 'nvim-tree/nvim-web-devicons',
+    opts = {
+      options = { numbers = 'buffer_id' },
+    },
+  },
 }
