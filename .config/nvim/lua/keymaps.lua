@@ -1,5 +1,5 @@
 -- Clear highlights on search when pressing <Esc> in normal mode
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set('n', '<Esc>', vim.cmd.nohlsearch)
 
 -- Diagnostic keymaps
 vim.keymap.set(
@@ -20,7 +20,7 @@ vim.keymap.set(
 )
 
 -- Lazy
-vim.keymap.set('n', '<leader>l', '<cmd>Lazy<CR>', { desc = 'Lazy' })
+vim.keymap.set('n', '<leader>l', vim.cmd.Lazy, { desc = 'Lazy' })
 
 -- Persistence
 
@@ -28,7 +28,7 @@ vim.keymap.set('n', '<leader>l', '<cmd>Lazy<CR>', { desc = 'Lazy' })
 vim.keymap.set(
   'n',
   '<leader>qq',
-  '<cmd>qa<CR>',
+  vim.cmd.qa,
   { desc = 'Quit current session' }
 )
 
@@ -109,7 +109,7 @@ vim.keymap.set('n', '<C-S-l>', '<C-w>>', { desc = 'Resize window right' })
 vim.keymap.set(
   { 'n', 'i' },
   '<C-C>',
-  '<Cmd>fc<CR>',
+  vim.cmd.fc,
   { desc = 'Close floating window' }
 )
 
@@ -133,38 +133,38 @@ vim.keymap.set('i', '<M-k>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move Up' })
 vim.keymap.set(
   'n',
   '<S-h>',
-  '<cmd>BufferLineCyclePrev<cr>',
+  vim.cmd.BufferLineCyclePrev,
   { desc = 'Go to left buffer' }
 )
 vim.keymap.set(
   'n',
   '<S-l>',
-  '<cmd>BufferLineCycleNext<cr>',
+  vim.cmd.BufferLineCycleNext,
   { desc = 'Go to right buffer' }
 )
 vim.keymap.set(
   'n',
   '<leader>bg',
-  '<cmd>BufferLinePick<cr>',
+  vim.cmd.BufferLinePick,
   { desc = 'Go to buffer' }
 )
 vim.keymap.set(
   'n',
   '<leader>bD',
-  '<cmd>BufferLinePickClose<cr>',
+  vim.cmd.BufferLinePickClose,
   { desc = 'Select delete buffer' }
 )
 vim.keymap.set(
   'n',
   '<leader>bp',
-  '<cmd>BufferLineTogglePin<cr>',
+  vim.cmd.BufferLineTogglePin,
   { desc = 'Pin buffer' }
 )
-vim.keymap.set('n', '<leader>bd', '<cmd>bd<cr>', { desc = 'Buffer delete' })
+vim.keymap.set('n', '<leader>bd', vim.cmd.bd, { desc = 'Buffer delete' })
 vim.keymap.set(
   'n',
   '<leader>bo',
-  '<cmd>BufferLineCloseOthers<cr>',
+  vim.cmd.BufferLineCloseOthers,
   { desc = 'Buffer delete others' }
 )
 
@@ -172,13 +172,13 @@ vim.keymap.set(
 vim.keymap.set(
   'n',
   '<leader>|',
-  '<cmd>vsplit<cr>',
+  vim.cmd.vsplit,
   { desc = 'Split window vertically' }
 )
 vim.keymap.set(
   'n',
   '<leader>-',
-  '<cmd>split<cr>',
+  vim.cmd.split,
   { desc = 'Split window horizontally' }
 )
 
@@ -186,7 +186,7 @@ vim.keymap.set(
 vim.keymap.set(
   'n',
   'zl',
-  '<cmd>loadview<cr>',
+  vim.cmd.loadview,
   { desc = 'Loadview' }
 )
 
@@ -194,7 +194,7 @@ vim.keymap.set(
 vim.keymap.set(
   'n',
   '<leader>st',
-  '<cmd>TodoTelescope<cr>',
+  vim.cmd.TodoTelescope,
   { desc = 'Search for TODO comments' }
 )
 vim.keymap.set('n', ']t', function()

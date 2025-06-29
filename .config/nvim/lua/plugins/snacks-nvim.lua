@@ -7,7 +7,6 @@ return {
     bigfile = { enabled = true }, -- Deactivates things for files too large
     dashboard = { enabled = true }, -- Initial neovim dashboard
     indent = { enabled = true }, -- Indent lines
-    quickfile = { enabled = true }, -- Open files quickly
     rename = { enabled = true }, -- Rename files
     scroll = { enabled = true }, -- Smooth scrolling
     statuscolumn = { enabled = true }, -- Status column on its own
