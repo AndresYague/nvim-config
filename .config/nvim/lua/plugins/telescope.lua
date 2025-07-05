@@ -98,8 +98,8 @@ return {
         { desc = 'Search Files' }
       )
       vim.keymap.set('n', '<leader>sF', function()
-        builtin.find_files { hidden = true }
-      end, { desc = 'Search hidden files' })
+        builtin.find_files { hidden = true, no_ignore = true }
+      end, { desc = 'Search hidden/ignored files' })
       vim.keymap.set(
         'n',
         '<leader>ss',
@@ -118,6 +118,9 @@ return {
         builtin.live_grep,
         { desc = 'Search by Grep' }
       )
+      vim.keymap.set('n', '<leader>sG', function()
+        builtin.live_grep { glob_pattern = "*.*" }
+      end, { desc = 'Search hidden/ignored files by Grep' })
       vim.keymap.set(
         'n',
         '<C-s>',

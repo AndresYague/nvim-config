@@ -54,7 +54,7 @@ return {
 
           -- Rename the variable under your cursor.
           --  Most Language Servers support renaming across files, etc.
-          map('<leader>cr', vim.lsp.buf.rename, 'Rename')
+          map('<leader>cR', vim.lsp.buf.rename, 'Rename')
 
           -- Execute a code action, usually your cursor needs to be on top of an error
           -- or a suggestion from your LSP for this to activate.
@@ -67,31 +67,31 @@ return {
 
           -- Find references for the word under your cursor.
           map(
-            'gcr',
+            '<leader>cr',
             require('telescope.builtin').lsp_references,
-            'Goto Code References'
+            'Code References'
           )
 
           -- Jump to the implementation of the word under your cursor.
           --  Useful when your language has ways of declaring types without an actual implementation.
           map(
-            'gci',
+            '<leader>ci',
             require('telescope.builtin').lsp_implementations,
-            'Goto Code Implementation'
+            'Code Implementation'
           )
 
           -- Jump to the definition of the word under your cursor.
           --  This is where a variable was first declared, or where a function is defined, etc.
           --  To jump back, press <C-t>.
           map(
-            'gcd',
+            '<leader>cd',
             require('telescope.builtin').lsp_definitions,
-            'Goto Code Definition'
+            'Code Definition'
           )
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header.
-          map('gcD', vim.lsp.buf.declaration, 'Goto Code Declaration')
+          map('<leader>cD', vim.lsp.buf.declaration, 'Code Declaration')
 
           -- Fuzzy find all the symbols in your current document.
           --  Symbols are things like variables, functions, types, etc.
@@ -115,7 +115,7 @@ return {
           map(
             'gct',
             require('telescope.builtin').lsp_type_definitions,
-            'Goto Code Type Definition'
+            'Code Type Definition'
           )
 
           -- This function resolves a difference between neovim nightly (version 0.11) and stable (version 0.10)

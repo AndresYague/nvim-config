@@ -39,14 +39,14 @@ return {
   },
   keys = {
     {
-      '<leader>z',
+      '<C-w>z',
       function()
         Snacks.zen()
       end,
       desc = 'Toggle Zen Mode',
     },
     {
-      '<leader>Z',
+      '<C-w>m',
       function()
         Snacks.zen.zoom()
       end,

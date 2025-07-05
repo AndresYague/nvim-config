@@ -52,7 +52,7 @@ return {
         { '<leader>l', group = 'Lazy' },
         { '<leader>q', group = 'Sessions' },
         { '<leader>b', group = 'Buffer' },
-        { '<leader>w', group = 'Window' },
+        { '<leader>t', group = 'Terminal' },
         { '<leader>u', group = 'UI' },
         { '<leader>g', group = 'Git' },
       },
