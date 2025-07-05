@@ -25,12 +25,7 @@ vim.keymap.set('n', '<leader>l', vim.cmd.Lazy, { desc = 'Lazy' })
 -- Persistence
 
 -- Close current session
-vim.keymap.set(
-  'n',
-  '<leader>qq',
-  vim.cmd.qa,
-  { desc = 'Quit current session' }
-)
+vim.keymap.set('n', '<leader>qq', vim.cmd.qa, { desc = 'Quit current session' })
 
 -- load the session for the current directory
 vim.keymap.set('n', '<leader>qs', function()
@@ -181,14 +176,21 @@ vim.keymap.set(
   vim.cmd.split,
   { desc = 'Split window horizontally' }
 )
+vim.keymap.set('n', '<leader>t|', function()
+  vim.cmd.vsplit { args = { 'term://%:p:h//' .. vim.opt.shell:get() } }
+end, { desc = 'Open terminal vertically (file location)' })
+vim.keymap.set('n', '<leader>tv', function()
+  vim.cmd.vsplit { args = { 'term://' .. vim.opt.shell:get()} }
+end, { desc = 'Open terminal vertically (cwd)' })
+vim.keymap.set('n', '<leader>t-', function()
+  vim.cmd.split { args = { 'term://%:p:h//' .. vim.opt.shell:get() } }
+end, { desc = 'Open terminal horizontally (file location)' })
+vim.keymap.set('n', '<leader>th', function()
+  vim.cmd.split { args = { 'term://' .. vim.opt.shell:get()} }
+end, { desc = 'Open terminal horizontally (cwd)' })
 
 -- Loadview
-vim.keymap.set(
-  'n',
-  'zl',
-  vim.cmd.loadview,
-  { desc = 'Loadview' }
-)
+vim.keymap.set('n', 'zl', vim.cmd.loadview, { desc = 'Loadview' })
 
 -- These are the "TODO" search keymaps
 vim.keymap.set(
