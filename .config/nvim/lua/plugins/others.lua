@@ -1,7 +1,7 @@
 return {
   {
     'AndresYague/move-enclosing.nvim',
-    opts = { keymap = '<C-E>' },
+    opts = { word_keymap = '<C-E>', WORD_keymap = '<C-S-E>' },
   },
   {
     'folke/noice.nvim',

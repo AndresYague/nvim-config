@@ -98,7 +98,13 @@ return {
     event = 'InsertEnter',
     config = true,
     opts = {
-        ignored_next_char = [=[[%w%%%[%.%$]]=]
+      -- Do not ignore any char for pair creation
+      ignored_next_char = '',
     },
+  },
+
+  {
+    'numToStr/Comment.nvim',
+    opts = {},
   },
 }
