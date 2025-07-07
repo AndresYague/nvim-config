@@ -14,7 +14,7 @@ vim.keymap.set(
 -- Color-picker
 vim.keymap.set(
   'n',
-  '<leader>C',
+  '<leader>uC',
   '<cmd>Telescope colorscheme<CR>',
   { desc = 'Colorscheme' }
 )
@@ -47,12 +47,6 @@ vim.keymap.set('n', '<leader>qd', function()
   require('persistence').stop()
 end, { desc = 'Do not save session' })
 
--- Typing keymaps
-vim.keymap.set({ 'n', 'i', 'c', 'v' }, 'º', '<')
-vim.keymap.set({ 'n', 'i', 'c', 'v' }, 'ª', '>')
-vim.keymap.set('n', 'ºº', '<<')
-vim.keymap.set('n', 'ªª', '>>')
-
 -- Terminal keymaps
 vim.keymap.set(
   't',
@@ -84,10 +78,6 @@ vim.keymap.set(
   '<C-\\><C-n><C-w>h',
   { desc = 'Go to left window' }
 )
-
--- Keymaps for top-bottom <S-T> and <S-B>
-vim.keymap.set('n', '<S-t>', '<S-h>', { desc = 'Go to window top' })
-vim.keymap.set('n', '<S-b>', '<S-l>', { desc = 'Go to window bottom' })
 
 -- Window keymaps
 vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Go to upper window' })
@@ -155,6 +145,9 @@ vim.keymap.set(
   vim.cmd.BufferLineTogglePin,
   { desc = 'Pin buffer' }
 )
+vim.keymap.set('n', '<leader>bP', function()
+  vim.cmd.BufferLineGroupClose { args = { 'ungrouped' } }
+end, { desc = 'Delete unpinned buffers' })
 vim.keymap.set('n', '<leader>bd', vim.cmd.bd, { desc = 'Buffer delete' })
 vim.keymap.set(
   'n',
@@ -180,13 +173,13 @@ vim.keymap.set('n', '<leader>t|', function()
   vim.cmd.vsplit { args = { 'term://%:p:h//' .. vim.opt.shell:get() } }
 end, { desc = 'Open terminal vertically (file location)' })
 vim.keymap.set('n', '<leader>tv', function()
-  vim.cmd.vsplit { args = { 'term://' .. vim.opt.shell:get()} }
+  vim.cmd.vsplit { args = { 'term://' .. vim.opt.shell:get() } }
 end, { desc = 'Open terminal vertically (cwd)' })
 vim.keymap.set('n', '<leader>t-', function()
   vim.cmd.split { args = { 'term://%:p:h//' .. vim.opt.shell:get() } }
 end, { desc = 'Open terminal horizontally (file location)' })
 vim.keymap.set('n', '<leader>th', function()
-  vim.cmd.split { args = { 'term://' .. vim.opt.shell:get()} }
+  vim.cmd.split { args = { 'term://' .. vim.opt.shell:get() } }
 end, { desc = 'Open terminal horizontally (cwd)' })
 
 -- Loadview
