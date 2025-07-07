@@ -34,10 +34,7 @@ return {
       --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
       --    function will be executed to configure the current buffer
       vim.api.nvim_create_autocmd('LspAttach', {
-        group = vim.api.nvim_create_augroup(
-          'lsp-attach',
-          { clear = true }
-        ),
+        group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
         callback = function(event)
           -- Create a function that lets us more easily define mappings
           -- specific for LSP related items. It sets the mode, buffer and
@@ -145,10 +142,8 @@ return {
               event.buf
             )
           then
-            local highlight_augroup = vim.api.nvim_create_augroup(
-              'lsp-highlight',
-              { clear = false }
-            )
+            local highlight_augroup =
+              vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
               buffer = event.buf,
               group = highlight_augroup,

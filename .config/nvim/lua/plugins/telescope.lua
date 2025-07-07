@@ -119,7 +119,7 @@ return {
         { desc = 'Search by Grep' }
       )
       vim.keymap.set('n', '<leader>sG', function()
-        builtin.live_grep { glob_pattern = "*.*" }
+        builtin.live_grep { glob_pattern = '*.*' }
       end, { desc = 'Search hidden/ignored files by Grep' })
       vim.keymap.set(
         'n',
