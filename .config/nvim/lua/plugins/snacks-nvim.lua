@@ -140,6 +140,13 @@ return {
         Snacks.toggle.inlay_hints():map '<leader>uh'
         Snacks.toggle.indent():map '<leader>ug'
         Snacks.toggle.dim():map '<leader>uD'
+        Snacks.toggle.animate():map '<leader>ua'
+        Snacks.toggle
+          .option('cursorline', { name = 'Cursor Line' })
+          :map '<leader>uR'
+        Snacks.toggle
+          .option('cursorcolumn', { name = 'Cursor Column' })
+          :map '<leader>ur'
       end,
     })
   end,
