@@ -2,7 +2,7 @@
 require 'options'
 
 -- Make the vim shell "fish"
-vim.opt.shell = "fish"
+vim.opt.shell = 'fish'
 vim.opt.foldlevelstart = 99
 
 -- Install `lazy.nvim` plugin manager

@@ -199,6 +199,9 @@ vim.keymap.set('n', '[t', function()
   require('todo-comments').jump_prev()
 end, { desc = 'Previous todo comment' })
 
+-- Handy shortcut for calculator mode
+vim.keymap.set('n', '<leader>cc', 'i<C-R>=', {desc = "Calculator insert"})
+
 -- Remove undesired mappings from LSP
 local remove_lsp_mapping = function(mode, lhs)
   local map_desc = vim.fn.maparg(lhs, mode, false, true).desc
