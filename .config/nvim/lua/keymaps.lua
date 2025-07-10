@@ -170,16 +170,16 @@ vim.keymap.set(
   { desc = 'Split window horizontally' }
 )
 vim.keymap.set('n', '<leader>t|', function()
-  vim.cmd.vsplit { args = { 'term://%:p:h//' .. vim.opt.shell:get() } }
+  vim.cmd.vsplit { args = { 'term://%:p:h//' .. vim.o.shell } }
 end, { desc = 'Open terminal vertically (file location)' })
 vim.keymap.set('n', '<leader>tv', function()
-  vim.cmd.vsplit { args = { 'term://' .. vim.opt.shell:get() } }
+  vim.cmd.vsplit { args = { 'term://' .. vim.o.shell } }
 end, { desc = 'Open terminal vertically (cwd)' })
 vim.keymap.set('n', '<leader>t-', function()
-  vim.cmd.split { args = { 'term://%:p:h//' .. vim.opt.shell:get() } }
+  vim.cmd.split { args = { 'term://%:p:h//' .. vim.o.shell } }
 end, { desc = 'Open terminal horizontally (file location)' })
 vim.keymap.set('n', '<leader>th', function()
-  vim.cmd.split { args = { 'term://' .. vim.opt.shell:get() } }
+  vim.cmd.split { args = { 'term://' .. vim.o.shell } }
 end, { desc = 'Open terminal horizontally (cwd)' })
 
 -- Loadview
@@ -200,7 +200,7 @@ vim.keymap.set('n', '[t', function()
 end, { desc = 'Previous todo comment' })
 
 -- Handy shortcut for calculator mode
-vim.keymap.set('n', '<leader>cc', 'i<C-R>=', {desc = "Calculator insert"})
+vim.keymap.set('n', '<leader>cc', 'i<C-R>=', { desc = 'Calculator insert' })
 
 -- Remove undesired mappings from LSP
 local remove_lsp_mapping = function(mode, lhs)
