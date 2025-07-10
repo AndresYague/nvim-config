@@ -16,8 +16,16 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 vim.api.nvim_create_autocmd({ 'FileType' }, {
   pattern = { 'cpp', 'lua' },
   callback = function()
-    vim.opt.tabstop = 2
-    vim.opt.shiftwidth = 2
+    vim.o.tabstop = 2
+    vim.o.shiftwidth = 2
+  end,
+})
+
+-- Make python add comments on new line
+vim.api.nvim_create_autocmd({ 'FileType' }, {
+  pattern = { 'python' },
+  callback = function()
+    vim.o.formatoptions = "jcroql"
   end,
 })
 
