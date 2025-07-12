@@ -91,4 +91,7 @@ return {
       end,
     },
   },
+  {
+    'AndresYague/git-worktree.nvim',
+  },
 }

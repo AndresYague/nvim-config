@@ -46,15 +46,16 @@ return {
 
       -- Document existing key chains
       spec = {
-        { '<leader>s', group = 'Search' },
+        { '<leader>b', group = 'Buffer' },
         { '<leader>c', group = 'Code' },
+        { '<leader>g', group = 'Git' },
+        { '<leader>gw', group = 'Git worktree' },
         { '<leader>h', group = 'Git Hunk' },
         { '<leader>l', group = 'Lazy' },
         { '<leader>q', group = 'Sessions' },
-        { '<leader>b', group = 'Buffer' },
+        { '<leader>s', group = 'Search' },
         { '<leader>t', group = 'Terminal' },
         { '<leader>u', group = 'UI' },
-        { '<leader>g', group = 'Git' },
       },
     },
   },
