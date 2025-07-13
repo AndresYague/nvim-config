@@ -29,7 +29,7 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
   end,
 })
 
--- Make python add comments on new line
+-- Add keybinds for diff mode
 vim.api.nvim_create_autocmd({ 'DiffUpdated' }, {
   desc = 'Diff put and fetch keymaps when on diff',
   group = vim.api.nvim_create_augroup('diff-mode', { clear = true }),

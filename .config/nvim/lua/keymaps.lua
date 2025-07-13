@@ -200,11 +200,26 @@ vim.keymap.set('n', '[t', function()
 end, { desc = 'Previous todo comment' })
 
 -- Git worktree keymaps
-vim.keymap.set('n', '<leader>gwc', ':lua require("telescope").extensions.git_worktree.create_git_worktree()<CR>', { desc = 'Create worktree' })
+vim.keymap.set(
+  'n',
+  '<leader>gwc',
+  ':lua require("telescope").extensions.git_worktree.create_git_worktree()<CR>',
+  { desc = 'Create worktree' }
+)
 
-vim.keymap.set('n', '<leader>gwd', ':lua require("telescope").extensions.git_worktree.delete_git_worktree()<CR>', { desc = 'Delete worktree' })
+vim.keymap.set(
+  'n',
+  '<leader>gwd',
+  ':lua require("telescope").extensions.git_worktree.delete_git_worktree()<CR>',
+  { desc = 'Delete worktree' }
+)
 
-vim.keymap.set('n', '<leader>gws', ':lua require("telescope").extensions.git_worktree.git_worktrees()<CR>', { desc = 'Switch worktree' })
+vim.keymap.set(
+  'n',
+  '<leader>gws',
+  ':lua require("telescope").extensions.git_worktree.git_worktrees()<CR>',
+  { desc = 'Switch worktree' }
+)
 
 -- Handy shortcut for calculator mode
 vim.keymap.set('n', '<leader>cc', 'i<C-R>=', { desc = 'Calculator insert' })
