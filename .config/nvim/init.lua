@@ -102,8 +102,30 @@ require 'autocmds'
 -- Load health
 require 'health'
 
+-- Try to load these colorschemes in order
+local load_colorschemes = { 'nightfox', 'tokyonight' }
+
 -- Set colorscheme
-vim.cmd.colorscheme 'nightfox'
+local found = nil
+local colorschemes = vim.fn.getcompletion('', 'color')
+for i, load_col in ipairs(load_colorschemes) do
+  for _, col in ipairs(colorschemes) do
+    if load_col == col then
+      found = i
+      break
+    end
+  end
+
+  if found then
+    break
+  end
+end
+
+if found then
+  vim.cmd.colorscheme(load_colorschemes[found])
+else
+  vim.cmd.colorscheme 'default'
+end
 
 -- The modeline
 -- vim: ts=2 sts=2 sw=2 et
