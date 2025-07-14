@@ -12,12 +12,11 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- Change these options for cpp and lua
-
 vim.api.nvim_create_autocmd({ 'FileType' }, {
   pattern = { 'cpp', 'lua' },
   callback = function()
-    vim.o.tabstop = 2
-    vim.o.shiftwidth = 2
+    vim.bo.tabstop = 2
+    vim.bo.shiftwidth = 2
   end,
 })
 
@@ -25,7 +24,7 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
 vim.api.nvim_create_autocmd({ 'FileType' }, {
   pattern = { 'python' },
   callback = function()
-    vim.o.formatoptions = 'jcroql'
+    vim.bo.formatoptions = 'jcroql'
   end,
 })
 
@@ -67,8 +66,7 @@ local ignore_filetypes_folding =
 
 vim.api.nvim_create_autocmd({ 'FileType' }, {
   callback = function()
-    local filetype = vim.bo.filetype
-    if vim.tbl_contains(ignore_filetypes_folding, filetype) then
+    if vim.tbl_contains(ignore_filetypes_folding, vim.bo.filetype) then
       return
     end
 
