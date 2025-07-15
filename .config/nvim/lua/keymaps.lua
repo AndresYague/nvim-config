@@ -221,6 +221,41 @@ vim.keymap.set(
   { desc = 'Switch worktree' }
 )
 
+-- Keymaps for diffmode
+vim.keymap.set(
+  'n',
+  'gs',
+  '<cmd>Gvdiffsplit!<CR>',
+  { desc = 'Do a Gvdiffsplit!' }
+)
+vim.keymap.set('n', 'gh', function()
+  if vim.o.diff then
+    return '<cmd>diffget //2<CR>'
+  else
+    return 'gh'
+  end
+end, { expr = true, desc = 'Get diff from left merge window' })
+vim.keymap.set('n', 'gl', function()
+  if vim.o.diff then
+    return '<cmd>diffget //3<CR>'
+  else
+    return 'gl'
+  end
+end, { expr = true, desc = 'Get diff from right merge window' })
+vim.keymap.set('n', 'gq', function()
+  if vim.o.diff then
+    local cmd = ''
+    for _, b in ipairs(vim.api.nvim_list_bufs()) do
+      if string.find(vim.api.nvim_buf_get_name(b), 'fugitive://') then
+        cmd = cmd .. '<cmd>bwipeout ' .. b .. '<CR>'
+      end
+    end
+    return cmd
+  else
+    return 'gq'
+  end
+end, { expr = true, desc = 'Close the diff windows' })
+
 -- Handy shortcut for calculator mode
 vim.keymap.set('n', '<leader>cc', 'i<C-R>=', { desc = 'Calculator insert' })
 

@@ -50,7 +50,7 @@ return {
     version = '*',
     dependencies = 'nvim-tree/nvim-web-devicons',
     opts = {
-      options = { numbers = 'buffer_id' },
+      options = { numbers = 'none' },
     },
   },
 }

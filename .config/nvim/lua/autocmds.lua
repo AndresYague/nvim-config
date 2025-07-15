@@ -28,37 +28,6 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
   end,
 })
 
--- Add keybinds for diff mode
-vim.api.nvim_create_autocmd({ 'DiffUpdated' }, {
-  desc = 'Diff put and fetch keymaps when on diff',
-  group = vim.api.nvim_create_augroup('diff-mode', { clear = true }),
-  callback = function()
-    -- Normal diff keymap, get from other
-    vim.api.nvim_buf_set_keymap(
-      0,
-      'n',
-      'go',
-      'do',
-      { desc = 'Get diff from other window' }
-    )
-    -- Gvdiffsplit keymaps
-    vim.api.nvim_buf_set_keymap(
-      0,
-      'n',
-      'gh',
-      '<cmd>diffget //2<CR>',
-      { desc = 'Get diff from left merge window' }
-    )
-    vim.api.nvim_buf_set_keymap(
-      0,
-      'n',
-      'gl',
-      '<cmd>diffget //3<CR>',
-      { desc = 'Get diff from right merge window' }
-    )
-  end,
-})
-
 -- Folding expressions
 
 local ignore_filetypes_folding =
