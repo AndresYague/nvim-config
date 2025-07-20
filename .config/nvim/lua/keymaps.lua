@@ -271,6 +271,9 @@ local remove_lsp_mapping = function(mode, lhs)
   vim.keymap.del(mode, lhs)
 end
 
+-- Open oil
+vim.keymap.set('n', '<leader>o', vim.cmd.Oil, { desc = 'Open oil' })
+
 remove_lsp_mapping('n', 'gra')
 remove_lsp_mapping('x', 'gra')
 remove_lsp_mapping('n', 'gri')
@@ -279,3 +282,4 @@ remove_lsp_mapping('n', 'grn')
 remove_lsp_mapping('n', 'grt')
 remove_lsp_mapping('n', 'gd')
 remove_lsp_mapping('n', 'gD')
+remove_lsp_mapping('n', 'gO')
