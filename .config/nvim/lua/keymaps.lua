@@ -256,6 +256,9 @@ vim.keymap.set('n', 'gq', function()
   end
 end, { expr = true, desc = 'Close the diff windows' })
 
+-- Mason window display
+vim.keymap.set('n', '<leader>cm', '<cmd>Mason<CR>', { desc = 'Mason window' })
+
 -- Handy shortcut for calculator mode
 vim.keymap.set('n', '<leader>cc', 'i<C-R>=', { desc = 'Calculator insert' })
 
