@@ -48,6 +48,18 @@ return {
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
 
+        defaults = {
+          mappings = {
+            i = {
+              ['<C-H>'] = require('telescope.actions.generate').which_key {},
+              ['<C-Q>'] = require('telescope.actions').smart_send_to_qflist,
+            },
+            n = {
+              ['<C-Q>'] = require('telescope.actions').smart_send_to_qflist,
+            },
+          },
+        },
+
         pickers = {
           find_files = {
             theme = 'ivy',

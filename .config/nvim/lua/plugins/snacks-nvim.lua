@@ -13,7 +13,6 @@ return {
     scratch = { enabled = true }, -- Scratch space
     scope = {
       enabled = true,
-      -- TODO: Does this even work?
       treesitter = {
         blocks = {
           enabled = true,
@@ -28,6 +27,10 @@ return {
           'repeat_statement',
           'if_statement',
           'for_statement',
+        },
+        -- these treesitter fields will be considered as blocks
+        field_blocks = {
+          "local_declaration",
         },
       },
     }, -- Scope jumps
