@@ -36,40 +36,7 @@ return {
         },
       },
       sections = {
-        lualine_a = {
-          {
-            function()
-              -- Retrieve the mode from nvim_get_mode
-              local mode = vim.api.nvim_get_mode().mode
-              local mode_map = {
-                ['\22'] = 'V-BLOCK',
-                c = 'COMMAND',
-                i = 'INSERT',
-                n = 'NORMAL',
-                no = 'O-PENDING',
-                nt = 'NORMAL',
-                R = 'REPLACE',
-                ['^S'] = 'S-BLOCK',
-                s = 'SELECT',
-                S = 'S-LINE',
-                t = 'TERMINAL',
-                v = 'VISUAL',
-                V = 'V-LINE',
-              }
-
-              -- Save the status mode
-              local status = mode_map[mode] or mode:upper()
-
-              local reg = vim.fn.reg_recording()
-              -- If a macro is being recorded, append "@<register>"
-              if reg ~= '' then
-                status = status .. ' (Recording @' .. reg .. ')'
-              end
-
-              return status
-            end,
-          },
-        },
+        lualine_a = { 'mode' },
         lualine_b = {
           'branch',
           'diff',
@@ -79,6 +46,13 @@ return {
         lualine_c = {
           'filename',
           'searchcount',
+          {
+            -- Recorder
+            function()
+              return require('recorder').displaySlots()
+                .. require('recorder').recordingStatus()
+            end,
+          },
         },
         lualine_x = {
           'encoding',

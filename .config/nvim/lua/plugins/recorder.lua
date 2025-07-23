@@ -21,7 +21,7 @@ return {
         deleteAllMacros = 'dq',
         yankMacro = 'yq',
         -- ⚠️ this should be a string you don't use in insert mode during a macro
-        addBreakPoint = nil,
+        addBreakPoint = '###',
       },
 
       -- Clears all macros-slots on startup.
