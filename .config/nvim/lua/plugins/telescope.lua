@@ -51,7 +51,7 @@ return {
         defaults = {
           mappings = {
             i = {
-              ['<C-H>'] = require('telescope.actions.generate').which_key {},
+              ['<C-K>'] = require('telescope.actions.generate').which_key {},
               ['<C-Q>'] = require('telescope.actions').smart_send_to_qflist,
             },
             n = {
@@ -85,6 +85,7 @@ return {
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
+      local utils = require 'telescope.utils'
       vim.keymap.set(
         'n',
         '<leader>sh',
@@ -99,19 +100,150 @@ return {
       )
       vim.keymap.set(
         'n',
-        '<leader>sf',
-        builtin.find_files,
-        { desc = 'Search Files' }
-      )
-      vim.keymap.set(
-        'n',
         '<C-f>',
         builtin.find_files,
         { desc = 'Search Files' }
       )
+
+      -- Define the function so we can call it recursively
+      local attach_find_files
+
+      -- Function to toggle hidden and ignored
+      ---@param hidden boolean
+      ---@param no_ignore boolean
+      ---@param cwd string?
+      attach_find_files = function(hidden, no_ignore, cwd)
+        -- Show the prefix for hidden and ignored files
+        local find_files_prompt_prefix = function()
+          local s = ''
+          if hidden and no_ignore then
+            s = '(h|i)'
+          elseif hidden then
+            s = '(h)'
+          elseif no_ignore then
+            s = '(i)'
+          end
+          return s .. '> '
+        end
+        local prompt_prefix = find_files_prompt_prefix()
+
+        local prompt_title =
+          'Find Files - <C-h> Toogle Hidden - <C-i> Toggle ignore | '
+        if cwd then
+          prompt_title = prompt_title .. cwd
+        else
+          prompt_title = prompt_title .. '(Root)'
+        end
+
+        builtin.find_files {
+          hidden = hidden,
+          no_ignore = no_ignore,
+          prompt_title = prompt_title,
+          prompt_prefix = prompt_prefix,
+          cwd = cwd,
+          attach_mappings = function(_, map)
+            map({ 'i', 'n' }, '<C-h>', function()
+              attach_find_files(not hidden, no_ignore, cwd)
+            end, { desc = 'Toggle hidden' })
+            map({ 'i', 'n' }, '<C-i>', function()
+              attach_find_files(hidden, not no_ignore, cwd)
+            end, { desc = 'Toggle ignored' })
+
+            -- needs to return true if you want to map default_mappings and
+            -- false if not
+            return true
+          end,
+        }
+      end
+
+      vim.keymap.set('n', '<C-f>', function()
+        attach_find_files(false, false)
+      end, { desc = 'Search Files in the root directory' })
+
+      vim.keymap.set('n', '<leader>sf', function()
+        attach_find_files(false, false)
+      end, { desc = 'Search Files in the root directory' })
+
       vim.keymap.set('n', '<leader>sF', function()
-        builtin.find_files { hidden = true, no_ignore = true }
-      end, { desc = 'Search hidden/ignored files' })
+        attach_find_files(false, false, utils.buffer_dir())
+      end, { desc = 'Search files in the current buffer directory' })
+
+      -- Define the function so we can call it recursively
+      local attach_live_grep
+
+      -- Function to toggle hidden and filter types
+      ---@param hidden boolean
+      ---@param type_filter string?
+      ---@param cwd string?
+      attach_live_grep = function(hidden, type_filter, cwd)
+        -- If filter is empty, make it nil
+        if type_filter == '' then
+          type_filter = nil
+        end
+
+        -- Show the prefix for hidden files and type filter
+        local live_grep_prompt_prefix = function()
+          local s = ''
+          if hidden and type_filter then
+            s = '(h|' .. type_filter .. ')'
+          elseif hidden then
+            s = '(h)'
+          elseif type_filter then
+            s = '(' .. type_filter .. ')'
+          end
+          return s .. '> '
+        end
+        local prompt_prefix = live_grep_prompt_prefix()
+
+        -- Set-up the prompt title
+        local prompt_title =
+          'Live Grep - <C-h> Toogle Hidden - <C-f> Type filter | '
+        if cwd then
+          prompt_title = prompt_title .. cwd
+        else
+          prompt_title = prompt_title .. '(Root)'
+        end
+
+        local additional_args = {}
+        if hidden then
+          table.insert(additional_args, '--hidden')
+        end
+
+        builtin.live_grep {
+          additional_args = additional_args,
+          cwd = cwd,
+          type_filter = type_filter,
+          prompt_title = prompt_title,
+          prompt_prefix = prompt_prefix,
+          attach_mappings = function(_, map)
+            map({ 'i', 'n' }, '<C-h>', function()
+              attach_live_grep(not hidden, type_filter, cwd)
+            end, { desc = 'Toggle hidden' })
+            map({ 'i', 'n' }, '<C-f>', function()
+              vim.ui.input({ prompt = 'Filter pattern: ' }, function(input)
+                attach_live_grep(hidden, input, cwd)
+              end)
+            end, { desc = 'Filter by pattern' })
+
+            -- needs to return true if you want to map default_mappings and
+            -- false if not
+            return true
+          end,
+        }
+      end
+
+      vim.keymap.set('n', '<C-s>', function()
+        attach_live_grep(false)
+      end, { desc = 'Search by Grep' })
+
+      vim.keymap.set('n', '<leader>sg', function()
+        attach_live_grep(false)
+      end, { desc = 'Search by Grep' })
+
+      vim.keymap.set('n', '<leader>sG', function()
+        attach_live_grep(false, nil, utils.buffer_dir())
+      end, { desc = 'Search by Grep in the current buffer directory' })
+
       vim.keymap.set(
         'n',
         '<leader>ss',
@@ -123,21 +255,6 @@ return {
         '<leader>sw',
         builtin.grep_string,
         { desc = 'Search current Word' }
-      )
-      vim.keymap.set(
-        'n',
-        '<leader>sg',
-        builtin.live_grep,
-        { desc = 'Search by Grep' }
-      )
-      vim.keymap.set('n', '<leader>sG', function()
-        builtin.live_grep { glob_pattern = '*.*' }
-      end, { desc = 'Search hidden/ignored files by Grep' })
-      vim.keymap.set(
-        'n',
-        '<C-s>',
-        builtin.live_grep,
-        { desc = 'Search by Grep' }
       )
       vim.keymap.set(
         'n',
