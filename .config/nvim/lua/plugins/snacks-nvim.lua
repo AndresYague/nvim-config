@@ -9,6 +9,7 @@ return {
     indent = { enabled = true }, -- Indent lines
     rename = { enabled = true }, -- Rename files
     scroll = { enabled = true }, -- Smooth scrolling
+    picker = { enabled = true }, -- Picker
     statuscolumn = { enabled = true }, -- Status column on its own
     scratch = { enabled = true }, -- Scratch space
     scope = {

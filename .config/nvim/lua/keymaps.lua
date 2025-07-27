@@ -4,20 +4,12 @@ vim.keymap.set('n', '<Esc>', vim.cmd.nohlsearch)
 -- Diagnostic keymaps
 vim.keymap.set(
   'n',
-  '<leader>f',
+  '<leader>d',
   vim.diagnostic.setloclist,
   { desc = 'Open diagnostic Quickfix list' }
 )
 
 -- Custom keybindings
-
--- Color-picker
-vim.keymap.set(
-  'n',
-  '<leader>uC',
-  '<cmd>Telescope colorscheme<CR>',
-  { desc = 'Colorscheme' }
-)
 
 -- Lazy
 vim.keymap.set('n', '<leader>l', vim.cmd.Lazy, { desc = 'Lazy' })
@@ -186,12 +178,6 @@ end, { desc = 'Open terminal horizontally (cwd)' })
 vim.keymap.set('n', 'zl', vim.cmd.loadview, { desc = 'Loadview' })
 
 -- These are the "TODO" search keymaps
-vim.keymap.set(
-  'n',
-  '<leader>st',
-  vim.cmd.TodoTelescope,
-  { desc = 'Search for TODO comments' }
-)
 vim.keymap.set('n', ']t', function()
   require('todo-comments').jump_next()
 end, { desc = 'Next todo comment' })
@@ -200,6 +186,7 @@ vim.keymap.set('n', '[t', function()
 end, { desc = 'Previous todo comment' })
 
 -- Git worktree keymaps
+-- TODO: Remove Telescope dependency here
 vim.keymap.set(
   'n',
   '<leader>gwc',
@@ -207,6 +194,7 @@ vim.keymap.set(
   { desc = 'Create worktree' }
 )
 
+-- TODO: Remove Telescope dependency here
 vim.keymap.set(
   'n',
   '<leader>gwd',
@@ -214,6 +202,7 @@ vim.keymap.set(
   { desc = 'Delete worktree' }
 )
 
+-- TODO: Remove Telescope dependency here
 vim.keymap.set(
   'n',
   '<leader>gws',
@@ -262,6 +251,11 @@ vim.keymap.set('n', '<leader>cm', '<cmd>Mason<CR>', { desc = 'Mason window' })
 -- Handy shortcut for calculator mode
 vim.keymap.set('n', '<leader>cc', 'i<C-R>=', { desc = 'Calculator insert' })
 
+-- Run tests
+vim.keymap.set('n', '<leader>rt', function()
+  vim.cmd.PlenaryBustedFile '%'
+end, { desc = 'Run Plenary tests' })
+
 -- Remove undesired mappings from LSP
 local remove_lsp_mapping = function(mode, lhs)
   local map_desc = vim.fn.maparg(lhs, mode, false, true).desc
@@ -272,7 +266,7 @@ local remove_lsp_mapping = function(mode, lhs)
 end
 
 -- Open oil
-vim.keymap.set('n', '<leader>o', vim.cmd.Oil, { desc = 'Open oil' })
+vim.keymap.set('n', '<leader>o', vim.cmd.Oil, { desc = 'Oil' })
 
 remove_lsp_mapping('n', 'gra')
 remove_lsp_mapping('x', 'gra')
