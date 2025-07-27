@@ -1,4 +1,4 @@
-local default = require 'nvim-web-devicons.icons-default'
+local devicons = require 'nvim-web-devicons'
 return {
   {
     'folke/snacks.nvim',
@@ -10,7 +10,6 @@ return {
             keys = {
               ['<c-h>'] = { 'toggle_hidden', mode = { 'i', 'n' } },
               ['<c-i>'] = { 'toggle_ignored', mode = { 'i', 'n' } },
-              ['<c-t>'] = { 'filter_type', mode = { 'i', 'n' } },
             },
           },
           list = {
@@ -56,7 +55,7 @@ return {
                   picker.opts.ft = {}
                 else
                   local icon =
-                    require('nvim-web-devicons').get_icon_by_filetype(
+                    devicons.get_icon_by_filetype(
                       choice,
                       {}
                     )
@@ -95,7 +94,15 @@ return {
       {
         '<leader>/',
         function()
-          Snacks.picker.grep()
+          Snacks.picker.grep {
+            win = {
+              input = {
+                keys = {
+                  ['<c-t>'] = { 'filter_type', mode = { 'i', 'n' } },
+                },
+              },
+            },
+          }
         end,
         desc = 'Grep',
       },
@@ -226,21 +233,45 @@ return {
       {
         '<leader>sB',
         function()
-          Snacks.picker.grep_buffers()
+          Snacks.picker.grep_buffers {
+            win = {
+              input = {
+                keys = {
+                  ['<c-t>'] = { 'filter_type', mode = { 'i', 'n' } },
+                },
+              },
+            },
+          }
         end,
         desc = 'Grep Open Buffers',
       },
       {
         '<leader>sg',
         function()
-          Snacks.picker.grep()
+          Snacks.picker.grep {
+            win = {
+              input = {
+                keys = {
+                  ['<c-t>'] = { 'filter_type', mode = { 'i', 'n' } },
+                },
+              },
+            },
+          }
         end,
         desc = 'Grep',
       },
       {
         '<leader>sw',
         function()
-          Snacks.picker.grep_word()
+          Snacks.picker.grep_word {
+            win = {
+              input = {
+                keys = {
+                  ['<c-t>'] = { 'filter_type', mode = { 'i', 'n' } },
+                },
+              },
+            },
+          }
         end,
         desc = 'Visual selection or word',
         mode = { 'n', 'x' },
