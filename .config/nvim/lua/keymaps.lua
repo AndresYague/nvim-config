@@ -190,7 +190,7 @@ end, { desc = 'Previous todo comment' })
 vim.keymap.set(
   'n',
   '<leader>gwc',
-  ':lua require("telescope").extensions.git_worktree.create_git_worktree()<CR>',
+  ':lua require("git-worktree.wt_pickers").create_worktree_picker()<CR>',
   { desc = 'Create worktree' }
 )
 
@@ -198,15 +198,14 @@ vim.keymap.set(
 vim.keymap.set(
   'n',
   '<leader>gwd',
-  ':lua require("telescope").extensions.git_worktree.delete_git_worktree()<CR>',
+  ':lua require("git-worktree.wt_pickers").delete_worktree_picker()<CR>',
   { desc = 'Delete worktree' }
 )
 
--- TODO: Remove Telescope dependency here
 vim.keymap.set(
   'n',
   '<leader>gws',
-  ':lua require("telescope").extensions.git_worktree.git_worktrees()<CR>',
+  ':lua require("git-worktree.wt_pickers").switch_worktree_picker()<CR>',
   { desc = 'Switch worktree' }
 )
 

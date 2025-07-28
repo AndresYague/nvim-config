@@ -33,7 +33,7 @@ return {
               local file_types = { 'all' }
               for type in string.gmatch(list, '\n%w+:') do
                 type = string.sub(type, 2, string.len(type) - 1)
-                table.insert(file_types, type)
+                file_types[#file_types+1] = type
               end
 
               -- Return the file_types list
@@ -54,11 +54,7 @@ return {
                   picker.opts.prompt = ' '
                   picker.opts.ft = {}
                 else
-                  local icon =
-                    devicons.get_icon_by_filetype(
-                      choice,
-                      {}
-                    )
+                  local icon = devicons.get_icon_by_filetype(choice, {})
 
                   if icon then
                     picker.opts.prompt = icon .. '  '
@@ -67,8 +63,6 @@ return {
                   end
                   picker.opts.ft = choice
                 end
-
-                return true
               end
             )
           end,
