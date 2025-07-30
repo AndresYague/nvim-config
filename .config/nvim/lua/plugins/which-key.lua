@@ -42,20 +42,26 @@ return {
           F11 = '<F11>',
           F12 = '<F12>',
         },
+        rules = {
+          { pattern = 'oil', icon = ' ', color = 'yellow' },
+          { pattern = 'run', icon = ' ', color = 'green' },
+        },
       },
 
       -- Document existing key chains
       spec = {
         { '<leader>b', group = 'Buffer' },
         { '<leader>c', group = 'Code' },
+        { '<leader>f', group = 'Find' },
         { '<leader>g', group = 'Git' },
-        { '<leader>gw', group = 'Git worktree' },
         { '<leader>h', group = 'Git Hunk' },
         { '<leader>l', group = 'Lazy' },
         { '<leader>q', group = 'Sessions' },
+        { '<leader>r', group = 'Run' },
         { '<leader>s', group = 'Search' },
         { '<leader>t', group = 'Terminal' },
         { '<leader>u', group = 'UI' },
+        { '<leader>w', group = 'Git worktree' },
       },
     },
   },

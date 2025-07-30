@@ -115,8 +115,6 @@ return {
         desc = 'Notification History',
       },
       {
-        -- TODO:
-        -- 1) Navigate better
         '<leader>e',
         function()
           Snacks.explorer()

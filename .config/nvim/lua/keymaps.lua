@@ -186,25 +186,23 @@ vim.keymap.set('n', '[t', function()
 end, { desc = 'Previous todo comment' })
 
 -- Git worktree keymaps
--- TODO: Remove Telescope dependency here
 vim.keymap.set(
   'n',
-  '<leader>gwc',
+  '<leader>wc',
   ':lua require("git-worktree.wt_pickers").create_worktree_picker()<CR>',
   { desc = 'Create worktree' }
 )
 
--- TODO: Remove Telescope dependency here
 vim.keymap.set(
   'n',
-  '<leader>gwd',
+  '<leader>wd',
   ':lua require("git-worktree.wt_pickers").delete_worktree_picker()<CR>',
   { desc = 'Delete worktree' }
 )
 
 vim.keymap.set(
   'n',
-  '<leader>gws',
+  '<leader>ws',
   ':lua require("git-worktree.wt_pickers").switch_worktree_picker()<CR>',
   { desc = 'Switch worktree' }
 )
