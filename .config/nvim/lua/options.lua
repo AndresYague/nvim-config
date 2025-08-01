@@ -5,7 +5,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
 
 -- Have colors
-vim.opt.termguicolors = true
+vim.o.termguicolors = true
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
@@ -57,7 +57,7 @@ vim.o.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 -- Set up tabs and column preview
-vim.opt.colorcolumn = '80'
+vim.o.colorcolumn = '80'
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
 vim.o.expandtab = true

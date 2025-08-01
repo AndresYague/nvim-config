@@ -31,7 +31,7 @@ return {
         },
         -- these treesitter fields will be considered as blocks
         field_blocks = {
-          "local_declaration",
+          'local_declaration',
         },
       },
     }, -- Scope jumps
@@ -108,6 +108,9 @@ return {
     },
   },
   init = function()
+    -- Local variable for keeping track of visual bold
+    local visual_bold = false
+
     vim.api.nvim_create_autocmd('User', {
       pattern = 'VeryLazy',
       callback = function()
@@ -151,6 +154,29 @@ return {
         Snacks.toggle
           .option('cursorcolumn', { name = 'Cursor Column' })
           :map '<leader>ur'
+
+        -- Fully custom toggle
+        Snacks.toggle
+          .new({
+            id = 'visual_bold',
+            name = 'Visual Bold',
+            get = function()
+              return visual_bold
+            end,
+            set = function(state)
+              if state then
+                vim.cmd.highlight {
+                  args = { 'link Visual IncSearch' },
+                  bang = true,
+                }
+                visual_bold = true
+              else
+                vim.cmd.highlight { args = { 'link Visual NONE' } }
+                visual_bold = false
+              end
+            end,
+          })
+          :map '<leader>uv'
       end,
     })
   end,
