@@ -1,6 +1,6 @@
 return {
   {
-    'chrisgrieser/nvim-recorder',
+    'AndresYague/nvim-recorder',
     dependencies = 'rcarriga/nvim-notify', -- optional
     opts = {
       -- Named registers where macros are saved (single lowercase letters only).
@@ -14,7 +14,7 @@ return {
       dynamicSlots = 'static',
 
       mapping = {
-        startStopRecording = 'q',
+        startStopRecording = 'qq',
         playMacro = 'Q',
         switchSlot = '<C-q>',
         editMacro = 'cq',
@@ -24,8 +24,11 @@ return {
         addBreakPoint = '¡',
       },
 
+      -- Disable breakpoint mapping
+      enableBreakPointMap = false,
+
       -- Clears all macros-slots on startup.
-      clear = false,
+      clear = true,
 
       -- Log level used for non-critical notifications; mostly relevant for nvim-notify.
       -- (Note that by default, nvim-notify does not show the levels `trace` & `debug`.)

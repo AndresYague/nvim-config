@@ -253,6 +253,9 @@ vim.keymap.set('n', '<leader>rt', function()
   vim.cmd.PlenaryBustedFile '%'
 end, { desc = 'Run Plenary tests' })
 
+-- Open oil
+vim.keymap.set('n', '<leader>o', vim.cmd.Oil, { desc = 'Oil' })
+
 -- Remove undesired mappings from LSP
 local remove_lsp_mapping = function(mode, lhs)
   local map_desc = vim.fn.maparg(lhs, mode, false, true).desc
@@ -261,9 +264,6 @@ local remove_lsp_mapping = function(mode, lhs)
   end
   vim.keymap.del(mode, lhs)
 end
-
--- Open oil
-vim.keymap.set('n', '<leader>o', vim.cmd.Oil, { desc = 'Oil' })
 
 remove_lsp_mapping('n', 'gra')
 remove_lsp_mapping('x', 'gra')
