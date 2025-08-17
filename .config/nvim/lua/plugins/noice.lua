@@ -3,6 +3,18 @@ return {
     'folke/noice.nvim',
     event = 'VeryLazy',
     opts = {
+      routes = {
+        -- TODO: Temporary fix for external command show
+        {
+          filter = { event = 'msg_show', kind = { 'shell_out', 'shell_err' } },
+          view = 'notify',
+          opts = {
+            level = 'info',
+            skip = false,
+            replace = false,
+          },
+        },
+      },
       lsp = {
         -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
         override = {
