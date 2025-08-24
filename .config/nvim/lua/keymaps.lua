@@ -4,7 +4,7 @@ vim.keymap.set('n', '<Esc>', vim.cmd.nohlsearch)
 -- Diagnostic keymaps
 vim.keymap.set(
   'n',
-  '<leader>d',
+  '<leader>dd',
   vim.diagnostic.setloclist,
   { desc = 'Open diagnostic Quickfix list' }
 )

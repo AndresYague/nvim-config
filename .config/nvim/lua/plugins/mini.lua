@@ -9,6 +9,9 @@ return {
       --  - yinq - [Y]ank [I]nside [N]ext [Q]uote
       --  - ci'  - [C]hange [I]nside [']quote
       require('mini.ai').setup { n_lines = 500 }
+
+      -- Better scope jumping
+      require('mini.indentscope')
     end,
   },
 }
