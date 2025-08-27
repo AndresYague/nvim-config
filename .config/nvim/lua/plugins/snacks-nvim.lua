@@ -155,6 +155,20 @@ return {
           .option('cursorcolumn', { name = 'Cursor Column' })
           :map '<leader>ur'
 
+        -- Toggle context
+        Snacks.toggle
+          .new({
+            id = 'treesitter-context',
+            name = 'Treesitter Context',
+            get = function()
+              return require('treesitter-context').enabled()
+            end,
+            set = function()
+              require('treesitter-context').toggle()
+            end,
+          })
+          :map '<leader>ut'
+
         -- Fully custom toggle
         Snacks.toggle
           .new({

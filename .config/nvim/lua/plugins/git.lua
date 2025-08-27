@@ -5,6 +5,12 @@ return {
     'lewis6991/gitsigns.nvim',
     lazy = false,
     opts = {
+      signs = {
+        add = { text = '|' },
+      },
+      signs_staged = {
+        add = { text = '|' },
+      },
       signs_staged_enable = true,
       signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
       numhl = true, -- Toggle with `:Gitsigns toggle_numhl`

@@ -102,6 +102,9 @@ require 'autocmds'
 -- Load health
 require 'health'
 
+-- Disable treesitter-context
+require('treesitter-context').disable()
+
 -- Try to load these colorschemes in order
 local load_colorschemes = { 'nightfox', 'tokyonight' }
 

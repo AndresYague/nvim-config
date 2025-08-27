@@ -256,6 +256,11 @@ end, { desc = 'Run Plenary tests' })
 -- Open oil
 vim.keymap.set('n', '<leader>o', vim.cmd.Oil, { desc = 'Oil' })
 
+-- Jump to previous context
+vim.keymap.set('n', '[u', function()
+  require('treesitter-context').go_to_context(vim.v.count1)
+end, { silent = true, desc = 'Jump to top of context' })
+
 -- Remove undesired mappings from LSP
 local remove_lsp_mapping = function(mode, lhs)
   local map_desc = vim.fn.maparg(lhs, mode, false, true).desc
