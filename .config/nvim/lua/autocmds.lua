@@ -28,6 +28,14 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
   end,
 })
 
+-- Change makeprg for python files
+vim.api.nvim_create_autocmd({ 'FileType' }, {
+  pattern = { 'python' },
+  callback = function()
+    vim.bo.makeprg = 'python3 %'
+  end,
+})
+
 -- Folding expressions
 
 local ignore_filetypes_folding =

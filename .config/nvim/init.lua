@@ -99,6 +99,9 @@ require('lazy').setup({
 -- Load autocommands
 require 'autocmds'
 
+-- Add python format to errorformat
+vim.o.errorformat = vim.o.errorformat .. ',\\ \\ File "%f"\\, line %l\\, %m'
+
 -- Load health
 require 'health'
 
