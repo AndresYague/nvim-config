@@ -4,6 +4,18 @@ return {
     opts = { word_keymap = '<C-E>', WORD_keymap = '<C-S-E>' },
   },
   {
+    'ysmb-wtsg/in-and-out.nvim',
+    keys = {
+      {
+        '<C-O>',
+        function()
+          require('in-and-out').in_and_out()
+        end,
+        mode = 'i',
+      },
+    },
+  },
+  {
     'nvim-treesitter/nvim-treesitter-context',
     opts = {
       separator = '-',
