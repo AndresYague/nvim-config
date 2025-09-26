@@ -169,6 +169,20 @@ return {
           })
           :map '<leader>ut'
 
+        -- Toggle autopairs
+        Snacks.toggle
+          .new({
+            id = 'nvim-autopairs',
+            name = 'Autopairs',
+            get = function()
+              return not require('nvim-autopairs').state.disabled
+            end,
+            set = function()
+              require('nvim-autopairs').toggle()
+            end,
+          })
+          :map '<leader>up'
+
         -- Fully custom toggle
         Snacks.toggle
           .new({

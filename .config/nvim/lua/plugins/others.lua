@@ -7,7 +7,7 @@ return {
     'ysmb-wtsg/in-and-out.nvim',
     keys = {
       {
-        '<C-O>',
+        '<C-I>',
         function()
           require('in-and-out').in_and_out()
         end,
