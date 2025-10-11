@@ -99,6 +99,7 @@ return {
       -- Do not ignore any char for pair creation
       ignored_next_char = '',
     },
+    lazy = false
   },
 
   {

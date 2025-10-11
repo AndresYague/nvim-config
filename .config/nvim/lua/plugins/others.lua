@@ -4,6 +4,13 @@ return {
     opts = { word_keymap = '<C-E>', WORD_keymap = '<C-S-E>' },
   },
   {
+    'AndresYague/print-debug.nvim',
+    opts = {
+      mark = '"',
+      keymap = '<leader>dp',
+    },
+  },
+  {
     'ysmb-wtsg/in-and-out.nvim',
     keys = {
       {
