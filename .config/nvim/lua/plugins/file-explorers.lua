@@ -18,6 +18,10 @@ return {
         ['<leader>h'] = { 'actions.select', opts = { horizontal = true } },
         ['<leader>v'] = { 'actions.select', opts = { vertical = true } },
       },
+      -- Configuration for the floating action confirmation window
+      confirmation = {
+        border = 'rounded',
+      },
     },
   },
 }
