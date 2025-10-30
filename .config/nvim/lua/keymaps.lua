@@ -186,26 +186,17 @@ vim.keymap.set('n', '[t', function()
 end, { desc = 'Previous todo comment' })
 
 -- Git worktree keymaps
-vim.keymap.set(
-  'n',
-  '<leader>wc',
-  ':lua require("git-worktree.wt_pickers").create_worktree_picker()<CR>',
-  { desc = 'Create worktree' }
-)
+vim.keymap.set('n', '<leader>gwc', function()
+  require('git-worktree.wt_pickers').create_worktree_picker()
+end, { desc = 'Create worktree' })
 
-vim.keymap.set(
-  'n',
-  '<leader>wd',
-  ':lua require("git-worktree.wt_pickers").delete_worktree_picker()<CR>',
-  { desc = 'Delete worktree' }
-)
+vim.keymap.set('n', '<leader>gwd', function()
+  require('git-worktree.wt_pickers').delete_worktree_picker()
+end, { desc = 'Delete worktree' })
 
-vim.keymap.set(
-  'n',
-  '<leader>ws',
-  ':lua require("git-worktree.wt_pickers").switch_worktree_picker()<CR>',
-  { desc = 'Switch worktree' }
-)
+vim.keymap.set('n', '<leader>gws', function()
+  require('git-worktree.wt_pickers').switch_worktree_picker()
+end, { desc = 'Switch worktree' })
 
 -- Keymaps for diffmode
 vim.keymap.set(
@@ -269,6 +260,34 @@ local remove_lsp_mapping = function(mode, lhs)
   end
   vim.keymap.del(mode, lhs)
 end
+
+vim.keymap.set('n', '<leader>ja', function()
+  require('harpoon'):list():add()
+end, { desc = 'Add to list' })
+vim.keymap.set('n', '<leader>jq', function()
+  require('harpoon').ui:toggle_quick_menu(require('harpoon'):list())
+end, { desc = 'Harpoon quick menu' })
+
+vim.keymap.set('n', '<leader>j1', function()
+  require('harpoon'):list():select(1)
+end, { desc = 'Select 1' })
+vim.keymap.set('n', '<leader>j2', function()
+  require('harpoon'):list():select(2)
+end, { desc = 'Select 2' })
+vim.keymap.set('n', '<leader>j3', function()
+  require('harpoon'):list():select(3)
+end, { desc = 'Select 3' })
+vim.keymap.set('n', '<leader>j4', function()
+  require('harpoon'):list():select(4)
+end, { desc = 'Select 4' })
+
+-- Toggle previous & next buffers stored within Harpoon list
+vim.keymap.set('n', '<leader>jp', function()
+  require('harpoon'):list():prev()
+end, { desc = 'Previous' })
+vim.keymap.set('n', '<leader>jn', function()
+  require('harpoon'):list():next()
+end, { desc = 'Next' })
 
 remove_lsp_mapping('n', 'gra')
 remove_lsp_mapping('x', 'gra')

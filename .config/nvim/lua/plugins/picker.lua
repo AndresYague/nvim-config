@@ -2,6 +2,7 @@ local devicons = require 'nvim-web-devicons'
 return {
   {
     'folke/snacks.nvim',
+    tag = 'v2.27.0', -- TODO: Remove when fixed (or advance)
     ---@type snacks.Config
     opts = {
       picker = {
@@ -33,7 +34,7 @@ return {
               local file_types = { 'all' }
               for type in string.gmatch(list, '\n%w+:') do
                 type = string.sub(type, 2, string.len(type) - 1)
-                file_types[#file_types+1] = type
+                file_types[#file_types + 1] = type
               end
 
               -- Return the file_types list

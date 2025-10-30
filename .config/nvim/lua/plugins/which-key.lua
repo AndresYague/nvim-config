@@ -44,6 +44,7 @@ return {
         },
         rules = {
           { pattern = 'oil', icon = ' ', color = 'yellow' },
+          { pattern = 'harpoon', icon = '󰻈 ', color = 'orange' },
           { pattern = 'run', icon = ' ', color = 'green' },
         },
       },
@@ -56,6 +57,7 @@ return {
         { '<leader>f', group = 'Find' },
         { '<leader>g', group = 'Git' },
         { '<leader>h', group = 'Git Hunk' },
+        { '<leader>j', group = 'Harpoon' },
         { '<leader>l', group = 'Lazy' },
         { '<leader>q', group = 'Sessions' },
         { '<leader>r', group = 'Run' },

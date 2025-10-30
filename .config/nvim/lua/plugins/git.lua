@@ -43,57 +43,29 @@ return {
         row = 0,
         col = 1,
       },
-      on_attach = function(bufnr)
+      -- NOTE: Not needed bufnr here as keyamp applies to current buffer
+      on_attach = function(--[[ bufnr ]])
         -- Setup keymaps
-        vim.api.nvim_buf_set_keymap(
-          bufnr,
-          'n',
-          '<leader>hb',
-          '<cmd>lua require"gitsigns".blame_line()<CR>',
-          { desc = 'Blame Line' }
-        )
-        vim.api.nvim_buf_set_keymap(
-          bufnr,
-          'n',
-          ']h',
-          '<cmd>lua require"gitsigns".next_hunk()<CR>',
-          { desc = 'Goto next hunk' }
-        )
-        vim.api.nvim_buf_set_keymap(
-          bufnr,
-          'n',
-          '[h',
-          '<cmd>lua require"gitsigns".prev_hunk()<CR>',
-          { desc = 'Goto previous hunk' }
-        )
-        vim.api.nvim_buf_set_keymap(
-          bufnr,
-          'n',
-          '<leader>hp',
-          '<cmd>lua require"gitsigns".preview_hunk_inline()<CR>',
-          { desc = 'Preview Hunk inline' }
-        )
-        vim.api.nvim_buf_set_keymap(
-          bufnr,
-          'n',
-          '<leader>hr',
-          '<cmd>lua require"gitsigns".reset_hunk()<CR>',
-          { desc = 'Reset Hunk' }
-        )
-        vim.api.nvim_buf_set_keymap(
-          bufnr,
-          'n',
-          '<leader>hs',
-          '<cmd>lua require"gitsigns".stage_hunk()<CR>',
-          { desc = 'Stage Hunk' }
-        )
-        vim.api.nvim_buf_set_keymap(
-          bufnr,
-          'n',
-          '<leader>hu',
-          '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
-          { desc = 'Undo Stage Hunk' }
-        )
+        vim.keymap.set('n', '<leader>hb', function()
+          require('gitsigns').blame_line()
+        end, { desc = 'Blame Line' })
+        vim.keymap.set('n', ']h', function()
+          ---@diagnostic disable-next-line: param-type-mismatch -- TODO: Remove when signature fixed
+          require('gitsigns').nav_hunk 'next'
+        end, { desc = 'Goto next hunk' })
+        vim.keymap.set('n', '[h', function()
+          ---@diagnostic disable-next-line: param-type-mismatch -- TODO: Remove when signature fixed
+          require('gitsigns').nav_hunk 'prev'
+        end, { desc = 'Goto previous hunk' })
+        vim.keymap.set('n', '<leader>hp', function()
+          require('gitsigns').preview_hunk_inline()
+        end, { desc = 'Preview Hunk inline' })
+        vim.keymap.set('n', '<leader>hr', function()
+          require('gitsigns').reset_hunk()
+        end, { desc = 'Reset Hunk' })
+        vim.keymap.set('n', '<leader>hs', function()
+          require('gitsigns').stage_hunk()
+        end, { desc = 'Stage/Unstage Hunk' })
       end,
     },
   },
