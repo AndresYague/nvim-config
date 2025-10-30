@@ -2,7 +2,6 @@ local devicons = require 'nvim-web-devicons'
 return {
   {
     'folke/snacks.nvim',
-    tag = 'v2.27.0', -- TODO: Remove when fixed (or advance)
     ---@type snacks.Config
     opts = {
       picker = {

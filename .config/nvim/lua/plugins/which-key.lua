@@ -44,7 +44,7 @@ return {
         },
         rules = {
           { pattern = 'oil', icon = ' ', color = 'yellow' },
-          { pattern = 'harpoon', icon = '󰻈 ', color = 'orange' },
+          { pattern = 'harpoon', icon = '󰛢', color = 'orange' },
           { pattern = 'run', icon = ' ', color = 'green' },
         },
       },
