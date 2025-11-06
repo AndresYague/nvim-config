@@ -6,7 +6,7 @@ return {
       -- Named registers where macros are saved (single lowercase letters only).
       -- The first register is the default register used as macro-slot after
       -- startup.
-      slots = { 'a', 'b' },
+      slots = { 'a', 'b', 'c' },
 
       -- specify one of options:
       -- [static]   -> use static slots, this is default behaviour
@@ -14,7 +14,7 @@ return {
       dynamicSlots = 'static',
 
       mapping = {
-        startStopRecording = 'qq',
+        startStopRecording = 'q',
         playMacro = 'Q',
         switchSlot = '<C-q>',
         editMacro = 'cq',

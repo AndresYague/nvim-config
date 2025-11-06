@@ -46,6 +46,7 @@ return {
           { pattern = 'oil', icon = ' ', color = 'yellow' },
           { pattern = 'harpoon', icon = '󰛢', color = 'orange' },
           { pattern = 'run', icon = ' ', color = 'green' },
+          { pattern = 'lazy', icon = '💤 '},
         },
       },
 
