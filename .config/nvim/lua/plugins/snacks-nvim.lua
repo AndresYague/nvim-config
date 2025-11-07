@@ -28,6 +28,7 @@ return {
           'repeat_statement',
           'if_statement',
           'for_statement',
+          'for_range_loop',
         },
         -- these treesitter fields will be considered as blocks
         field_blocks = {
