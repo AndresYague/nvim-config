@@ -67,10 +67,6 @@ require('lazy').setup({
       },
       indent = { enable = true, disable = { 'ruby' } },
     },
-    -- There are additional nvim-treesitter modules that you can use to interact
-    -- with nvim-treesitter. You should go explore a few and see what interests you:
-    --
-    --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
   },
 }, {
   ui = {
@@ -105,6 +101,19 @@ require 'health'
 
 -- Disable treesitter-context
 require('treesitter-context').disable()
+
+-- Add incremental selection keymaps
+require('nvim-treesitter.configs').setup {
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = '<CR>',
+      scope_incremental = '<CR>',
+      node_incremental = '<TAB>',
+      node_decremental = '<S-TAB>',
+    },
+  },
+}
 
 -- Try to load these colorschemes in order
 local load_colorschemes = { 'nightfox', 'tokyonight' }
