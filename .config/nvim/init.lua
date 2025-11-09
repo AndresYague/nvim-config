@@ -42,16 +42,19 @@ require('lazy').setup({
     build = ':TSUpdate',
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
+    dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects' },
     opts = {
       ensure_installed = {
         'bash',
         'c',
+        'cpp',
         'diff',
         'html',
         'lua',
         'luadoc',
         'markdown',
         'markdown_inline',
+        'python',
         'query',
         'vim',
         'vimdoc',
@@ -101,19 +104,6 @@ require 'health'
 
 -- Disable treesitter-context
 require('treesitter-context').disable()
-
--- Add incremental selection keymaps
-require('nvim-treesitter.configs').setup {
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = '<CR>',
-      scope_incremental = '<CR>',
-      node_incremental = '<TAB>',
-      node_decremental = '<S-TAB>',
-    },
-  },
-}
 
 -- Try to load these colorschemes in order
 local load_colorschemes = { 'nightfox', 'tokyonight' }

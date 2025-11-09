@@ -16,18 +16,18 @@ return {
       treesitter = {
         blocks = {
           enabled = true,
-          'function_declaration',
-          'function_definition',
-          'method_declaration',
-          'method_definition',
           'class_declaration',
           'class_definition',
           'do_statement',
-          'while_statement',
-          'repeat_statement',
-          'if_statement',
-          'for_statement',
           'for_range_loop',
+          'for_statement',
+          'function_declaration',
+          'function_definition',
+          'if_statement',
+          'method_declaration',
+          'method_definition',
+          'repeat_statement',
+          'while_statement',
         },
         -- these treesitter fields will be considered as blocks
         field_blocks = {
