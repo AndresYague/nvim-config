@@ -31,4 +31,14 @@ return {
       options = { numbers = 'none' },
     },
   },
+  {
+    'norcalli/nvim-colorizer.lua',
+    config = function()
+      -- Attaches to every FileType mode
+      require('colorizer').setup({ '*' }, {
+        RRGGBBAA = true, -- #RRGGBBAA hex codes
+        css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+      })
+    end,
+  },
 }
