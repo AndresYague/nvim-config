@@ -104,19 +104,15 @@ return {
                 .. require('recorder').recordingStatus()
             end,
           },
-        },
-        lualine_x = {
-          {
-            require('noice').api.status.command.get,
-            cond = require('noice').api.status.command.has,
-            color = { fg = '#ff9e64' },
-          },
           -- NOTE: Uncomment if we want to see "@recording"
           -- {
           --   require('noice').api.status.mode.get,
           --   cond = require('noice').api.status.mode.has,
           --   color = { fg = '#ff9e64' },
           -- },
+        },
+        lualine_x = {
+          '%S', -- This can be used because vim.o.showcmdloc = 'statusline' is in the opts
           'encoding',
           'fileformat',
           'filetype',
