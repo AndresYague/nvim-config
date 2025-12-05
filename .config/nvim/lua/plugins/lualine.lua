@@ -119,7 +119,6 @@ return {
           -- },
           'encoding',
           'fileformat',
-          'hostname',
           'filetype',
         },
         lualine_y = { 'selectioncount', 'progress', 'location' },
