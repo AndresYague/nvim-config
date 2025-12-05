@@ -84,18 +84,18 @@ return {
 
               -- Retrieve and return mode
               return mode_names[vim.api.nvim_get_mode().mode]
-
             end,
           },
         },
         lualine_b = {
-          'branch',
-          'diff',
+          -- 'filename', -- TODO: Remove eventually
+          'windows',
           { 'lsp_status', icon = '' },
           'diagnostics',
         },
         lualine_c = {
-          'filename',
+          'branch',
+          'diff',
           'searchcount',
           {
             -- Recorder
@@ -106,8 +106,20 @@ return {
           },
         },
         lualine_x = {
+          {
+            require('noice').api.status.command.get,
+            cond = require('noice').api.status.command.has,
+            color = { fg = '#ff9e64' },
+          },
+          -- NOTE: Uncomment if we want to see "@recording"
+          -- {
+          --   require('noice').api.status.mode.get,
+          --   cond = require('noice').api.status.mode.has,
+          --   color = { fg = '#ff9e64' },
+          -- },
           'encoding',
           'fileformat',
+          'hostname',
           'filetype',
         },
         lualine_y = { 'selectioncount', 'progress', 'location' },

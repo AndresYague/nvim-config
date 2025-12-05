@@ -29,6 +29,9 @@ return {
         },
       },
       -- you can enable a preset for easier configuration
+      -- cmdline = {
+      --   view = 'cmdline',
+      -- },
       presets = {
         bottom_search = true, -- use a classic bottom cmdline for search
         command_palette = true, -- position the cmdline and popupmenu together
