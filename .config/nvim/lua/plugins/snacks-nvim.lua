@@ -183,7 +183,7 @@ return {
           })
           :map '<leader>up'
 
-        -- Fully custom toggle
+        -- Fully custom toggle for visual_bold
         Snacks.toggle
           .new({
             id = 'visual_bold',
@@ -205,6 +205,20 @@ return {
             end,
           })
           :map '<leader>uv'
+
+        -- Fully custom toggle for colorizer
+        Snacks.toggle
+          .new({
+            id = 'colorizer',
+            name = 'Colorizer',
+            get = function()
+              return require('colorizer').is_buffer_attached(0)
+            end,
+            set = function()
+              vim.cmd 'ColorizerToggle'
+            end,
+          })
+          :map '<leader>uz'
       end,
     })
   end,

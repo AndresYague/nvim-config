@@ -28,9 +28,9 @@ return {
           enabled = false, -- Remove the huge signature help from noice
         },
       },
-      -- cmdline = {
-      --   view = 'cmdline',
-      -- },
+      cmdline = {
+        view = 'cmdline',
+      },
       -- you can enable a preset for easier configuration
       presets = {
         bottom_search = false, -- use a classic bottom cmdline for search
