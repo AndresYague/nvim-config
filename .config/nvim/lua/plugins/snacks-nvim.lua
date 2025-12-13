@@ -183,6 +183,26 @@ return {
           })
           :map '<leader>up'
 
+        -- Toggle Markview
+        Snacks.toggle
+          .new({
+            id = 'markview',
+            name = 'Markview',
+            get = function()
+              local buffer = vim.api.nvim_get_current_buf()
+              if not require('markview.state').buf_attached(buffer) then
+                require('markview.commands').attach(buffer)
+                require('markview.commands').disable(buffer)
+              end
+              return require('markview.state').get_buffer_state(buffer, false).enable
+            end,
+            set = function()
+              local buffer = vim.api.nvim_get_current_buf()
+              require('markview.commands').toggle(buffer)
+            end,
+          })
+          :map '<leader>um'
+
         -- Fully custom toggle for visual_bold
         Snacks.toggle
           .new({

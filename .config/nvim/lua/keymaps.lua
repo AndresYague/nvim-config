@@ -109,18 +109,6 @@ vim.keymap.set('i', '<M-k>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move Up' })
 -- Bufferline keymaps
 vim.keymap.set(
   'n',
-  '<S-h>',
-  vim.cmd.BufferLineCyclePrev,
-  { desc = 'Go to left buffer' }
-)
-vim.keymap.set(
-  'n',
-  '<S-l>',
-  vim.cmd.BufferLineCycleNext,
-  { desc = 'Go to right buffer' }
-)
-vim.keymap.set(
-  'n',
   '<leader>bg',
   vim.cmd.BufferLinePick,
   { desc = 'Go to buffer' }
