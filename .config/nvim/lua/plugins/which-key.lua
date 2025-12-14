@@ -43,10 +43,11 @@ return {
           F12 = '<F12>',
         },
         rules = {
-          { pattern = 'oil', icon = ' ', color = 'yellow' },
           { pattern = 'harpoon', icon = '󰛢', color = 'orange' },
+          { pattern = 'lazy', icon = '💤 ' },
+          { pattern = 'nabla', icon = '󰿈' },
+          { pattern = 'oil', icon = ' ', color = 'yellow' },
           { pattern = 'run', icon = ' ', color = 'green' },
-          { pattern = 'lazy', icon = '💤 '},
         },
       },
 

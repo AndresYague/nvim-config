@@ -49,6 +49,7 @@ require('lazy').setup({
         'c',
         'cpp',
         'diff',
+        'fortran',
         'html',
         'lua',
         'luadoc',
@@ -56,8 +57,10 @@ require('lazy').setup({
         'markdown_inline',
         'python',
         'query',
+        'latex',
         'vim',
         'vimdoc',
+        'yaml',
       },
       -- Autoinstall languages that are not installed
       auto_install = true,
@@ -96,14 +99,18 @@ require('lazy').setup({
 -- Load autocommands
 require 'autocmds'
 
--- Add python format to errorformat
-vim.o.errorformat = vim.o.errorformat .. ',\\ \\ File "%f"\\, line %l\\, %m'
-
 -- Load health
 require 'health'
 
 -- Disable treesitter-context
-require('treesitter-context').disable()
+if package.loaded['treesitter-context'] then
+  require('treesitter-context').disable()
+end
+
+-- Load language specific options and autocmds
+require 'languages.cpp'
+require 'languages.lua'
+require 'languages.python'
 
 -- Try to load these colorschemes in order
 local load_colorschemes = { 'nightfox', 'tokyonight' }
@@ -127,7 +134,7 @@ end
 if found then
   vim.cmd.colorscheme(load_colorschemes[found])
 else
-  vim.cmd.colorscheme 'default'
+  vim.cmd.colorscheme 'slate'
 end
 
 -- The modeline

@@ -11,31 +11,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
--- Change these options for cpp and lua
-vim.api.nvim_create_autocmd({ 'FileType' }, {
-  pattern = { 'cpp', 'lua' },
-  callback = function()
-    vim.bo.tabstop = 2
-    vim.bo.shiftwidth = 2
-  end,
-})
-
--- Make python add comments on new line
-vim.api.nvim_create_autocmd({ 'FileType' }, {
-  pattern = { 'python' },
-  callback = function()
-    vim.bo.formatoptions = 'jcroql'
-  end,
-})
-
--- Change makeprg for python files
-vim.api.nvim_create_autocmd({ 'FileType' }, {
-  pattern = { 'python' },
-  callback = function()
-    vim.bo.makeprg = 'python3 %'
-  end,
-})
-
 -- Folding expressions
 
 local ignore_filetypes_folding =

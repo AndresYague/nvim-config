@@ -203,6 +203,34 @@ return {
           })
           :map '<leader>um'
 
+        -- Toggle Nabla
+        Snacks.toggle
+          .new({
+            id = 'nabla',
+            name = 'Nabla',
+            get = function()
+              return require('nabla').is_virt_enabled()
+            end,
+            set = function()
+              require('nabla').toggle_virt()
+            end,
+          })
+          :map '<leader>uN'
+
+        -- Fully custom toggle for colorizer
+        Snacks.toggle
+          .new({
+            id = 'colorizer',
+            name = 'Colorizer',
+            get = function()
+              return require('colorizer').is_buffer_attached(0)
+            end,
+            set = function()
+              vim.cmd 'ColorizerToggle'
+            end,
+          })
+          :map '<leader>uz'
+
         -- Fully custom toggle for visual_bold
         Snacks.toggle
           .new({
@@ -225,20 +253,6 @@ return {
             end,
           })
           :map '<leader>uv'
-
-        -- Fully custom toggle for colorizer
-        Snacks.toggle
-          .new({
-            id = 'colorizer',
-            name = 'Colorizer',
-            get = function()
-              return require('colorizer').is_buffer_attached(0)
-            end,
-            set = function()
-              vim.cmd 'ColorizerToggle'
-            end,
-          })
-          :map '<leader>uz'
       end,
     })
   end,

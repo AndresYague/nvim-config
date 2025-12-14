@@ -277,6 +277,14 @@ vim.keymap.set('n', '<leader>jn', function()
   require('harpoon'):list():next()
 end, { desc = 'Next' })
 
+-- Nabla
+vim.keymap.set(
+  'n',
+  '<leader>p',
+  '<cmd>lua require("nabla").popup()<CR>',
+  { desc = 'Nabla Pop Up' }
+)
+
 remove_lsp_mapping('n', 'gra')
 remove_lsp_mapping('x', 'gra')
 remove_lsp_mapping('n', 'gri')
