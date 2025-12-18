@@ -81,6 +81,7 @@ return {
               mode_names['CTRL-S'] = 'SELECT'
               mode_names['r?'] = 'CONFIRM'
               mode_names['!'] = 'EXTERNAL'
+              mode_names['\22'] = 'V-BLOCK'
 
               -- Retrieve and return mode
               return mode_names[vim.api.nvim_get_mode().mode]
