@@ -7,7 +7,10 @@ return {
       {
         '<leader>cf',
         function()
-          require('conform').format { async = true, lsp_format = 'fallback' }
+          require('conform').format {
+            async = true,
+            lsp_format = 'fallback',
+          }
         end,
         mode = '',
         desc = 'Format buffer',
@@ -57,7 +60,7 @@ return {
     --- @type blink.cmp.Config
     opts = {
       keymap = {
-        preset = 'super-tab',
+        preset = 'default',
       },
 
       appearance = {
