@@ -32,48 +32,8 @@ rtp:prepend(lazypath)
 require 'keymaps'
 
 require('lazy').setup({
-
   -- Import all plugins inside of the "plugins" directory
   { import = 'plugins' },
-
-  -- Add treesitter
-  { -- Highlight, edit, and navigate code
-    'nvim-treesitter/nvim-treesitter',
-    build = ':TSUpdate',
-    main = 'nvim-treesitter.configs', -- Sets main module to use for opts
-    -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
-    dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects' },
-    opts = {
-      ensure_installed = {
-        'bash',
-        'c',
-        'cpp',
-        'diff',
-        'fortran',
-        'html',
-        'lua',
-        'luadoc',
-        'markdown',
-        'markdown_inline',
-        'python',
-        'query',
-        'latex',
-        'vim',
-        'vimdoc',
-        'yaml',
-      },
-      -- Autoinstall languages that are not installed
-      auto_install = true,
-      highlight = {
-        enable = true,
-        -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-        --  If you are experiencing weird indenting issues, add the language to
-        --  the list of additional_vim_regex_highlighting and disabled languages for indent.
-        additional_vim_regex_highlighting = { 'ruby' },
-      },
-      indent = { enable = true, disable = { 'ruby' } },
-    },
-  },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the

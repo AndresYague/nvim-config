@@ -107,18 +107,18 @@ vim.keymap.set('i', '<M-j>', '<esc><cmd>m .+1<cr>==gi', { desc = 'Move Down' })
 vim.keymap.set('i', '<M-k>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move Up' })
 
 -- Bufferline keymaps
-vim.keymap.set(
-  'n',
-  '<S-h>',
-  vim.cmd.BufferLineCyclePrev,
-  { desc = 'Go to left buffer' }
-)
-vim.keymap.set(
-  'n',
-  '<S-l>',
-  vim.cmd.BufferLineCycleNext,
-  { desc = 'Go to right buffer' }
-)
+-- vim.keymap.set(
+--   'n',
+--   '<S-h>',
+--   vim.cmd.BufferLineCyclePrev,
+--   { desc = 'Go to left buffer' }
+-- )
+-- vim.keymap.set(
+--   'n',
+--   '<S-l>',
+--   vim.cmd.BufferLineCycleNext,
+--   { desc = 'Go to right buffer' }
+-- )
 vim.keymap.set(
   'n',
   '<leader>bg',
@@ -288,14 +288,6 @@ end, { desc = 'Previous' })
 vim.keymap.set('n', '<leader>jn', function()
   require('harpoon'):list():next()
 end, { desc = 'Next' })
-
--- Nabla
-vim.keymap.set(
-  'n',
-  '<leader>p',
-  '<cmd>lua require("nabla").popup()<CR>',
-  { desc = 'Nabla Pop Up' }
-)
 
 remove_lsp_mapping('n', 'gra')
 remove_lsp_mapping('x', 'gra')

@@ -20,12 +20,6 @@ return {
     end,
   },
   {
-    'nvim-treesitter/nvim-treesitter-context',
-    opts = {
-      separator = '-',
-    },
-  },
-  {
     'folke/persistence.nvim',
     event = 'BufReadPre', -- this will only start session saving when an actual file was opened
     opts = {

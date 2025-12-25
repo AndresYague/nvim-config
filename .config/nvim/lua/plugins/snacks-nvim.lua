@@ -6,11 +6,11 @@ return {
   opts = {
     bigfile = { enabled = true }, -- Deactivates things for files too large
     dashboard = { enabled = true }, -- Initial neovim dashboard
+    explorer = { enabled = true }, -- File explorer
+    image = { enabled = true }, -- Render images
     indent = { enabled = true, chunk = { enabled = true } }, -- Indent lines
+    quickfile = { enabled = true }, -- Load file as fast as possible
     rename = { enabled = true }, -- Rename files
-    scroll = { enabled = true }, -- Smooth scrolling
-    statuscolumn = { enabled = true }, -- Status column on its own
-    scratch = { enabled = true }, -- Scratch space
     scope = {
       enabled = true,
       treesitter = {
@@ -35,10 +35,13 @@ return {
         },
       },
     }, -- Scope jumps
-    toggle = { enabled = true }, -- Toggle things
     lazygit = { enabled = true }, -- Lazygit
-    words = { enabled = true }, -- LSP help for references
     notifier = { enabled = true }, -- Better notifications
+    scratch = { enabled = true }, -- Scratch space
+    scroll = { enabled = true }, -- Smooth scrolling
+    statuscolumn = { enabled = true }, -- Status column on its own
+    toggle = { enabled = true }, -- Toggle things
+    words = { enabled = true }, -- LSP help for references
     zen = { enabled = true }, -- Zen/Zoom mode
   },
   keys = {
@@ -138,12 +141,6 @@ return {
           )
           :map '<leader>uc'
         Snacks.toggle.treesitter():map '<leader>uT'
-        Snacks.toggle
-          .option(
-            'background',
-            { off = 'light', on = 'dark', name = 'Dark Background' }
-          )
-          :map '<leader>ub'
         Snacks.toggle.inlay_hints():map '<leader>uh'
         Snacks.toggle.indent():map '<leader>ug'
         Snacks.toggle.dim():map '<leader>uD'
@@ -202,20 +199,6 @@ return {
             end,
           })
           :map '<leader>um'
-
-        -- Toggle Nabla
-        Snacks.toggle
-          .new({
-            id = 'nabla',
-            name = 'Nabla',
-            get = function()
-              return require('nabla').is_virt_enabled()
-            end,
-            set = function()
-              require('nabla').toggle_virt()
-            end,
-          })
-          :map '<leader>uN'
 
         -- Fully custom toggle for colorizer
         Snacks.toggle
