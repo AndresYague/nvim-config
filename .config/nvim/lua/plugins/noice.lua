@@ -4,14 +4,15 @@ return {
     event = 'VeryLazy',
     opts = {
       routes = {
-        -- TODO: Temporary fix for external command show
+        -- HACK: Temporary fix for external command show
         {
-          filter = { event = 'msg_show', kind = { 'shell_out', 'shell_err' } },
           view = 'notify',
-          opts = {
-            level = 'info',
-            skip = false,
-            replace = false,
+          filter = {
+            event = 'msg_show',
+            kind = {
+              'shell_out',
+              'shell_err',
+            },
           },
         },
       },
