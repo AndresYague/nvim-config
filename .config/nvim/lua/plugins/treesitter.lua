@@ -2,6 +2,7 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     lazy = false,
+    -- TODO:
     -- Pin to version that works with textobjects and neorg, this version
     -- uses "nvim-treesitter.configs" instead of "nvim-treesitter.config"
     version = '0.10.0',
@@ -12,9 +13,11 @@ return {
         ensure_installed = {
           'bash',
           'c',
+          'comment',
           'cpp',
           'css',
           'diff',
+          'fish',
           'fortran',
           'html',
           'javascript',
