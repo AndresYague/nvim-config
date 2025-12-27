@@ -11,34 +11,6 @@ vim.keymap.set(
 
 -- Custom keybindings
 
--- Lazy
-vim.keymap.set('n', '<leader>l', vim.cmd.Lazy, { desc = 'Lazy' })
-
--- Persistence
-
--- Close current session
-vim.keymap.set('n', '<leader>qq', vim.cmd.qa, { desc = 'Quit current session' })
-
--- load the session for the current directory
-vim.keymap.set('n', '<leader>qs', function()
-  require('persistence').load()
-end, { desc = 'Load session in the current directory' })
-
--- select a session to load
-vim.keymap.set('n', '<leader>qS', function()
-  require('persistence').select()
-end, { desc = 'Select session to load' })
-
--- load the last session
-vim.keymap.set('n', '<leader>ql', function()
-  require('persistence').load { last = true }
-end, { desc = 'Load last session' })
-
--- stop Persistence => session won't be saved on exit
-vim.keymap.set('n', '<leader>qd', function()
-  require('persistence').stop()
-end, { desc = 'Do not save session' })
-
 -- Terminal keymaps
 vim.keymap.set(
   't',
@@ -76,13 +48,10 @@ vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Go to upper window' })
 vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Go to lower window' })
 vim.keymap.set('n', '<C-h>', '<C-w>h', { desc = 'Go to left window' })
 vim.keymap.set('n', '<C-l>', '<C-w>l', { desc = 'Go to right window' })
-
--- Window keymaps
 vim.keymap.set('n', '<C-S-k>', '<C-w>+', { desc = 'Resize window up' })
 vim.keymap.set('n', '<C-S-j>', '<C-w>-', { desc = 'Resize window down' })
 vim.keymap.set('n', '<C-S-h>', '<C-w><', { desc = 'Resize window left' })
 vim.keymap.set('n', '<C-S-l>', '<C-w>>', { desc = 'Resize window right' })
-
 vim.keymap.set(
   { 'n', 'i' },
   '<C-C>',
@@ -90,65 +59,7 @@ vim.keymap.set(
   { desc = 'Close floating window' }
 )
 
--- Move line up and down
-vim.keymap.set(
-  'n',
-  '<M-j>',
-  "<cmd>execute 'move .+' . v:count1<cr>==",
-  { desc = 'Move Down' }
-)
-vim.keymap.set(
-  'n',
-  '<M-k>',
-  "<cmd>execute 'move .-' . (v:count1 + 1)<cr>==",
-  { desc = 'Move Up' }
-)
-vim.keymap.set('i', '<M-j>', '<esc><cmd>m .+1<cr>==gi', { desc = 'Move Down' })
-vim.keymap.set('i', '<M-k>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move Up' })
-
--- Bufferline keymaps
--- vim.keymap.set(
---   'n',
---   '<S-h>',
---   vim.cmd.BufferLineCyclePrev,
---   { desc = 'Go to left buffer' }
--- )
--- vim.keymap.set(
---   'n',
---   '<S-l>',
---   vim.cmd.BufferLineCycleNext,
---   { desc = 'Go to right buffer' }
--- )
-vim.keymap.set(
-  'n',
-  '<leader>bg',
-  vim.cmd.BufferLinePick,
-  { desc = 'Go to buffer' }
-)
-vim.keymap.set(
-  'n',
-  '<leader>bD',
-  vim.cmd.BufferLinePickClose,
-  { desc = 'Select delete buffer' }
-)
-vim.keymap.set(
-  'n',
-  '<leader>bp',
-  vim.cmd.BufferLineTogglePin,
-  { desc = 'Pin buffer' }
-)
-vim.keymap.set('n', '<leader>bP', function()
-  vim.cmd.BufferLineGroupClose { args = { 'ungrouped' } }
-end, { desc = 'Delete unpinned buffers' })
-vim.keymap.set('n', '<leader>bd', vim.cmd.bd, { desc = 'Buffer delete' })
-vim.keymap.set(
-  'n',
-  '<leader>bo',
-  vim.cmd.BufferLineCloseOthers,
-  { desc = 'Buffer delete others' }
-)
-
--- Window keymaps
+-- Window split keymaps
 vim.keymap.set(
   'n',
   '<leader>|',
@@ -174,29 +85,24 @@ vim.keymap.set('n', '<leader>th', function()
   vim.cmd.split { args = { 'term://' .. vim.o.shell } }
 end, { desc = 'Open terminal horizontally (cwd)' })
 
+-- Move line up and down
+vim.keymap.set(
+  'n',
+  '<M-j>',
+  "<cmd>execute 'move .+' . v:count1<cr>==",
+  { desc = 'Move Down' }
+)
+vim.keymap.set(
+  'n',
+  '<M-k>',
+  "<cmd>execute 'move .-' . (v:count1 + 1)<cr>==",
+  { desc = 'Move Up' }
+)
+vim.keymap.set('i', '<M-j>', '<esc><cmd>m .+1<cr>==gi', { desc = 'Move Down' })
+vim.keymap.set('i', '<M-k>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move Up' })
+
 -- Loadview
 vim.keymap.set('n', 'zl', vim.cmd.loadview, { desc = 'Loadview' })
-
--- These are the "TODO" search keymaps
-vim.keymap.set('n', ']t', function()
-  require('todo-comments').jump_next()
-end, { desc = 'Next todo comment' })
-vim.keymap.set('n', '[t', function()
-  require('todo-comments').jump_prev()
-end, { desc = 'Previous todo comment' })
-
--- Git worktree keymaps
-vim.keymap.set('n', '<leader>gwc', function()
-  require('git-worktree.wt_pickers').create_worktree_picker()
-end, { desc = 'Create worktree' })
-
-vim.keymap.set('n', '<leader>gwd', function()
-  require('git-worktree.wt_pickers').delete_worktree_picker()
-end, { desc = 'Delete worktree' })
-
-vim.keymap.set('n', '<leader>gws', function()
-  require('git-worktree.wt_pickers').switch_worktree_picker()
-end, { desc = 'Switch worktree' })
 
 -- Keymaps for diffmode
 vim.keymap.set(
@@ -244,14 +150,6 @@ vim.keymap.set('n', '<leader>rt', function()
   vim.cmd.PlenaryBustedFile '%'
 end, { desc = 'Run Plenary tests' })
 
--- Open oil
-vim.keymap.set('n', '<leader>o', vim.cmd.Oil, { desc = 'Oil' })
-
--- Jump to previous context
-vim.keymap.set('n', '[u', function()
-  require('treesitter-context').go_to_context(vim.v.count1)
-end, { silent = true, desc = 'Jump to top of context' })
-
 -- Remove undesired mappings from LSP
 local remove_lsp_mapping = function(mode, lhs)
   local map_desc = vim.fn.maparg(lhs, mode, false, true).desc
@@ -260,34 +158,6 @@ local remove_lsp_mapping = function(mode, lhs)
   end
   vim.keymap.del(mode, lhs)
 end
-
-vim.keymap.set('n', '<leader>ja', function()
-  require('harpoon'):list():add()
-end, { desc = 'Add to list' })
-vim.keymap.set('n', '<leader>jq', function()
-  require('harpoon').ui:toggle_quick_menu(require('harpoon'):list())
-end, { desc = 'Harpoon quick menu' })
-
-vim.keymap.set('n', '<leader>j1', function()
-  require('harpoon'):list():select(1)
-end, { desc = 'Select 1' })
-vim.keymap.set('n', '<leader>j2', function()
-  require('harpoon'):list():select(2)
-end, { desc = 'Select 2' })
-vim.keymap.set('n', '<leader>j3', function()
-  require('harpoon'):list():select(3)
-end, { desc = 'Select 3' })
-vim.keymap.set('n', '<leader>j4', function()
-  require('harpoon'):list():select(4)
-end, { desc = 'Select 4' })
-
--- Toggle previous & next buffers stored within Harpoon list
-vim.keymap.set('n', '<leader>jp', function()
-  require('harpoon'):list():prev()
-end, { desc = 'Previous' })
-vim.keymap.set('n', '<leader>jn', function()
-  require('harpoon'):list():next()
-end, { desc = 'Next' })
 
 remove_lsp_mapping('n', 'gra')
 remove_lsp_mapping('x', 'gra')
