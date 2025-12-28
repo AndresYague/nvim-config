@@ -45,7 +45,6 @@ return {
         rules = {
           { pattern = 'harpoon', icon = '󰛢', color = 'orange' },
           { pattern = 'lazy', icon = '💤 ' },
-          { pattern = 'nabla', icon = '󰿈' },
           { pattern = 'oil', icon = ' ', color = 'yellow' },
           { pattern = 'run', icon = ' ', color = 'green' },
         },
@@ -66,7 +65,7 @@ return {
         { '<leader>s', group = 'Search' },
         { '<leader>t', group = 'Terminal' },
         { '<leader>u', group = 'UI' },
-        { '<leader>w', group = 'Git worktree' },
+        { '<leader>gw', group = 'Git worktree' },
       },
     },
   },
