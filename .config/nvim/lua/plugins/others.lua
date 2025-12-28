@@ -1,15 +1,8 @@
 require('persistence').setup {
   event = 'BufReadPre', -- this will only start session saving when an actual file was opened
 }
-require('move-enclosing').setup {
-  { word_keymap = '<C-E>', WORD_keymap = '<C-S-E>' },
-}
-require('print-debug').setup {
-  {
-    mark = '"',
-    keymap = '<leader>dp',
-  },
-}
+require('move-enclosing').setup {}
+require('print-debug').setup {}
 require('nvim-surround').setup()
 require('bufferline').setup {
   options = { numbers = 'none' },

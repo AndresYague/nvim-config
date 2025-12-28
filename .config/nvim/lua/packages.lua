@@ -106,6 +106,9 @@ vim.pack.add {
   git_str .. 'nvim-treesitter/nvim-treesitter-context',
   git_str .. 'nvim-treesitter/nvim-treesitter-textobjects',
 
+  -- vimdocs
+  git_str .. 'ibhagwan/ts-vimdoc.nvim',
+
   -- which-key
   git_str .. 'folke/which-key.nvim',
 }
