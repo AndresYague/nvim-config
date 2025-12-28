@@ -14,7 +14,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- Folding expressions
 
 local ignore_filetypes_folding =
-  { 'gitcommit', 'gitrebase', 'svg', 'hgcommit', 'fugitive' }
+{ 'gitcommit', 'gitrebase', 'svg', 'hgcommit', 'fugitive' }
 
 vim.api.nvim_create_autocmd({ 'FileType' }, {
   callback = function()

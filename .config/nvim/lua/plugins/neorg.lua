@@ -2,8 +2,10 @@ require('neorg').setup {
   load = {
     ['core.defaults'] = {},
     ['core.latex.renderer'] = {
-      conceal = true,
-      renderer = 'core.integrations.image',
+      config = {
+        conceal = true,
+        renderer = 'core.integrations.image',
+      },
     },
     ['core.concealer'] = {
       config = {

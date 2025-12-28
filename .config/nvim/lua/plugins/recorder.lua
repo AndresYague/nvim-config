@@ -2,7 +2,7 @@ require('recorder').setup {
   -- Named registers where macros are saved (single lowercase letters only).
   -- The first register is the default register used as macro-slot after
   -- startup.
-  slots = { 'a', 'b', 'c' },
+  slots = { 'a', 'b' },
 
   -- specify one of options:
   -- [static]   -> use static slots, this is default behaviour
@@ -24,7 +24,7 @@ require('recorder').setup {
   enableBreakPointMap = false,
 
   -- Clears all macros-slots on startup.
-  clear = false,
+  clear = true,
 
   -- Log level used for non-critical notifications; mostly relevant for nvim-notify.
   -- (Note that by default, nvim-notify does not show the levels `trace` & `debug`.)
@@ -43,9 +43,9 @@ require('recorder').setup {
   -- temporarily changes changes some settings for the duration of the macro.
   performanceOpts = {
     countThreshold = 100,
-    lazyredraw = true, -- enable lazyredraw (see `:h lazyredraw`)
+    lazyredraw = true,         -- enable lazyredraw (see `:h lazyredraw`)
     noSystemClipboard = false, -- remove `+`/`*` from clipboard option
-    autocmdEventsIgnore = { -- temporarily ignore these autocmd events
+    autocmdEventsIgnore = {    -- temporarily ignore these autocmd events
       'TextChangedI',
       'TextChanged',
       'InsertLeave',

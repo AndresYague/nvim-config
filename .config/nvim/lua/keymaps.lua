@@ -1,6 +1,17 @@
 -- Clear highlights on search when pressing <Esc> in normal mode
 vim.keymap.set('n', '<Esc>', vim.cmd.nohlsearch)
 
+-- Execute
+vim.keymap.set('n', '<leader>x', ':.lua<CR>', { desc = 'Execute lua line' })
+
+-- Update plugins
+vim.keymap.set(
+  'n',
+  '<leader>p',
+  ':lua vim.pack.update()<CR>',
+  { desc = 'Update plugins' }
+)
+
 -- Diagnostic keymaps
 vim.keymap.set(
   'n',
@@ -149,22 +160,3 @@ vim.keymap.set('n', '<leader>cc', 'i<C-R>=', { desc = 'Calculator insert' })
 vim.keymap.set('n', '<leader>rt', function()
   vim.cmd.PlenaryBustedFile '%'
 end, { desc = 'Run Plenary tests' })
-
--- Remove undesired mappings from LSP
-local remove_lsp_mapping = function(mode, lhs)
-  local map_desc = vim.fn.maparg(lhs, mode, false, true).desc
-  if map_desc == nil or string.find(map_desc, 'vim%.lsp') == nil then
-    return
-  end
-  vim.keymap.del(mode, lhs)
-end
-
-remove_lsp_mapping('n', 'gra')
-remove_lsp_mapping('x', 'gra')
-remove_lsp_mapping('n', 'gri')
-remove_lsp_mapping('n', 'grr')
-remove_lsp_mapping('n', 'grn')
-remove_lsp_mapping('n', 'grt')
-remove_lsp_mapping('n', 'gd')
-remove_lsp_mapping('n', 'gD')
-remove_lsp_mapping('n', 'gO')

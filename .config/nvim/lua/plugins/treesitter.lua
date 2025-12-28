@@ -1,5 +1,5 @@
 require('treesitter-context').setup {
-  enable = false,
+  enable = false, -- Start with context disabled
   separator = '=',
   max_lines = '30%',
 }

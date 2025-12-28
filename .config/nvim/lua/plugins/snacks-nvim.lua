@@ -3,21 +3,52 @@ local devicons = require 'nvim-web-devicons'
 
 Snacks.setup {
   bigfile = { enabled = true }, -- Deactivates things for files too large
-  dashboard = { enabled = true,
+  dashboard = {
+    enabled = true,
     preset = {
-    keys = {
-      { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
-      { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
-      { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
-      { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
-      { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
-      { icon = " ", key = "s", desc = "Restore Session", action = "<leader>qs" },
-      { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+      keys = {
+        {
+          icon = ' ',
+          key = 'f',
+          desc = 'Find File',
+          action = ":lua Snacks.dashboard.pick('files')",
+        },
+        {
+          icon = ' ',
+          key = 'n',
+          desc = 'New File',
+          action = ':ene | startinsert',
+        },
+        {
+          icon = ' ',
+          key = 'g',
+          desc = 'Find Text',
+          action = ":lua Snacks.dashboard.pick('live_grep')",
+        },
+        {
+          icon = ' ',
+          key = 'r',
+          desc = 'Recent Files',
+          action = ":lua Snacks.dashboard.pick('oldfiles')",
+        },
+        {
+          icon = ' ',
+          key = 'c',
+          desc = 'Config',
+          action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
+        },
+        {
+          icon = ' ',
+          key = 's',
+          desc = 'Restore Session',
+          action = '<leader>qs',
+        },
+        { icon = ' ', key = 'q', desc = 'Quit', action = ':qa' },
+      },
     },
-  },
     sections = {
-      { section = "header" },
-      { section = "keys", gap = 1, padding = 1 },
+      { section = 'header' },
+      { section = 'keys', gap = 1, padding = 1 },
     },
   }, -- Initial neovim dashboard
   explorer = { enabled = true }, -- File explorer
@@ -57,7 +88,6 @@ Snacks.setup {
   toggle = { enabled = true }, -- Toggle things
   words = { enabled = true }, -- LSP help for references
   zen = { enabled = true }, -- Zen/Zoom mode
-  -- FIXME: Does not work yet
   picker = {
     enabled = true,
     win = {

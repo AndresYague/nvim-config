@@ -85,7 +85,6 @@ require('lualine').setup {
       },
     },
     lualine_b = {
-      -- 'filename', -- TODO: Remove eventually
       'windows',
       { 'lsp_status', icon = '' },
       'diagnostics',
@@ -98,7 +97,7 @@ require('lualine').setup {
         -- Recorder
         function()
           return require('recorder').displaySlots()
-            .. require('recorder').recordingStatus()
+              .. require('recorder').recordingStatus()
         end,
       },
       -- NOTE: Uncomment if we want to see "@recording"
