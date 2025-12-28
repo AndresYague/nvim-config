@@ -53,12 +53,12 @@ vim.pack.add {
   },
 
   -- lsp
-  git_str .. 'folke/lazydev.nvim',
-  git_str .. 'neovim/nvim-lspconfig',
-  git_str .. 'mason-org/mason.nvim',
-  git_str .. 'mason-org/mason-lspconfig.nvim',
   git_str .. 'WhoIsSethDaniel/mason-tool-installer.nvim',
+  git_str .. 'folke/lazydev.nvim',
   git_str .. 'j-hui/fidget.nvim',
+  git_str .. 'mason-org/mason-lspconfig.nvim',
+  git_str .. 'mason-org/mason.nvim',
+  git_str .. 'neovim/nvim-lspconfig',
 
   -- lualine
   git_str .. 'nvim-lualine/lualine.nvim',
