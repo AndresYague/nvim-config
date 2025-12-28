@@ -1,10 +1,8 @@
 require('treesitter-context').setup {
+  enable = false,
   separator = '=',
   max_lines = '30%',
 }
-
--- Disable treesitter-context
-require('treesitter-context').disable()
 
 -- Setup for nvim-treesitter-textobjects and treesitter
 require('nvim-treesitter.configs').setup {
