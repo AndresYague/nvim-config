@@ -17,7 +17,7 @@ vim.pack.add {
   -- treesitter
   {
     src = git_str .. 'nvim-treesitter/nvim-treesitter',
-    version = vim.version.range '0.10.0',
+    version = 'main',
   },
   --[[ ================================================================= ]]
 
@@ -32,7 +32,7 @@ vim.pack.add {
 
   -- NOTE: luasnip requires going to
   -- $HOME/.local/share/nvim/site/pack/core/opt/LuaSnip
-  -- or equivalent and running make install_jsregexp
+  -- or equivalent and running "make install_jsregexp"
   git_str .. 'L3MON4D3/LuaSnip',
 
   git_str .. 'folke/todo-comments.nvim',
@@ -71,7 +71,6 @@ vim.pack.add {
   git_str .. 'nvim-neorg/lua-utils.nvim',
   git_str .. 'nvim-neorg/neorg',
   git_str .. 'nvim-neotest/nvim-nio',
-  git_str .. 'nvim-neotest/nvim-nio',
   git_str .. 'pysan3/pathlib.nvim',
 
   -- noice
@@ -104,7 +103,10 @@ vim.pack.add {
 
   -- treesitter
   git_str .. 'nvim-treesitter/nvim-treesitter-context',
-  git_str .. 'nvim-treesitter/nvim-treesitter-textobjects',
+  {
+    src = git_str .. 'nvim-treesitter/nvim-treesitter-textobjects',
+    version = 'main',
+  },
 
   -- vimdocs
   git_str .. 'ibhagwan/ts-vimdoc.nvim',
