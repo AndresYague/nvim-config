@@ -120,3 +120,6 @@ require 'plugins.quicklist'
 require 'plugins.recorder'
 require 'plugins.treesitter'
 require 'plugins.which-key'
+
+-- Local plugins
+require 'local_plugins.floating_term'
