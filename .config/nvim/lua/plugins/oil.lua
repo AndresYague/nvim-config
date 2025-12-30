@@ -23,3 +23,17 @@ require('oil').setup {
 
 -- Open oil
 vim.keymap.set('n', '<leader>o', vim.cmd.Oil, { desc = 'Oil' })
+
+-- If renaming a file with Oil, let the LSP know
+-- through snacks.rename
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'OilActionsPost',
+  callback = function(event)
+    if event.data.actions[1].type == 'move' then
+      Snacks.rename.on_rename_file(
+        event.data.actions[1].src_url,
+        event.data.actions[1].dest_url
+      )
+    end
+  end,
+})
