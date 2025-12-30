@@ -56,6 +56,9 @@ require('lazy').setup({
   },
 })
 
+-- Load the floating terminal local plugin
+require 'local_plugins.floating_term'
+
 -- Load autocommands
 require 'autocmds'
 
