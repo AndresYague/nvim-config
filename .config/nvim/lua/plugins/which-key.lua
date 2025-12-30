@@ -41,9 +41,7 @@ require('which-key').setup {
     rules = {
       { pattern = 'lua', icon = ' ' },
       { pattern = 'grep', icon = '󱎸 ', color = 'green' },
-      { pattern = 'harpoon', icon = '󰛢', color = 'orange' },
       { pattern = 'history', icon = ' ', color = 'red' },
-      { pattern = 'lazy', icon = '💤 ' },
       { pattern = 'oil', icon = ' ', color = 'yellow' },
       { pattern = 'plugin', icon = ' ', color = 'blue' },
       { pattern = 'run', icon = ' ', color = 'orange' },
@@ -58,13 +56,10 @@ require('which-key').setup {
     { '<leader>f',  group = 'Find' },
     { '<leader>g',  group = 'Git' },
     { '<leader>h',  group = 'Git Hunk' },
-    { '<leader>j',  group = 'Harpoon' },
-    { '<leader>l',  group = 'Lazy' },
     { '<leader>q',  group = 'Sessions' },
     { '<leader>r',  group = 'Run' },
     { '<leader>s',  group = 'Search' },
     { '<leader>t',  group = 'Terminal' },
     { '<leader>u',  group = 'UI' },
-    { '<leader>gw', group = 'Git worktree' },
   },
 }

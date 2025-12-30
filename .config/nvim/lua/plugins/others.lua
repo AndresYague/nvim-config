@@ -4,9 +4,6 @@ require('persistence').setup {
 require('move-enclosing').setup {}
 require('print-debug').setup {}
 require('nvim-surround').setup()
-require('bufferline').setup {
-  options = { numbers = 'none' },
-}
 require('flash').setup()
 
 require('colorizer').setup({ '*' }, {
@@ -14,39 +11,6 @@ require('colorizer').setup({ '*' }, {
   css = true,      -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
   mode = 'background',
 })
-
--- Bufferline keymaps
-vim.keymap.set(
-  'n',
-  '<leader>bp',
-  vim.cmd.BufferLineCyclePrev,
-  { desc = 'Go to left buffer' }
-)
-vim.keymap.set(
-  'n',
-  '<leader>bn',
-  vim.cmd.BufferLineCycleNext,
-  { desc = 'Go to right buffer' }
-)
-vim.keymap.set(
-  'n',
-  '<leader>bg',
-  vim.cmd.BufferLinePick,
-  { desc = 'Go to buffer' }
-)
-vim.keymap.set(
-  'n',
-  '<leader>bD',
-  vim.cmd.BufferLinePickClose,
-  { desc = 'Select delete buffer' }
-)
-vim.keymap.set('n', '<leader>bd', vim.cmd.bd, { desc = 'Buffer delete' })
-vim.keymap.set(
-  'n',
-  '<leader>bo',
-  vim.cmd.BufferLineCloseOthers,
-  { desc = 'Buffer delete others' }
-)
 
 -- Persistence keymaps
 -- Close current session
@@ -67,6 +31,11 @@ end, { desc = 'Load last session' })
 vim.keymap.set('n', '<leader>qd', function()
   require('persistence').stop()
 end, { desc = 'Do not save session' })
+-- Restart keymap (NOTE: Uses persistence)
+vim.keymap.set('n', '<leader>qr', function()
+  vim.cmd.restart('lua require("persistence").load()')
+end, { desc = 'Restart session' })
+
 
 -- Flash keymaps
 vim.keymap.set({ 'n', 'x', 'o' }, 's', function()

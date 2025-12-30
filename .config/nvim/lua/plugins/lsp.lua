@@ -1,9 +1,6 @@
 -- Setup mason early for lsp capabilities below
 require('mason').setup()
 
--- Setup fidget early
-require('fidget').setup {}
-
 require('lazydev').setup {
   library = {
     -- Load luvit types when the `vim.uv` word is found

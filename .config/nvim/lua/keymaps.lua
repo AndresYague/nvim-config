@@ -2,7 +2,12 @@
 vim.keymap.set('n', '<Esc>', vim.cmd.nohlsearch)
 
 -- Execute
-vim.keymap.set('n', '<leader>x', ':.lua<CR>', { desc = 'Execute lua line' })
+vim.keymap.set(
+  { 'n', 'v' },
+  '<leader>x',
+  ':.lua<CR>',
+  { desc = 'Execute lua line' }
+)
 
 -- Update plugins
 vim.keymap.set(
@@ -22,13 +27,20 @@ vim.keymap.set(
 
 -- Custom keybindings
 
--- Terminal keymaps
-vim.keymap.set(
-  't',
-  '<ESC><ESC>',
-  '<C-\\><C-n>',
-  { desc = 'Exit terminal mode' }
-)
+-- Buffers keymaps
+vim.keymap.set('n', '<leader>bd', vim.cmd.bd, { desc = 'Buffer delete' })
+vim.keymap.set('n', '<leader>bo', function()
+  local current_buf = vim.api.nvim_get_current_buf()
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if buf == current_buf then
+      goto continue
+    end
+    vim.api.nvim_buf_delete(buf, {})
+    ::continue::
+  end
+end, { desc = 'Buffer delete others' })
+
+-- Window navigation
 vim.keymap.set(
   't',
   '<C-k>',
@@ -54,7 +66,7 @@ vim.keymap.set(
   { desc = 'Go to left window' }
 )
 
--- Window keymaps
+-- Other window keymaps
 vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Go to upper window' })
 vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Go to lower window' })
 vim.keymap.set('n', '<C-h>', '<C-w>h', { desc = 'Go to left window' })
@@ -83,6 +95,15 @@ vim.keymap.set(
   vim.cmd.split,
   { desc = 'Split window horizontally' }
 )
+
+-- Terminal keymaps
+vim.keymap.set(
+  't',
+  '<ESC><ESC>',
+  '<C-\\><C-n>',
+  { desc = 'Exit terminal mode' }
+)
+
 vim.keymap.set('n', '<leader>t|', function()
   vim.cmd.vsplit { args = { 'term://%:p:h//' .. vim.o.shell } }
 end, { desc = 'Open terminal vertically (file location)' })
@@ -111,9 +132,6 @@ vim.keymap.set(
 )
 vim.keymap.set('i', '<M-j>', '<esc><cmd>m .+1<cr>==gi', { desc = 'Move Down' })
 vim.keymap.set('i', '<M-k>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move Up' })
-
--- Loadview
-vim.keymap.set('n', 'zl', vim.cmd.loadview, { desc = 'Loadview' })
 
 -- Keymaps for diffmode
 vim.keymap.set(

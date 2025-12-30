@@ -1,7 +1,3 @@
-require('git-worktree').setup {
-  autopush = false,
-}
-
 require('gitsigns').setup {
   signs = {
     add = { text = '|' },
@@ -66,16 +62,3 @@ require('gitsigns').setup {
     end, { desc = 'Stage/Unstage Hunk' })
   end,
 }
-
--- Git worktree keymaps
-vim.keymap.set('n', '<leader>gwc', function()
-  require('git-worktree.wt_pickers').create_worktree_picker()
-end, { desc = 'Create worktree' })
-
-vim.keymap.set('n', '<leader>gwd', function()
-  require('git-worktree.wt_pickers').delete_worktree_picker()
-end, { desc = 'Delete worktree' })
-
-vim.keymap.set('n', '<leader>gws', function()
-  require('git-worktree.wt_pickers').switch_worktree_picker()
-end, { desc = 'Switch worktree' })
