@@ -9,14 +9,6 @@ vim.keymap.set(
   { desc = 'Execute lua line' }
 )
 
--- Update plugins
-vim.keymap.set(
-  'n',
-  '<leader>p',
-  ':lua vim.pack.update()<CR>',
-  { desc = 'Update plugins' }
-)
-
 -- Diagnostic keymaps
 vim.keymap.set(
   'n',

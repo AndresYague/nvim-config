@@ -123,3 +123,4 @@ require 'plugins.which-key'
 
 -- Local plugins
 require 'local_plugins.floating_term'
+require 'local_plugins.mng_plugs'
