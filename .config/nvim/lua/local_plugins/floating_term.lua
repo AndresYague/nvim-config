@@ -1,5 +1,5 @@
 -- Save the buffer and window information
-local state = { bufnr = -1, win_id = -1 }
+local state = {}
 
 ---@param relsize number Relative window size
 local toggle_floating_terminal = function(relsize)
@@ -10,7 +10,7 @@ local toggle_floating_terminal = function(relsize)
   end
 
   -- If the window is open, close it
-  if vim.api.nvim_win_is_valid(state.win_id) then
+  if vim.api.nvim_win_is_valid(state.win_id or -1) then
     vim.api.nvim_win_close(state.win_id, true)
   else
     -- Create a new buffer if we don't have one already
@@ -33,9 +33,10 @@ local toggle_floating_terminal = function(relsize)
     })
 
     -- Open terminal if it was not there before
-    if vim.o.buftype ~= 'terminal' then
+    if vim.bo.buftype ~= 'terminal' then
       vim.cmd.terminal()
     end
+    vim.cmd.startinsert()
   end
 end
 
@@ -54,7 +55,7 @@ vim.keymap.set('n', '<leader>tt', function()
     group = vim.api.nvim_create_augroup('FloatingTerm', { clear = true }),
     buffer = state.bufnr,
     callback = function()
-      toggle_floating_terminal(0.8)
+      toggle_floating_terminal(relsize)
     end,
     desc = 'Close floating terminal when leaving the window',
   })
