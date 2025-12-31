@@ -2,7 +2,10 @@ local Snacks = require 'snacks'
 local devicons = require 'nvim-web-devicons'
 
 Snacks.setup {
-  bigfile = { enabled = true }, -- Deactivates things for files too large
+  -- Deactivates things for files too large
+  bigfile = { enabled = true },
+
+  -- Initial neovim dashboard
   dashboard = {
     enabled = true,
     preset = {
@@ -38,12 +41,20 @@ Snacks.setup {
       { section = 'header' },
       { section = 'keys',  gap = 1, padding = 1 },
     },
-  },                                                       -- Initial neovim dashboard
-  explorer = { enabled = true },                           -- File explorer
-  image = { enabled = true },                              -- Render images
-  indent = { enabled = true, chunk = { enabled = true } }, -- Indent lines
-  quickfile = { enabled = true },                          -- Load file as fast as possible
-  rename = { enabled = true },                             -- Rename files
+  },
+
+  -- File explorer
+  explorer = { enabled = true },
+  -- Render images
+  image = { enabled = true },
+  -- Indent lines
+  indent = { enabled = true, chunk = { enabled = true } },
+  -- Load file as fast as possible
+  quickfile = { enabled = true },
+  -- Rename files
+  rename = { enabled = true },
+
+  -- Scope jumps
   scope = {
     enabled = true,
     treesitter = {
@@ -67,15 +78,24 @@ Snacks.setup {
         'local_declaration',
       },
     },
-  },                                 -- Scope jumps
-  lazygit = { enabled = true },      -- Lazygit
-  notifier = { enabled = true },     -- Better notifications
-  scratch = { enabled = true },      -- Scratch space
-  scroll = { enabled = true },       -- Smooth scrolling
-  statuscolumn = { enabled = true }, -- Status column on its own
-  toggle = { enabled = true },       -- Toggle things
-  words = { enabled = true },        -- LSP help for references
-  zen = { enabled = true },          -- Zen/Zoom mode
+  },
+
+  -- Lazygit
+  lazygit = { enabled = true },
+  -- Better notifications
+  notifier = { enabled = true },
+  -- Scratch space
+  scratch = { enabled = true },
+  -- Smooth scrolling
+  scroll = { enabled = true },
+  -- Status column on its own
+  statuscolumn = { enabled = true },
+  -- Toggle things
+  toggle = { enabled = true },
+  -- Zen/Zoom mode
+  zen = { enabled = true },
+
+  -- Pickers
   picker = {
     enabled = true,
     win = {

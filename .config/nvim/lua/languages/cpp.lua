@@ -1,4 +1,4 @@
--- Change these options for cpp and lua
+-- Change these options for cpp
 vim.api.nvim_create_autocmd({ 'FileType' }, {
   pattern = 'cpp',
   callback = function()

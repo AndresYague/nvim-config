@@ -40,6 +40,7 @@ require('which-key').setup {
     },
     rules = {
       { pattern = 'lua', icon = ' ' },
+      { pattern = 'execute', icon = ' ' },
       { pattern = 'grep', icon = '󱎸 ', color = 'green' },
       { pattern = 'history', icon = ' ', color = 'red' },
       { pattern = 'oil', icon = ' ', color = 'yellow' },
@@ -50,16 +51,18 @@ require('which-key').setup {
 
   -- Document existing key chains
   spec = {
-    { '<leader>b',  group = 'Buffer' },
-    { '<leader>c',  group = 'Code' },
-    { '<leader>d',  group = 'Debug' },
-    { '<leader>f',  group = 'Find' },
-    { '<leader>g',  group = 'Git' },
-    { '<leader>h',  group = 'Git Hunk' },
-    { '<leader>q',  group = 'Sessions' },
-    { '<leader>r',  group = 'Run' },
-    { '<leader>s',  group = 'Search' },
-    { '<leader>t',  group = 'Terminal' },
-    { '<leader>u',  group = 'UI' },
+    { '<leader>b', group = 'Buffer' },
+    { '<leader>c', group = 'Code' },
+    { '<leader>d', group = 'Debug' },
+    { '<leader>f', group = 'Find' },
+    { '<leader>g', group = 'Git' },
+    { '<leader>h', group = 'Git Hunk' },
+    { '<leader>p', group = 'Plugin' },
+    { '<leader>q', group = 'Sessions' },
+    { '<leader>r', group = 'Run' },
+    { '<leader>s', group = 'Search' },
+    { '<leader>t', group = 'Terminal' },
+    { '<leader>u', group = 'UI' },
+    { '<leader>x', group = 'Execute' },
   },
 }

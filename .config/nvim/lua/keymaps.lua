@@ -4,9 +4,23 @@ vim.keymap.set('n', '<Esc>', vim.cmd.nohlsearch)
 -- Execute
 vim.keymap.set(
   { 'n', 'v' },
-  '<leader>x',
+  '<leader>xx',
   ':.lua<CR>',
   { desc = 'Execute lua line' }
+)
+vim.keymap.set(
+  { 'n' },
+  '<leader>xf',
+  ':%lua<CR>',
+  { desc = 'Execute lua file' }
+)
+
+-- Remap redo
+vim.keymap.set(
+  'n',
+  'U',
+  '<C-R>',
+  { desc = 'Redo' }
 )
 
 -- Diagnostic keymaps

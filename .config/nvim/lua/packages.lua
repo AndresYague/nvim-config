@@ -102,7 +102,8 @@ vim.pack.add {
 -- Make sure luarocks is started before other plugins
 require('luarocks-nvim').setup()
 
--- Make sure snacks-nvim loads quick
+-- Make sure snacks-nvim loads ASAP
+-- but after luarocks-nvim
 require 'plugins.snacks-nvim'
 
 require 'plugins.colorschemes'
