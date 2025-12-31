@@ -23,6 +23,15 @@ vim.keymap.set(
   { desc = 'Redo' }
 )
 
+-- Remap alternate-file
+vim.keymap.set(
+  'n',
+  '<leader>a',
+  '<C-^>',
+  { desc = 'Alternate file' }
+)
+
+
 -- Diagnostic keymaps
 vim.keymap.set(
   'n',
