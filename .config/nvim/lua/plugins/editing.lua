@@ -14,6 +14,11 @@ require('conform').setup {
 
 require('luasnip.loaders.from_vscode').lazy_load()
 
+-- "in-and-out" keymaps
+vim.keymap.set('i', '<C-H>', function()
+  require('in-and-out').in_and_out()
+end)
+
 -- "TODO" search keymaps
 vim.keymap.set('n', ']t', function()
   require('todo-comments').jump_next()

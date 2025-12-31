@@ -36,6 +36,7 @@ vim.pack.add {
   'https://github.com/rafamadriz/friendly-snippets',
   'https://github.com/stevearc/conform.nvim',
   'https://github.com/windwp/nvim-autopairs',
+  'https://github.com/ysmb-wtsg/in-and-out.nvim.git',
 
   -- git
   'https://github.com/lewis6991/gitsigns.nvim',
