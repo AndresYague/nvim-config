@@ -108,6 +108,18 @@ vim.keymap.set({ 'x', 'o' }, 'ic', function()
     'textobjects'
   )
 end, { desc = 'Inside class' })
+vim.keymap.set({ 'x', 'o' }, 'al', function()
+  require('nvim-treesitter-textobjects.select').select_textobject(
+    '@block.outer',
+    'textobjects'
+  )
+end, { desc = 'Around block' })
+vim.keymap.set({ 'x', 'o' }, 'il', function()
+  require('nvim-treesitter-textobjects.select').select_textobject(
+    '@block.inner',
+    'textobjects'
+  )
+end, { desc = 'Inside block' })
 
 -- Moves
 -- Functions
