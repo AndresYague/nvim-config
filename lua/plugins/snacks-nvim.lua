@@ -205,112 +205,112 @@ vim.api.nvim_create_autocmd('User', {
     Snacks.toggle.option('spell', { name = 'Spelling' }):map '<leader>us'
     Snacks.toggle.option('wrap', { name = 'Wrap' }):map '<leader>uw'
     Snacks.toggle
-        .option('relativenumber', { name = 'Relative Number' })
-        :map '<leader>uL'
+      .option('relativenumber', { name = 'Relative Number' })
+      :map '<leader>uL'
     Snacks.toggle.diagnostics():map '<leader>ud'
     Snacks.toggle.line_number():map '<leader>ul'
     Snacks.toggle
-        .option('conceallevel', {
-          off = 0,
-          on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2,
-        })
-        :map '<leader>uc'
+      .option('conceallevel', {
+        off = 0,
+        on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2,
+      })
+      :map '<leader>uc'
     Snacks.toggle.treesitter():map '<leader>uT'
     Snacks.toggle.inlay_hints():map '<leader>uh'
     Snacks.toggle.indent():map '<leader>ug'
     Snacks.toggle.dim():map '<leader>uD'
     Snacks.toggle.animate():map '<leader>ua'
     Snacks.toggle
-        .option('cursorline', { name = 'Cursor Line' })
-        :map '<leader>uR'
+      .option('cursorline', { name = 'Cursor Line' })
+      :map '<leader>uR'
     Snacks.toggle
-        .option('cursorcolumn', { name = 'Cursor Column' })
-        :map '<leader>ur'
+      .option('cursorcolumn', { name = 'Cursor Column' })
+      :map '<leader>ur'
 
     -- Toggle context
     Snacks.toggle
-        .new({
-          id = 'treesitter-context',
-          name = 'Treesitter Context',
-          get = function()
-            return require('treesitter-context').enabled()
-          end,
-          set = function()
-            require('treesitter-context').toggle()
-          end,
-        })
-        :map '<leader>ut'
+      .new({
+        id = 'treesitter-context',
+        name = 'Treesitter Context',
+        get = function()
+          return require('treesitter-context').enabled()
+        end,
+        set = function()
+          require('treesitter-context').toggle()
+        end,
+      })
+      :map '<leader>ut'
 
     -- Toggle autopairs
     Snacks.toggle
-        .new({
-          id = 'nvim-autopairs',
-          name = 'Autopairs',
-          get = function()
-            return not require('nvim-autopairs').state.disabled
-          end,
-          set = function()
-            require('nvim-autopairs').toggle()
-          end,
-        })
-        :map '<leader>up'
+      .new({
+        id = 'nvim-autopairs',
+        name = 'Autopairs',
+        get = function()
+          return not require('nvim-autopairs').state.disabled
+        end,
+        set = function()
+          require('nvim-autopairs').toggle()
+        end,
+      })
+      :map '<leader>up'
 
     -- Toggle Markview
     Snacks.toggle
-        .new({
-          id = 'markview',
-          name = 'Markview',
-          get = function()
-            local buffer = vim.api.nvim_get_current_buf()
-            if not require('markview.state').buf_attached(buffer) then
-              require('markview.commands').attach(buffer)
-              require('markview.commands').disable(buffer)
-            end
-            return require('markview.state').get_buffer_state(buffer, false).enable
-          end,
-          set = function()
-            local buffer = vim.api.nvim_get_current_buf()
-            require('markview.commands').toggle(buffer)
-          end,
-        })
-        :map '<leader>um'
+      .new({
+        id = 'markview',
+        name = 'Markview',
+        get = function()
+          local buffer = vim.api.nvim_get_current_buf()
+          if not require('markview.state').buf_attached(buffer) then
+            require('markview.commands').attach(buffer)
+            require('markview.commands').disable(buffer)
+          end
+          return require('markview.state').get_buffer_state(buffer, false).enable
+        end,
+        set = function()
+          local buffer = vim.api.nvim_get_current_buf()
+          require('markview.commands').toggle(buffer)
+        end,
+      })
+      :map '<leader>um'
 
     -- Fully custom toggle for colorizer
     Snacks.toggle
-        .new({
-          id = 'colorizer',
-          name = 'Colorizer',
-          get = function()
-            return require('colorizer').is_buffer_attached(0)
-          end,
-          set = function()
-            vim.cmd 'ColorizerToggle'
-          end,
-        })
-        :map '<leader>uz'
+      .new({
+        id = 'colorizer',
+        name = 'Colorizer',
+        get = function()
+          return require('colorizer').is_buffer_attached(0)
+        end,
+        set = function()
+          vim.cmd 'ColorizerToggle'
+        end,
+      })
+      :map '<leader>uz'
 
     -- Fully custom toggle for visual_bold
     Snacks.toggle
-        .new({
-          id = 'visual_bold',
-          name = 'Visual Bold',
-          get = function()
-            return visual_bold
-          end,
-          set = function(state)
-            if state then
-              vim.cmd.highlight {
-                args = { 'link Visual IncSearch' },
-                bang = true,
-              }
-              visual_bold = true
-            else
-              vim.cmd.highlight { args = { 'link Visual NONE' } }
-              visual_bold = false
-            end
-          end,
-        })
-        :map '<leader>uv'
+      .new({
+        id = 'visual_bold',
+        name = 'Visual Bold',
+        get = function()
+          return visual_bold
+        end,
+        set = function(state)
+          if state then
+            vim.cmd.highlight {
+              args = { 'link Visual IncSearch' },
+              bang = true,
+            }
+            visual_bold = true
+          else
+            vim.cmd.highlight { args = { 'link Visual NONE' } }
+            visual_bold = false
+          end
+        end,
+      })
+      :map '<leader>uv'
   end,
 })
 
