@@ -26,12 +26,6 @@ vim.pack.add {
   'https://github.com/rebelot/kanagawa.nvim',
 
   -- editing
-
-  -- NOTE: luasnip requires going to
-  -- $HOME/.local/share/nvim/site/pack/core/opt/LuaSnip
-  -- or equivalent and running "make install_jsregexp"
-  'https://github.com/L3MON4D3/LuaSnip',
-
   'https://github.com/folke/todo-comments.nvim',
   'https://github.com/rafamadriz/friendly-snippets',
   'https://github.com/stevearc/conform.nvim',

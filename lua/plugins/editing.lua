@@ -12,8 +12,6 @@ require('conform').setup {
   format_on_save = nil, -- Do not format on save
 }
 
-require('luasnip.loaders.from_vscode').lazy_load()
-
 -- "in-and-out" keymaps
 vim.keymap.set('i', '<C-H>', function()
   require('in-and-out').in_and_out()
@@ -57,7 +55,7 @@ require('blink.cmp').setup {
     },
   },
 
-  snippets = { preset = 'luasnip' },
+  snippets = { preset = 'default' },
   fuzzy = { implementation = 'prefer_rust_with_warning' },
   signature = { enabled = true },
 }
