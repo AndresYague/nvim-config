@@ -1,6 +1,7 @@
 -- Save the buffer and window information
 local state = {}
 
+---Close or open the floating terminal, handle the buffer creation
 ---@param relsize number Relative window size
 local toggle_floating_terminal = function(relsize)
   -- Reset state

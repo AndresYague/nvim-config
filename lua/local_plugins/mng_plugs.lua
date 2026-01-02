@@ -1,4 +1,4 @@
--- Parse a plugin string to retrieve something close to the name
+---Parse a plugin string to retrieve something close to the name
 ---@param plug_str string
 ---@return string
 local plug_name_parse = function(plug_str)
@@ -21,8 +21,8 @@ local plug_name_parse = function(plug_str)
   return substring
 end
 
--- Parse a plugin string to retrieve something close to the name
--- Use the fact that we took the string with TS
+---Parse a plugin string to retrieve something close to the name
+---Use the fact that we took the string with TS
 ---@param plug_str string
 ---@return string
 local plug_name_parse_TS = function(plug_str)
@@ -40,9 +40,9 @@ local plug_name_parse_TS = function(plug_str)
   return substring
 end
 
--- This function calls vim.pack.del on a plugin which name is contained in
--- plug_str, if no string is given, it uses the line where the cursor is
--- located. It does not know about comments.
+---This function calls vim.pack.del on a plugin which name is contained in
+---plug_str, if no string is given, it uses the line where the cursor is
+---located. It does not know about comments.
 ---@param plug_str string?
 ---@return nil
 local plug_delete = function(plug_str)
@@ -59,15 +59,10 @@ local plug_delete = function(plug_str)
   end
 end
 
--- Find all plugins "added" in the file via "vim.pack.add"
----@param file_name string?
----@return table{string}
-local find_plugins_in_file = function(file_name)
-  -- Explore the file to find plugins
-  if file_name then
-    -- FIXME: Implement
-    error 'Not implemented yet!'
-  end
+---Find all plugins "added" in the file via "vim.pack.add"
+---@return string[]
+local find_plugins_in_file = function()
+  -- Explore the buffer to find plugins
 
   local plugin_names = {}
 
@@ -165,18 +160,16 @@ local find_plugins_in_file = function(file_name)
   return plugin_names
 end
 
--- This function attempts to sync plugins loaded with plugins in vim.pack.add,
--- assuming that all plugins are added in a single file. If a plugin is loaded
--- but not in vim.pack.add, it will delete it.
--- If no file_name is given, it will use the current file
----@param file_name string?
+---This function attempts to sync plugins loaded with plugins in vim.pack.add,
+---assuming that all plugins are added in a single file, which is the current
+---buffer. If a plugin is loaded but not in vim.pack.add, it will delete it.
 ---@return nil
-local plug_sync = function(file_name)
+local plug_sync = function()
   -- Get the plugin table
   local loaded_plugins = vim.pack.get()
 
   -- Find all plugins in file
-  local plugins_in_file = find_plugins_in_file(file_name)
+  local plugins_in_file = find_plugins_in_file()
 
   -- For every plugin in  loaded_plugins, check if it is in plugins_in_file
   -- if not, remove it
