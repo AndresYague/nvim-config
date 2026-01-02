@@ -108,6 +108,8 @@ vim.keymap.set({ 'x', 'o' }, 'ic', function()
     'textobjects'
   )
 end, { desc = 'Inside class' })
+
+-- Block selections
 vim.keymap.set({ 'x', 'o' }, 'al', function()
   require('nvim-treesitter-textobjects.select').select_textobject(
     '@block.outer',
@@ -173,6 +175,32 @@ vim.keymap.set({ 'n', 'x', 'o' }, '[[', function()
     'textobjects'
   )
 end, { desc = 'Previous class end' })
+
+-- Blocks
+vim.keymap.set({ 'n', 'x', 'o' }, ']l', function()
+  require('nvim-treesitter-textobjects.move').goto_next_start(
+    '@block.outer',
+    'textobjects'
+  )
+end, { desc = 'Next block start' })
+vim.keymap.set({ 'n', 'x', 'o' }, ']L', function()
+  require('nvim-treesitter-textobjects.move').goto_next_end(
+    '@block.outer',
+    'textobjects'
+  )
+end, { desc = 'Next block end' })
+vim.keymap.set({ 'n', 'x', 'o' }, '[l', function()
+  require('nvim-treesitter-textobjects.move').goto_previous_start(
+    '@block.outer',
+    'textobjects'
+  )
+end, { desc = 'Previous block start' })
+vim.keymap.set({ 'n', 'x', 'o' }, '[L', function()
+  require('nvim-treesitter-textobjects.move').goto_previous_end(
+    '@block.outer',
+    'textobjects'
+  )
+end, { desc = 'Previous block end' })
 
 -- Loops
 -- You can also pass a list to group multiple queries.
@@ -253,8 +281,9 @@ local ts_repeat_move = require 'nvim-treesitter-textobjects.repeatable_move'
 
 -- Repeat movement with ; and ,
 -- vim way: ; goes to the direction you were moving.
-vim.keymap.set({ 'n', 'x', 'o' }, ';', ts_repeat_move.repeat_last_move)
-vim.keymap.set({ 'n', 'x', 'o' }, ',', ts_repeat_move.repeat_last_move_opposite)
+-- NOTE: using ñ and Ñ respectively to avoid conflicts
+vim.keymap.set({ 'n', 'x', 'o' }, 'ñ', ts_repeat_move.repeat_last_move)
+vim.keymap.set({ 'n', 'x', 'o' }, 'Ñ', ts_repeat_move.repeat_last_move_opposite)
 
 -- NOTE: Comment to be able to use flash.nvim
 -- -- Optionally, make builtin f, F, t, T also repeatable with ; and ,
