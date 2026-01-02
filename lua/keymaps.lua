@@ -16,21 +16,10 @@ vim.keymap.set(
 )
 
 -- Remap redo
-vim.keymap.set(
-  'n',
-  'U',
-  '<C-R>',
-  { desc = 'Redo' }
-)
+vim.keymap.set('n', 'U', '<C-R>', { desc = 'Redo' })
 
 -- Remap alternate-file
-vim.keymap.set(
-  'n',
-  '<leader>a',
-  '<C-^>',
-  { desc = 'Alternate file' }
-)
-
+vim.keymap.set('n', '<leader>a', '<C-^>', { desc = 'Alternate file' })
 
 -- Diagnostic keymaps
 vim.keymap.set(
@@ -187,7 +176,10 @@ end, { expr = true, desc = 'Close the diff windows' })
 vim.keymap.set('n', '<leader>cm', '<cmd>Mason<CR>', { desc = 'Mason window' })
 
 -- Handy shortcut for calculator mode
-vim.keymap.set('n', '<leader>cc', 'i<C-R>=', { desc = 'Calculator insert' })
+vim.keymap.set('n', '<leader>cb', 'i<C-R>=', { desc = 'Calculator insert' })
+
+-- Use the calculator in normal mode (requires having bc installed)
+vim.keymap.set('x', '<leader>cc', ':!bc<CR>', { desc = 'Line calculator' })
 
 -- Run tests
 vim.keymap.set('n', '<leader>rt', function()
