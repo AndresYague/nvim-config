@@ -255,6 +255,21 @@ vim.api.nvim_create_autocmd('User', {
       })
       :map '<leader>up'
 
+    -- Toggle move-enclosing ts
+    Snacks.toggle
+      .new({
+        id = 'move-enclosing',
+        name = 'Move Enclosing TS',
+        get = function()
+          return require('move-enclosing').use_ts
+        end,
+        set = function()
+          require('move-enclosing').toggle_ts()
+        end,
+      })
+      :map '<leader>ue'
+
+
     -- Toggle Markview
     Snacks.toggle
       .new({

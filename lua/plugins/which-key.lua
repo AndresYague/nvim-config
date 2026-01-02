@@ -62,7 +62,7 @@ require('which-key').setup {
     { '<leader>r', group = 'Run' },
     { '<leader>s', group = 'Search' },
     { '<leader>t', group = 'Terminal' },
-    { '<leader>u', group = 'UI' },
+    { '<leader>u', group = 'UI + Toggles' },
     { '<leader>x', group = 'Execute' },
   },
 }
