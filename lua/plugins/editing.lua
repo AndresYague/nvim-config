@@ -52,6 +52,11 @@ require('blink.cmp').setup {
         module = 'lazydev.integrations.blink',
         score_offset = 100,
       },
+      snippets = {
+        opts = {
+          friendly_snippets = true,
+        },
+      },
     },
   },
 
