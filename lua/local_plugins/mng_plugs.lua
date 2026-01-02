@@ -17,7 +17,7 @@ local plug_name_parse = function(plug_str)
   -- If ".git" in string, remove
   substring = substring:gsub('%.git', '')
 
-  -- Reverse and return
+  -- Return
   return substring
 end
 
@@ -201,6 +201,5 @@ vim.keymap.set('n', '<leader>pu', vim.pack.update, { desc = 'Update plugins' })
 
 -- Keymap to sync plugins
 vim.keymap.set('n', '<leader>ps', function()
-  -- plug_sync(vim.fn.stdpath 'config' .. '/lua/packages.lua') -- FIXME: Not implemented
   plug_sync()
 end, { desc = 'Sync plugins' })
