@@ -1,5 +1,6 @@
 local Snacks = require 'snacks'
 local marks = {}
+local keymaps = {}
 
 ---Find the mark index
 ---@param mark string
@@ -52,6 +53,7 @@ local index_mark = function(mark, filename)
   vim.keymap.set('n', '<leader>j' .. mark_index, function()
     go_to_mark(marks[mark_index])
   end, { desc = filename })
+  keymaps[#keymaps+1] = mark_index
 end
 
 ---Add a given mark to the list or create a new one in the current position
@@ -133,17 +135,12 @@ end
 ---@return nil
 local index_all_marks = function()
   -- Clean the table and keymaps
-  if #marks > 0 then
-    for idx = 1, #marks + 1 do
-      vim.api.nvim_del_keymap('n', '<leader>j' .. idx)
-    end
+  for _, keymap in ipairs(keymaps) do
+      vim.api.nvim_del_keymap('n', '<leader>j' .. keymap)
   end
 
-  -- HACK: Make sure we leave no map whatsoever
-  vim.api.nvim_set_keymap('n', '<leader>j1', '', {})
-  vim.api.nvim_del_keymap('n', '<leader>j1')
-
   marks = {}
+  keymaps = {}
 
   -- Re-index
   for _, tbl in ipairs(vim.fn.getmarklist()) do
@@ -187,6 +184,16 @@ local choose_mark = function(action, prompt)
   )
 end
 
+---Function to remove all marks
+---@return nil
+local remove_marks = function ()
+  for _, mark in ipairs(marks) do
+    vim.api.nvim_del_mark(mark)
+  end
+
+  index_all_marks()
+end
+
 -- Set the "mark_add" keymap
 vim.keymap.set('n', '<leader>ja', mark_add, { desc = 'Add file to marks' })
 
@@ -205,6 +212,7 @@ end
 
 picker_action('<leader>js', 'go', 'Go to file')
 picker_action('<leader>jd', 'delete', 'Delete mark')
+vim.keymap.set('n', '<leader>jr', remove_marks, { desc = 'Remove all marks' })
 
 -- Run the mark indexing once vim has loaded
 vim.api.nvim_create_autocmd('VimEnter', {
