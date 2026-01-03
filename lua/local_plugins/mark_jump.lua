@@ -141,7 +141,8 @@ local choose_mark = function(action, prompt)
         return
       end
 
-      local mark = choice:sub(1)
+      -- Get only the mark name
+      local mark = choice:sub(1, 1)
 
       if action == 'go' then
         go_to_mark(mark)
@@ -151,6 +152,11 @@ local choose_mark = function(action, prompt)
 
         -- Re-index marks
         index_all_marks()
+      elseif action == 'change' then
+        -- Remove this mark and then create another in the current file
+        vim.api.nvim_del_mark(mark)
+        index_all_marks()
+        mark_add()
       end
     end
   )
@@ -194,8 +200,9 @@ local picker_action = function(lhs, action, prompt)
   end, { desc = prompt })
 end
 
-picker_action('<leader>js', 'go', 'Go to file')
-picker_action('<leader>jx', 'delete', 'Delete mark')
+picker_action('<leader>js', 'go', 'Choose go to file')
+picker_action('<leader>jx', 'delete', 'Choose delete mark')
+picker_action('<leader>jc', 'change', 'Choose change mark')
 
 -- Set other keymaps
 
