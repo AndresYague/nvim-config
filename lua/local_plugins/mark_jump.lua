@@ -1,0 +1,210 @@
+local Snacks = require 'snacks'
+local marks = {}
+
+---Find the mark index
+---@param mark string
+---@return integer
+local get_mark_index = function(mark)
+  local found_indx = nil
+  for idx, mrk in ipairs(marks) do
+    if mrk == mark then
+      found_indx = idx
+      break
+    end
+  end
+
+  assert(found_indx)
+
+  return found_indx
+end
+
+---Go to a mark saving the view before leaving and restoring it
+---after arriving
+---@param mark string
+---@return nil
+local go_to_mark = function(mark)
+  if vim.api.nvim_buf_get_name(0) ~= '' then
+    vim.cmd.mkview()
+  end
+  vim.api.nvim_feedkeys('`' .. mark, 'ixn', false)
+  vim.cmd.loadview()
+end
+
+---Index one mark and create a keymap for it
+---@param mark string
+---@param filename string?
+---@return nil
+local index_mark = function(mark, filename)
+  -- Get filename for mark
+  if not filename then
+    filename = vim.api.nvim_buf_get_name(vim.api.nvim_get_mark(mark, {})[3])
+  end
+
+  -- Shorten filename
+  filename = vim.fs.joinpath(
+    vim.fs.basename(vim.fs.dirname(filename)),
+    vim.fs.basename(filename)
+  )
+
+  local mark_index = get_mark_index(mark)
+
+  -- Add the keymap, create a fresh number so we don't capture #marks
+  vim.keymap.set('n', '<leader>j' .. mark_index, function()
+    go_to_mark(marks[mark_index])
+  end, { desc = filename })
+end
+
+---Add a given mark to the list or create a new one in the current position
+---@param mark string?
+---@param filename string?
+---@return nil
+local mark_add = function(mark, filename)
+  if not mark then
+    local inserted_mark = { did = false, index = 0 }
+
+    -- Do not add more than one mark per file
+    local bufname = vim.api.nvim_buf_get_name(0)
+    for _, mrk in ipairs(marks) do
+      if bufname == vim.fs.abspath(vim.api.nvim_get_mark(mrk, {})[4]) then
+        return nil
+      end
+    end
+
+    -- Add the mark to the list
+    if #marks == 0 then
+      marks = { 'A' }
+      inserted_mark.did = true
+      inserted_mark.index = #marks
+    else
+      -- ke sure we add marks in order
+      if marks[1] ~= 'A' then
+        table.insert(marks, 1, 'A')
+        inserted_mark.did = true
+        inserted_mark.index = 1
+      else
+        local lowest_mark = string.byte 'A'
+        for idx, mrk in ipairs(marks) do
+          if lowest_mark + idx - 1 < string.byte(mrk) then
+            inserted_mark.did = true
+            inserted_mark.index = idx
+            table.insert(marks, idx, string.char(marks[idx - 1]:byte() + 1))
+            break
+          end
+        end
+
+        if not inserted_mark.did then
+          marks[#marks + 1] = string.char(marks[#marks]:byte() + 1)
+          inserted_mark.did = true
+          inserted_mark.index = #marks
+        end
+      end
+    end
+
+    -- Add the mark to the file
+    local cursor = vim.api.nvim_win_get_cursor(0)
+    vim.api.nvim_buf_set_mark(
+      0,
+      marks[inserted_mark.index],
+      cursor[1],
+      cursor[2],
+      {}
+    )
+  else
+    marks[#marks + 1] = mark
+  end
+
+  -- Index the mark
+  index_mark(marks[#marks], filename)
+end
+
+---@param mark_arr string[]
+---@return string[]
+local filename_array = function(mark_arr)
+  local filename_arr = {}
+  for _, mark in ipairs(mark_arr) do
+    local markinfo = vim.api.nvim_get_mark(mark, {})
+    filename_arr[#filename_arr + 1] = mark .. ' -> ' .. markinfo[4]
+  end
+
+  return filename_arr
+end
+
+---Index all existing marks so they are not overwritten
+---@return nil
+local index_all_marks = function()
+  -- Clean the table
+  marks = {}
+
+  -- Re-index
+  for _, tbl in ipairs(vim.fn.getmarklist()) do
+    -- Take only the A-Z marks
+    if tbl.mark:match "'[A-Z]" then
+      mark_add(tbl.mark:sub(2), tbl.file)
+    end
+  end
+end
+
+---Perform an action on a chosen mark
+---@param action string
+---@param prompt string
+---@return nil
+local choose_mark = function(action, prompt)
+  Snacks.picker.select(
+    filename_array(marks),
+    { prompt = prompt },
+    function(choice)
+      -- User canceled
+      if not choice then
+        return
+      end
+
+      local mark = choice:sub(1, 1)
+
+      if action == 'go' then
+        go_to_mark(mark)
+      elseif action == 'delete' then
+        local mark_index = get_mark_index(mark)
+        -- Remove the mark from table
+        table.remove(marks, mark_index)
+
+        -- Remove from nvim
+        vim.api.nvim_del_mark(mark)
+
+        -- Remove from keymaps
+        vim.api.nvim_del_keymap('n', '<leader>j' .. mark_index)
+
+        -- Re-index marks
+        index_all_marks()
+      end
+    end
+  )
+end
+
+-- Set the "mark_add" keymap
+vim.keymap.set('n', '<leader>ja', mark_add, { desc = 'Add file to marks' })
+vim.keymap.set('n', '<leader>ji', index_all_marks, { desc = 'Index the marks' })
+
+-- Set other picker actions
+
+---General function to set picker actions
+---@param lhs string
+---@param action string
+---@param prompt string
+---@return nil
+local picker_action = function(lhs, action, prompt)
+  vim.keymap.set('n', lhs, function()
+    choose_mark(action, prompt)
+  end, { desc = prompt })
+end
+
+picker_action('<leader>js', 'go', 'Go to file')
+picker_action('<leader>jd', 'delete', 'Delete mark')
+
+-- Run the mark indexing once vim has loaded
+vim.api.nvim_create_autocmd('VimEnter', {
+  group = vim.api.nvim_create_augroup('Marks indexing', { clear = true }),
+  callback = function()
+    index_all_marks()
+  end,
+  once = true,
+})
