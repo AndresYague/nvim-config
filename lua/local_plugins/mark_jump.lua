@@ -91,7 +91,7 @@ local mark_add = function(mark, filename)
   -- Add the keymap
   vim.keymap.set('n', '<leader>j' .. mark_index, function()
     go_to_mark(marks[mark_index])
-  end, { desc = filename })
+  end, { desc = 'File: ' .. filename })
   keymaps[#keymaps + 1] = mark_index
 end
 
