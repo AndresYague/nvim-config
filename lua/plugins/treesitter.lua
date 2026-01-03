@@ -123,6 +123,20 @@ vim.keymap.set({ 'x', 'o' }, 'il', function()
   )
 end, { desc = 'Inside block' })
 
+-- Comment selections
+vim.keymap.set({ 'x', 'o' }, 'ac', function()
+  require('nvim-treesitter-textobjects.select').select_textobject(
+    '@comment.outer',
+    'textobjects'
+  )
+end, { desc = 'Around comment' })
+vim.keymap.set({ 'x', 'o' }, 'ic', function()
+  require('nvim-treesitter-textobjects.select').select_textobject(
+    '@comment.inner',
+    'textobjects'
+  )
+end, { desc = 'Inside comment' })
+
 -- Moves
 -- Functions
 vim.keymap.set({ 'n', 'x', 'o' }, ']f', function()
