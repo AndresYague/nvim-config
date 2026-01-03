@@ -132,7 +132,17 @@ end
 ---Index all existing marks so they are not overwritten
 ---@return nil
 local index_all_marks = function()
-  -- Clean the table
+  -- Clean the table and keymaps
+  if #marks > 0 then
+    for idx = 1, #marks + 1 do
+      vim.api.nvim_del_keymap('n', '<leader>j' .. idx)
+    end
+  end
+
+  -- HACK: Make sure we leave no map whatsoever
+  vim.api.nvim_set_keymap('n', '<leader>j1', '', {})
+  vim.api.nvim_del_keymap('n', '<leader>j1')
+
   marks = {}
 
   -- Re-index
@@ -169,9 +179,6 @@ local choose_mark = function(action, prompt)
 
         -- Remove from nvim
         vim.api.nvim_del_mark(mark)
-
-        -- Remove from keymaps
-        vim.api.nvim_del_keymap('n', '<leader>j' .. mark_index)
 
         -- Re-index marks
         index_all_marks()
