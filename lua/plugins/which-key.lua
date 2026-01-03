@@ -6,7 +6,6 @@ require('which-key').setup {
   icons = {
     rules = {
       { pattern = 'delete', icon = '󰆴 ', color = 'red' },
-      { pattern = 'index', icon = '󱪹 ', color = 'green' },
       { pattern = 'execute', icon = ' ' },
       { pattern = 'grep', icon = '󱎸 ', color = 'green' },
       { pattern = 'history', icon = ' ', color = 'red' },

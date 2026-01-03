@@ -182,7 +182,6 @@ end
 
 -- Set the "mark_add" keymap
 vim.keymap.set('n', '<leader>ja', mark_add, { desc = 'Add file to marks' })
-vim.keymap.set('n', '<leader>ji', index_all_marks, { desc = 'Index the marks' })
 
 -- Set other picker actions
 
