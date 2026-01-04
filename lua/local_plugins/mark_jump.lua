@@ -2,6 +2,8 @@ local Snacks = require 'snacks'
 local marks = {}
 local keymaps = {}
 
+M = {}
+
 ---Go to a mark saving the view before leaving and restoring it
 ---after arriving
 ---@param mark string
@@ -20,7 +22,7 @@ end
 ---@return nil
 local mark_add = function(mark, filename)
   if not mark then
-    local inserted_mark = { did = false, index = 0 }
+    local insert_mark = { did = false, index = 0 }
 
     -- Do not add more than one mark per file
     local bufname = vim.api.nvim_buf_get_name(0)
@@ -32,31 +34,31 @@ local mark_add = function(mark, filename)
 
     -- Add the mark to the list
     if #marks == 0 then
-      marks = { 'A' }
-      inserted_mark.did = true
-      inserted_mark.index = #marks
+      marks = { M.opts.mark_names[1] }
+      insert_mark.did = true
+      insert_mark.index = #marks
     else
-      -- ke sure we add marks in order
-      if marks[1] ~= 'A' then
-        table.insert(marks, 1, 'A')
-        inserted_mark.did = true
-        inserted_mark.index = 1
-      else
-        local lowest_mark = string.byte 'A'
-        for idx, mrk in ipairs(marks) do
-          if lowest_mark + idx - 1 < string.byte(mrk) then
-            inserted_mark.did = true
-            inserted_mark.index = idx
-            table.insert(marks, idx, string.char(marks[idx - 1]:byte() + 1))
-            break
-          end
+      for idx, mark_name in ipairs(M.opts.mark_names) do
+        if marks[idx] ~= mark_name then
+          table.insert(marks, idx, mark_name)
+          insert_mark.did = true
+          insert_mark.index = idx
+          break
         end
+      end
 
-        if not inserted_mark.did then
-          marks[#marks + 1] = string.char(marks[#marks]:byte() + 1)
-          inserted_mark.did = true
-          inserted_mark.index = #marks
-        end
+      -- Tell user to change mark
+      if not insert_mark.did then
+        vim.notify(
+          'Maximum number of marks reached, please choose to change a '
+            .. 'mark instead with "'
+            .. M.opts.choose_change
+            .. '" or add more marks to your configuration',
+          vim.log.levels.INFO,
+          { title = 'Too many marks' }
+        )
+
+        return nil
       end
     end
 
@@ -64,7 +66,7 @@ local mark_add = function(mark, filename)
     local cursor = vim.api.nvim_win_get_cursor(0)
     vim.api.nvim_buf_set_mark(
       0,
-      marks[inserted_mark.index],
+      marks[insert_mark.index],
       cursor[1],
       cursor[2],
       {}
@@ -89,7 +91,7 @@ local mark_add = function(mark, filename)
   )
 
   -- Add the keymap
-  vim.keymap.set('n', '<leader>j' .. mark_index, function()
+  vim.keymap.set('n', M.opts.prefix .. mark_index, function()
     go_to_mark(marks[mark_index])
   end, { desc = 'File: ' .. filename })
   keymaps[#keymaps + 1] = mark_index
@@ -112,7 +114,7 @@ end
 local index_all_marks = function()
   -- Clean the table and keymaps
   for _, keymap in ipairs(keymaps) do
-    vim.api.nvim_del_keymap('n', '<leader>j' .. keymap)
+    vim.api.nvim_del_keymap('n', M.opts.prefix .. keymap)
   end
 
   marks = {}
@@ -189,38 +191,62 @@ end
 
 -- Set picker actions
 
----General function to set picker actions
----@param lhs string
----@param action string
----@param prompt string
+---@param opts {add_mark_file: string, choose_change: string, choose_delete: string, choose_file: string, mark_names: string[], prefix: string, remove_mark_file: string, remove_marks: string}?
 ---@return nil
-local picker_action = function(lhs, action, prompt)
-  vim.keymap.set('n', lhs, function()
-    choose_mark(action, prompt)
-  end, { desc = prompt })
+M.setup = function(opts)
+  M.opts = opts or {}
+
+  M.opts.add_mark_file = M.opts.add_mark_file or '<leader>ja'
+  M.opts.choose_change = M.opts.choose_change or '<leader>jc'
+  M.opts.choose_delete = M.opts.choose_delete or '<leader>jx'
+  M.opts.choose_file = M.opts.choose_file or '<leader>js'
+  M.opts.mark_names = M.opts.mark_names or { 'A', 'B', 'C', 'D' }
+  M.opts.prefix = M.opts.prefix or '<leader>'
+  M.opts.remove_mark_file = M.opts.remove_mark_file or '<leader>jd'
+  M.opts.remove_marks = M.opts.remove_marks or '<leader>jr'
+
+  -- Set other keymaps
+
+  -- Set the "mark_add" keymap
+  vim.keymap.set('n', M.opts.add_mark_file, function()
+    mark_add()
+  end, { desc = 'Add file to marks' })
+  vim.keymap.set(
+    'n',
+    M.opts.remove_marks,
+    remove_marks,
+    { desc = 'Remove all marks' }
+  )
+  vim.keymap.set(
+    'n',
+    M.opts.remove_mark_file,
+    delete_from_file,
+    { desc = 'Remove mark from this file' }
+  )
+
+  ---General function to set picker actions
+  ---@param lhs string
+  ---@param action string
+  ---@param prompt string
+  ---@return nil
+  local picker_action = function(lhs, action, prompt)
+    vim.keymap.set('n', lhs, function()
+      choose_mark(action, prompt)
+    end, { desc = prompt })
+  end
+
+  picker_action(M.opts.choose_file, 'go', 'Choose go to file')
+  picker_action(M.opts.choose_delete, 'delete', 'Choose delete mark')
+  picker_action(M.opts.choose_change, 'change', 'Choose change mark')
+
+  -- Run the mark indexing once vim has loaded
+  vim.api.nvim_create_autocmd('VimEnter', {
+    group = vim.api.nvim_create_augroup('Marks indexing', { clear = true }),
+    callback = function()
+      index_all_marks()
+    end,
+    once = true,
+  })
 end
 
-picker_action('<leader>js', 'go', 'Choose go to file')
-picker_action('<leader>jx', 'delete', 'Choose delete mark')
-picker_action('<leader>jc', 'change', 'Choose change mark')
-
--- Set other keymaps
-
--- Set the "mark_add" keymap
-vim.keymap.set('n', '<leader>ja', mark_add, { desc = 'Add file to marks' })
-vim.keymap.set('n', '<leader>jr', remove_marks, { desc = 'Remove all marks' })
-vim.keymap.set(
-  'n',
-  '<leader>jd',
-  delete_from_file,
-  { desc = 'Remove mark from this file' }
-)
-
--- Run the mark indexing once vim has loaded
-vim.api.nvim_create_autocmd('VimEnter', {
-  group = vim.api.nvim_create_augroup('Marks indexing', { clear = true }),
-  callback = function()
-    index_all_marks()
-  end,
-  once = true,
-})
+M.setup()
