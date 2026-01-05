@@ -67,6 +67,7 @@ vim.pack.add {
   'https://github.com/folke/flash.nvim',
   'https://github.com/folke/persistence.nvim',
   'https://github.com/kylechui/nvim-surround',
+  'https://github.com/AndresYague/mark-jumps.nvim.git',
 
   -- previewers
   'https://github.com/OXY2DEV/markview.nvim',
@@ -119,5 +120,4 @@ require 'plugins.which-key'
 
 -- Local plugins
 require 'local_plugins.floating_term'
-require 'local_plugins.mark_jump'
 require 'local_plugins.mng_plugs'

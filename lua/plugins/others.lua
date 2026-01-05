@@ -5,6 +5,7 @@ require('move-enclosing').setup {}
 require('print-debug').setup {}
 require('nvim-surround').setup()
 require('flash').setup()
+require('mark-jumps').setup()
 
 require('colorizer').setup({ '*' }, {
   RRGGBBAA = true, -- #RRGGBBAA hex codes
@@ -33,9 +34,8 @@ vim.keymap.set('n', '<leader>qd', function()
 end, { desc = 'Do not save session' })
 -- Restart keymap (NOTE: Uses persistence)
 vim.keymap.set('n', '<leader>qr', function()
-  vim.cmd.restart('lua require("persistence").load()')
+  vim.cmd.restart 'lua require("persistence").load()'
 end, { desc = 'Restart session' })
-
 
 -- Flash keymaps
 vim.keymap.set({ 'n', 'x', 'o' }, 's', function()
@@ -53,3 +53,41 @@ end, { desc = 'Treesitter Search' })
 vim.keymap.set({ 'c' }, '<c-s>', function()
   require('flash').toggle()
 end, { desc = 'Toggle Flash Search' })
+
+-- Mark-jumps keymaps
+vim.keymap.set(
+  'n',
+  '<leader>ja',
+  require('mark-jumps').mark_add,
+  { desc = 'Add file to marks' }
+)
+vim.keymap.set(
+  'n',
+  '<leader>jr',
+  require('mark-jumps').remove_marks,
+  { desc = 'Remove all marks' }
+)
+vim.keymap.set(
+  'n',
+  '<leader>jd',
+  require('mark-jumps').delete_from_file,
+  { desc = 'Remove mark from this file' }
+)
+vim.keymap.set(
+  'n',
+  '<leader>js',
+  require('mark-jumps').choose_file,
+  { desc = 'Choose go to file' }
+)
+vim.keymap.set(
+  'n',
+  '<leader>jx',
+  require('mark-jumps').choose_delete,
+  { desc = 'Choose delete mark' }
+)
+vim.keymap.set(
+  'n',
+  '<leader>jc',
+  require('mark-jumps').choose_change,
+  { desc = 'Choose change mark' }
+)
