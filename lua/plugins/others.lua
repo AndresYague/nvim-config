@@ -5,7 +5,7 @@ require('move-enclosing').setup {}
 require('print-debug').setup {}
 require('nvim-surround').setup()
 require('flash').setup()
-require('mark-jumps').setup()
+require('fish-files').setup()
 
 require('colorizer').setup({ '*' }, {
   RRGGBBAA = true, -- #RRGGBBAA hex codes
@@ -54,40 +54,34 @@ vim.keymap.set({ 'c' }, '<c-s>', function()
   require('flash').toggle()
 end, { desc = 'Toggle Flash Search' })
 
--- Mark-jumps keymaps
+-- Fish-files keymaps
 vim.keymap.set(
   'n',
   '<leader>ja',
-  require('mark-jumps').mark_add,
-  { desc = 'Add file to marks' }
+  require('fish-files').add_hook,
+  { desc = 'Hook file' }
 )
 vim.keymap.set(
   'n',
   '<leader>jr',
-  require('mark-jumps').remove_marks,
-  { desc = 'Remove all marks' }
+  require('fish-files').unhook_all_files,
+  { desc = 'Unhook all files' }
 )
 vim.keymap.set(
   'n',
   '<leader>jd',
-  require('mark-jumps').delete_from_file,
-  { desc = 'Remove mark from this file' }
+  require('fish-files').remove_hook,
+  { desc = 'Unhook this file' }
 )
 vim.keymap.set(
   'n',
   '<leader>js',
-  require('mark-jumps').choose_file,
-  { desc = 'Choose go to file' }
+  require('fish-files').choose_reel_file,
+  { desc = 'Choose file to reel' }
 )
 vim.keymap.set(
   'n',
   '<leader>jx',
-  require('mark-jumps').choose_delete,
-  { desc = 'Choose delete mark' }
-)
-vim.keymap.set(
-  'n',
-  '<leader>jc',
-  require('mark-jumps').choose_change,
-  { desc = 'Choose change mark' }
+  require('fish-files').choose_remove_hook,
+  { desc = 'Choose file to unhook' }
 )
