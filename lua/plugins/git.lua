@@ -44,11 +44,9 @@ require('gitsigns').setup {
       require('gitsigns').blame_line()
     end, { desc = 'Blame Line' })
     vim.keymap.set('n', ']h', function()
-      ---@diagnostic disable-next-line: param-type-mismatch -- TODO: Remove when signature fixed
       require('gitsigns').nav_hunk 'next'
     end, { desc = 'Goto next hunk' })
     vim.keymap.set('n', '[h', function()
-      ---@diagnostic disable-next-line: param-type-mismatch -- TODO: Remove when signature fixed
       require('gitsigns').nav_hunk 'prev'
     end, { desc = 'Goto previous hunk' })
     vim.keymap.set('n', '<leader>hp', function()
