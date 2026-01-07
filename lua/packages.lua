@@ -24,6 +24,7 @@ vim.pack.add {
   'https://github.com/EdenEast/nightfox.nvim',
   'https://github.com/folke/tokyonight.nvim',
   'https://github.com/rebelot/kanagawa.nvim',
+  'https://github.com/catppuccin/nvim',
 
   -- editing
   'https://github.com/folke/todo-comments.nvim',

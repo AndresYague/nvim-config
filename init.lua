@@ -23,7 +23,15 @@ require 'languages.lua'
 require 'languages.python'
 
 -- Try to load these colorschemes in order
-local load_colorschemes = { 'nightfox', 'tokyonight' }
+local priority = 'kanagawa'
+
+local load_colorschemes = {
+  priority,
+  'catppuccin',
+  'kanagawa',
+  'nightfox',
+  'tokyonight'
+}
 
 -- Set colorscheme
 local found = nil

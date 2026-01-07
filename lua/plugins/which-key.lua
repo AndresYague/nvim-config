@@ -5,6 +5,7 @@ require('which-key').setup {
   preset = 'helix',
   icons = {
     rules = {
+      { pattern = 'unhook', icon = '󰛣 ', color = 'red' },
       { pattern = 'hook', icon = '󰛢 ', color = 'orange' },
       { pattern = 'reel', icon = '🎣 ', color = 'orange' },
       { pattern = 'change', icon = ' ', color = 'blue' },
