@@ -85,3 +85,9 @@ vim.keymap.set(
   require('fish-files').choose_remove_hook,
   { desc = 'Choose file to unhook' }
 )
+vim.keymap.set(
+  'n',
+  '<leader>jm',
+  require('fish-files').manage_hooks,
+  { desc = 'Manage hooks' }
+)
