@@ -341,6 +341,9 @@ vim.api.nvim_create_autocmd('User', {
   end,
 })
 
+-- Disable animations by default
+vim.g.snacks_animate = false
+
 vim.keymap.set('n', '<C-w>z', function()
   Snacks.zen()
 end, { desc = 'Toggle Zen Mode' })
