@@ -14,6 +14,12 @@ vim.keymap.set(
   ':%lua<CR>',
   { desc = 'Execute lua file' }
 )
+vim.keymap.set(
+  { 'n' },
+  '<leader>xp',
+  'yy:lua vim.print(<C-R>")<CR>',
+  { desc = 'Print lua line' }
+)
 
 -- Remap redo
 vim.keymap.set('n', 'U', '<C-R>', { desc = 'Redo' })

@@ -23,7 +23,8 @@ require 'languages.lua'
 require 'languages.python'
 
 -- Try to load these colorschemes in order
-local priority = 'kanagawa'
+require('local_plugins.mng_colorschemes')
+local priority = require('local_plugins.mng_colorschemes').priority
 
 local load_colorschemes = {
   priority,
