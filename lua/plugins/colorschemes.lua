@@ -12,27 +12,33 @@ require('nightfox').setup {
 }
 
 require('kanagawa').setup {
-  compile = true,   -- enable compiling the colorscheme
+  compile = true, -- enable compiling the colorscheme
   undercurl = true, -- enable undercurls
   commentStyle = { italic = true },
   functionStyle = {},
   keywordStyle = { italic = true },
   statementStyle = { bold = true },
   typeStyle = {},
-  transparent = false,   -- do not set background color
-  dimInactive = true,    -- dim inactive window `:h hl-NormalNC`
+  dimInactive = true, -- dim inactive window `:h hl-NormalNC`
   terminalColors = true, -- define vim.g.terminal_color_{0,17}
-  colors = {             -- add/modify theme and palette colors
-    palette = {},
-    theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
-  },
-  overrides = function(colors) -- add/modify highlights
-    return {}
-  end,
-  theme = 'wave',  -- Load "wave" theme when 'background' option is not set
-  background = {   -- map the value of 'background' option to a theme
+  theme = 'wave', -- Load "wave" theme when 'background' option is not set
+  background = { -- map the value of 'background' option to a theme
     dark = 'wave', -- try "dragon" !
     light = 'lotus',
+  },
+}
+
+
+require('catppuccin').setup {
+  dim_inactive = {
+    enabled = true, -- dims the background color of inactive window
+    shade = 'dark',
+    percentage = 0.15, -- percentage of the shade to apply to the inactive window
+  },
+  lsp_styles = { -- Handles the style of specific lsp hl groups (see `:h lsp-highlight`).
+    inlay_hints = {
+      background = false,
+    },
   },
 }
 
@@ -40,9 +46,9 @@ require('tokyonight').setup {
   lazy = false,
   -- your configuration comes here
   -- or leave it empty to use the default settings
-  style = 'moon',         -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
-  light_style = 'day',    -- The theme is used when the background is set to light
-  transparent = false,    -- Enable this to disable setting the background color
+  style = 'moon', -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
+  light_style = 'day', -- The theme is used when the background is set to light
+  transparent = false, -- Enable this to disable setting the background color
   terminal_colors = true, -- Configure the colors used when opening a `:terminal` in [Neovim](https://github.com/neovim/neovim)
   styles = {
     -- Style to be applied to different syntax groups
@@ -52,14 +58,14 @@ require('tokyonight').setup {
     functions = {},
     variables = {},
     -- Background styles. Can be "dark", "transparent" or "normal"
-    sidebars = 'dark',              -- style for sidebars, see below
-    floats = 'dark',                -- style for floating windows
+    sidebars = 'dark', -- style for sidebars, see below
+    floats = 'dark', -- style for floating windows
   },
-  sidebars = { 'qf', 'help' },      -- Set a darker background on sidebar-like windows. For example: `["qf", "vista_kind", "terminal", "packer"]`
-  day_brightness = 0.01,            -- Adjusts the brightness of the colors of the **Day** style. Number between 0 and 1, from dull to vibrant colors
+  sidebars = { 'qf', 'help' }, -- Set a darker background on sidebar-like windows. For example: `["qf", "vista_kind", "terminal", "packer"]`
+  day_brightness = 0.01, -- Adjusts the brightness of the colors of the **Day** style. Number between 0 and 1, from dull to vibrant colors
   hide_inactive_statusline = false, -- Enabling this option, will hide inactive statuslines and replace them with a thin border instead. Should work with the standard **StatusLine** and **LuaLine**.
-  dim_inactive = true,              -- dims inactive windows
-  lualine_bold = false,             -- When `true`, section headers in the lualine theme will be bold
+  dim_inactive = true, -- dims inactive windows
+  lualine_bold = false, -- When `true`, section headers in the lualine theme will be bold
 
   --- You can override specific color groups to use other groups or a hex color
   --- function will be called with a ColorScheme table
