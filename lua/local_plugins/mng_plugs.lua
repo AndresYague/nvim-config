@@ -165,6 +165,15 @@ end
 ---buffer. If a plugin is loaded but not in vim.pack.add, it will delete it.
 ---@return nil
 local plug_sync = function()
+  -- Make sure we are running the function in the right place
+  local where_to_run = vim.fs.abspath(
+    vim.fs.joinpath(vim.fn.stdpath 'config', 'lua', 'packages.lua')
+  )
+  if vim.fs.abspath(vim.api.nvim_buf_get_name(0)) ~= where_to_run then
+    vim.print('Run sync from ' .. where_to_run)
+    return nil
+  end
+
   -- Get the plugin table
   local loaded_plugins = vim.pack.get()
 

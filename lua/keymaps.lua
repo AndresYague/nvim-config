@@ -155,12 +155,7 @@ vim.keymap.set(
 vim.keymap.set('n', '<leader>cm', '<cmd>Mason<CR>', { desc = 'Mason window' })
 
 -- Handy shortcut for calculator mode
-vim.keymap.set('n', '<leader>cb', 'i<C-R>=', { desc = 'Calculator insert' })
+vim.keymap.set('n', '<leader>cc', 'i<C-R>=', { desc = 'Calculator insert' })
 
 -- Use the calculator in normal mode (requires having bc installed)
 vim.keymap.set('x', '<leader>cc', ':!bc<CR>', { desc = 'Line calculator' })
-
--- Run tests
-vim.keymap.set('n', '<leader>rt', function()
-  vim.cmd.PlenaryBustedFile '%'
-end, { desc = 'Run Plenary tests' })
