@@ -28,7 +28,6 @@ require('kanagawa').setup {
   },
 }
 
-
 require('catppuccin').setup {
   dim_inactive = {
     enabled = true, -- dims the background color of inactive window
