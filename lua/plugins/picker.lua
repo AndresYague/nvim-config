@@ -1,7 +1,7 @@
 local Snacks = require 'snacks'
 
 -- Top Pickers & Explorer
-vim.keymap.set({ 'n' }, '<leader><space>', function()
+vim.keymap.set({ 'n' }, '<leader>fs', function()
   Snacks.picker.smart()
 end, { desc = 'Smart Find Files' })
 vim.keymap.set({ 'n' }, '<leader>,', function()
@@ -34,7 +34,7 @@ end, { desc = 'Buffers' })
 vim.keymap.set({ 'n' }, '<leader>fc', function()
   Snacks.picker.files { cwd = vim.fn.stdpath 'config' }
 end, { desc = 'Find Config File' })
-vim.keymap.set({ 'n' }, '<leader>ff', function()
+vim.keymap.set({ 'n' }, '<leader><space>', function()
   Snacks.picker.files()
 end, { desc = 'Find Files' })
 vim.keymap.set({ 'n' }, '<leader>fg', function()
