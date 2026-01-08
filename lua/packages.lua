@@ -25,6 +25,7 @@ vim.pack.add {
   'https://github.com/folke/tokyonight.nvim',
   'https://github.com/rebelot/kanagawa.nvim',
   'https://github.com/catppuccin/nvim',
+  'https://github.com/binhtddev/dracula.nvim',
 
   -- editing
   'https://github.com/folke/todo-comments.nvim',
@@ -48,7 +49,7 @@ vim.pack.add {
   'https://github.com/nvim-lualine/lualine.nvim',
 
   -- orgmode
-  "https://github.com/nvim-orgmode/orgmode",
+  'https://github.com/nvim-orgmode/orgmode',
 
   -- TODO: Check periodically on neorg to see if it is fixed
   -- neorg

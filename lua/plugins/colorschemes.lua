@@ -80,3 +80,8 @@ require('tokyonight').setup {
     highlights.CursorLineNr.fg = colors.magenta
   end,
 }
+
+require('dracula').setup {
+  dim_inactive = true,
+  day_brightness = 0.01,
+}
