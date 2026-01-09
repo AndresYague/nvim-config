@@ -24,7 +24,7 @@ Snacks.setup {
         },
         {
           icon = ' ',
-          key = 'o',
+          key = 'l',
           desc = 'Oil',
           action = ':Oil',
         },

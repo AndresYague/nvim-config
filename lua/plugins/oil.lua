@@ -22,7 +22,7 @@ require('oil').setup {
 }
 
 -- Open oil
-vim.keymap.set('n', '<leader>o', vim.cmd.Oil, { desc = 'Oil' })
+vim.keymap.set('n', '<leader>l', vim.cmd.Oil, { desc = 'Oil' })
 
 -- If renaming a file with Oil, let the LSP know
 -- through snacks.rename

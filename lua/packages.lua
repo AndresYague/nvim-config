@@ -50,6 +50,7 @@ vim.pack.add {
 
   -- orgmode
   'https://github.com/nvim-orgmode/orgmode',
+  'https://github.com/nvim-orgmode/org-bullets.nvim',
 
   -- TODO: Check periodically on neorg to see if it is fixed
   -- neorg
