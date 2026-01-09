@@ -23,14 +23,8 @@ require 'languages.cpp'
 require 'languages.lua'
 require 'languages.python'
 
--- Try to load these colorschemes in order
+-- Load the previously saved colorscheme
 require 'local_plugins.mng_colorschemes'
-local priority = require('local_plugins.mng_colorschemes').priority
-if priority == '' then
-  vim.cmd.colorscheme 'slate'
-else
-  vim.cmd.colorscheme(priority)
-end
 
 -- The modeline
 -- vim: ts=2 sts=2 sw=2 et

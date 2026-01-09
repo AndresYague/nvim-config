@@ -14,7 +14,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- Folding expressions and indents
 
 local ignore_filetypes_folding =
-{ 'gitcommit', 'gitrebase', 'svg', 'hgcommit', 'fugitive' }
+{ 'gitcommit', 'gitrebase', 'svg', 'hgcommit', 'fugitive', 'org' }
 
 vim.api.nvim_create_autocmd({ 'FileType' }, {
   callback = function()
@@ -22,7 +22,7 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
       return
     end
 
-    if pcall(vim.treesitter.get_parser) and vim.o.filetype ~= 'org' then
+    if pcall(vim.treesitter.get_parser) then
       vim.treesitter.start()
       vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
       vim.opt.foldmethod = 'expr'

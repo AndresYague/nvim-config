@@ -1,7 +1,6 @@
 -- Attempt to save and load the latest colorscheme
 
-M = {}
-M.priority = ''
+local priority = ''
 
 -- Find where we save the colorscheme file
 local cs_path =
@@ -11,7 +10,7 @@ local cs_path =
 local fread = io.open(cs_path, 'r')
 if fread then
   for line in fread:lines() do
-    M.priority = line
+    priority = line
     break
   end
 end
@@ -29,5 +28,8 @@ vim.api.nvim_create_autocmd('VimLeave', {
   once = true,
 })
 
-
-return M
+if priority == '' then
+  vim.cmd.colorscheme 'slate'
+else
+  vim.cmd.colorscheme(priority)
+end
