@@ -4,6 +4,7 @@ require 'options'
 -- Make the vim shell "fish"
 vim.opt.shell = 'fish'
 vim.opt.foldlevelstart = 99
+vim.opt.concealcursor = 'nc'
 
 -- Load keymaps they have to come before loading which-key
 require 'keymaps'
@@ -23,7 +24,7 @@ require 'languages.lua'
 require 'languages.python'
 
 -- Try to load these colorschemes in order
-require('local_plugins.mng_colorschemes')
+require 'local_plugins.mng_colorschemes'
 local priority = require('local_plugins.mng_colorschemes').priority
 if priority == '' then
   vim.cmd.colorscheme 'slate'
