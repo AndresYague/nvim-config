@@ -59,13 +59,7 @@ vim.keymap.set(
   'n',
   '<leader>ja',
   require('fish-files').add_hook,
-  { desc = 'Hook file' }
-)
-vim.keymap.set(
-  'n',
-  '<leader>jr',
-  require('fish-files').unhook_all_files,
-  { desc = 'Unhook all files' }
+  { desc = 'Hook this file' }
 )
 vim.keymap.set(
   'n',
@@ -75,19 +69,13 @@ vim.keymap.set(
 )
 vim.keymap.set(
   'n',
-  '<leader>js',
-  require('fish-files').choose_reel_file,
-  { desc = 'Choose file to reel' }
-)
-vim.keymap.set(
-  'n',
-  '<leader>jx',
-  require('fish-files').choose_remove_hook,
-  { desc = 'Choose file to unhook' }
-)
-vim.keymap.set(
-  'n',
   '<leader>jm',
   require('fish-files').manage_hooks,
   { desc = 'Manage hooks' }
+)
+vim.keymap.set(
+  'n',
+  '<leader>jr',
+  require('fish-files').unhook_all_files,
+  { desc = 'Unhook all files' }
 )

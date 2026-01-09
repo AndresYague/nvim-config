@@ -15,8 +15,8 @@ require('lazydev').setup {
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
   callback = function(event)
-    -- Enable inlay hints
-    vim.lsp.inlay_hint.enable()
+    -- Uncomment to enable inlay hints automatically
+    -- vim.lsp.inlay_hint.enable()
 
     -- Create a function that lets us more easily define mappings
     -- specific for LSP related items. It sets the mode, buffer and
