@@ -9,10 +9,10 @@ require('orgmode').setup {
   org_hide_leading_stars = true,
   mappings = {
     agenda = {
-      org_agenda_earlier = "h",
-      org_agenda_later = "l",
-    }
-  }
+      org_agenda_earlier = 'h',
+      org_agenda_later = 'l',
+    },
+  },
 }
 
 require('org-bullets').setup()

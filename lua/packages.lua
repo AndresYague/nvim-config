@@ -4,7 +4,6 @@ vim.pack.add {
   -- General dependencies
   'https://github.com/nvim-tree/nvim-web-devicons',
   'https://github.com/rcarriga/nvim-notify',
-  -- 'https://github.com/vhyrro/luarocks.nvim',
 
   -- blink
   -- NOTE: The version is specified so the rust fuzzy find can be compiled
@@ -52,14 +51,6 @@ vim.pack.add {
   'https://github.com/nvim-orgmode/orgmode',
   'https://github.com/nvim-orgmode/org-bullets.nvim',
 
-  -- TODO: Check periodically on neorg to see if it is fixed
-  -- neorg
-  -- 'https://github.com/3rd/image.nvim',
-  -- 'https://github.com/nvim-neorg/lua-utils.nvim',
-  -- 'https://github.com/nvim-neorg/neorg',
-  -- 'https://github.com/nvim-neotest/nvim-nio',
-  -- 'https://github.com/pysan3/pathlib.nvim',
-
   -- noice
   'https://github.com/MunifTanjim/nui.nvim',
   'https://github.com/folke/noice.nvim',
@@ -102,10 +93,6 @@ vim.pack.add {
   'https://github.com/folke/which-key.nvim',
 }
 
--- Make sure luarocks is started before other plugins
--- NOTE: Only needed for neorg, which we don't have
--- require('luarocks-nvim').setup()
-
 -- Make sure snacks-nvim loads ASAP
 require 'plugins.snacks-nvim'
 
@@ -114,7 +101,6 @@ require 'plugins.editing'
 require 'plugins.git'
 require 'plugins.lsp'
 require 'plugins.lualine'
--- require 'plugins.neorg'
 require 'plugins.noice'
 require 'plugins.oil'
 require 'plugins.orgmode'
