@@ -46,7 +46,7 @@ end
 local relsize = 0.8
 
 -- Floating terminal
-vim.keymap.set('n', '<leader>tt', function()
+vim.keymap.set('n', '<C-Space>', function()
   toggle_floating_terminal(relsize)
 
   -- Create autocmd to close the window when leaving it
@@ -60,4 +60,25 @@ vim.keymap.set('n', '<leader>tt', function()
     end,
     desc = 'Close floating terminal when leaving the window',
   })
+end, { desc = 'Toggle floating terminal (cwd)' })
+
+-- Allow also the ergonomic one
+vim.keymap.set('n', '<Space>tt', function()
+  toggle_floating_terminal(relsize)
+
+  -- Create autocmd to close the window when leaving it
+  -- Doing it inside of the keymap so we can retrieve state.bufnr
+  -- so the autocmd only listens to the floating terminal
+  vim.api.nvim_create_autocmd({ 'WinLeave' }, {
+    group = vim.api.nvim_create_augroup('FloatingTerm', { clear = true }),
+    buffer = state.bufnr,
+    callback = function()
+      toggle_floating_terminal(relsize)
+    end,
+    desc = 'Close floating terminal when leaving the window',
+  })
+end, { desc = 'Toggle floating terminal (cwd)' })
+
+vim.keymap.set('t', '<C-Space>', function()
+  toggle_floating_terminal(relsize)
 end, { desc = 'Toggle floating terminal (cwd)' })

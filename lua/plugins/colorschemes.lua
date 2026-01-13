@@ -41,6 +41,19 @@ require('catppuccin').setup {
   },
 }
 
+require('dracula').setup {
+  dim_inactive = true,
+  day_brightness = 0.01,
+
+  on_colors = function(colors)
+    --- The yellow is confusing with the green and bright green, so modify
+    --- green to make it more distinct from yellow. Modify bright_green as
+    --- well to make it more distinct from green
+    colors.green = '#00D657'
+    colors.bright_green = '#70FF9A'
+  end,
+}
+
 require('tokyonight').setup {
   lazy = false,
   -- your configuration comes here
@@ -78,9 +91,4 @@ require('tokyonight').setup {
   on_highlights = function(highlights, colors)
     highlights.CursorLineNr.fg = colors.magenta
   end,
-}
-
-require('dracula').setup {
-  dim_inactive = true,
-  day_brightness = 0.01,
 }
