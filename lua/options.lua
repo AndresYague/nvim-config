@@ -54,7 +54,7 @@ vim.o.splitbelow = true
 
 -- Configure how whitespace is shown
 vim.o.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.listchars = { tab = '» ', trail = '·', extends = '>', nbsp = '␣' }
 
 -- Set up tabs and column preview
 vim.o.colorcolumn = '80'
