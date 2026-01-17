@@ -12,7 +12,7 @@ Snacks.setup {
       keys = {
         {
           icon = ' ',
-          key = '<space>',
+          key = 'f',
           desc = 'Find File',
           action = ":lua Snacks.dashboard.pick('files')",
         },
@@ -315,6 +315,20 @@ vim.api.nvim_create_autocmd('User', {
         end,
       })
       :map '<leader>uz'
+
+    -- Fully custom toggle for gitsigns
+    Snacks.toggle
+      .new({
+        id = 'gitsigns-word-diff',
+        name = 'Word diff',
+        get = function()
+          return require('gitsigns.config').config.word_diff
+        end,
+        set = function()
+          require('gitsigns').toggle_word_diff()
+        end,
+      })
+      :map '<leader>uW'
 
     -- Fully custom toggle for visual_bold
     Snacks.toggle
