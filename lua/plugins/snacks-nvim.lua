@@ -216,7 +216,7 @@ vim.api.nvim_create_autocmd('User', {
 
     -- Create some toggle mappings
     Snacks.toggle.option('spell', { name = 'Spelling' }):map '<leader>us'
-    Snacks.toggle.option('wrap', { name = 'Wrap' }):map '<leader>uw'
+    Snacks.toggle.option('wrap', { name = 'Wrap' }):map '<leader>uW'
     Snacks.toggle
       .option('relativenumber', { name = 'Relative Number' })
       :map '<leader>uL'
@@ -328,7 +328,7 @@ vim.api.nvim_create_autocmd('User', {
           require('gitsigns').toggle_word_diff()
         end,
       })
-      :map '<leader>uW'
+      :map '<leader>uw'
 
     -- Fully custom toggle for visual_bold
     Snacks.toggle

@@ -1,10 +1,4 @@
 require('gitsigns').setup {
-  signs = {
-    add = { text = '┃' },
-  },
-  signs_staged = {
-    add = { text = '┃' },
-  },
   signs_staged_enable = true,
   signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
   numhl = true,      -- Toggle with `:Gitsigns toggle_numhl`
