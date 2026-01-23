@@ -28,8 +28,8 @@ vim.keymap.set('n', 'U', '<C-R>', { desc = 'Redo' })
 vim.keymap.set('n', '<leader>a', '<C-^>', { desc = 'Alternate file' })
 
 -- Remap bracket operator
-vim.keymap.set({'o', 'x'}, 'ir', 'i[', { desc = 'inner []' })
-vim.keymap.set({'o', 'x'}, 'ar', 'a[', { desc = '[] block' })
+vim.keymap.set({ 'o', 'x' }, 'ir', 'i[', { desc = 'inner []' })
+vim.keymap.set({ 'o', 'x' }, 'ar', 'a[', { desc = '[] block' })
 
 -- Diagnostic keymaps
 vim.keymap.set(
