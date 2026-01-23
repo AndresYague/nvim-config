@@ -156,6 +156,9 @@ vim.keymap.set(
   '<cmd>Gvdiffsplit!<CR>',
   { desc = 'Do a Gvdiffsplit!' }
 )
+vim.keymap.set('n', '<leader>dt', '<cmd>diffthis<CR>', { desc = 'Diff this' })
+vim.keymap.set('n', '<leader>do', '<cmd>diffoff!<CR>', { desc = 'Diff off' })
+vim.keymap.set('v', '<leader>dt', '<cmd>diffthis<CR>', { desc = 'Diff this' })
 
 -- Mason window display
 vim.keymap.set('n', '<leader>cm', '<cmd>Mason<CR>', { desc = 'Mason window' })

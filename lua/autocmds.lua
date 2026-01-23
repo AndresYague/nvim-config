@@ -66,6 +66,7 @@ vim.api.nvim_create_autocmd('BufWinLeave', {
   callback = function(event)
     local match_str = 'fugitive:///'
     if event.file:sub(1, match_str:len()) == match_str then
+      vim.keymap.del('n', 'gh')
       vim.keymap.del('n', 'gl')
       vim.keymap.del('n', 'gq')
     end
