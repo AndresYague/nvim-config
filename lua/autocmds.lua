@@ -14,7 +14,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- Folding expressions and indents
 
 local ignore_filetypes_folding =
-{ 'gitcommit', 'gitrebase', 'svg', 'hgcommit', 'fugitive', 'org' }
+  { 'gitcommit', 'gitrebase', 'svg', 'hgcommit', 'fugitive', 'org' }
 
 vim.api.nvim_create_autocmd({ 'FileType' }, {
   callback = function()
@@ -70,5 +70,23 @@ vim.api.nvim_create_autocmd('BufWinLeave', {
       vim.keymap.del('n', 'gl')
       vim.keymap.del('n', 'gq')
     end
+  end,
+})
+
+-- Change relativenumber when changing modes
+local change_relnum =
+  vim.api.nvim_create_augroup('Change relnum', { clear = true })
+vim.api.nvim_create_autocmd('ModeChanged', {
+  group = change_relnum,
+  pattern = '*:i',
+  callback = function()
+    vim.o.relativenumber = false
+  end,
+})
+vim.api.nvim_create_autocmd('ModeChanged', {
+  group = change_relnum,
+  pattern = '*:n',
+  callback = function()
+    vim.o.relativenumber = true
   end,
 })
