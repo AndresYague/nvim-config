@@ -1,4 +1,3 @@
--- TODO: Make it operator pending!
 local current_selections = {}
 local selection_range = {}
 local buffers = {}
@@ -13,7 +12,7 @@ local namespace = vim.api.nvim_create_namespace 'local_diff'
 ---@return nil
 local add_selection = function()
   -- Visually selected region
-  local region = vim.fn.getregionpos(vim.fn.getpos 'v', vim.fn.getpos '.')
+  local region = vim.fn.getregionpos(vim.fn.getpos "'[", vim.fn.getpos "']")
 
   -- Get all lines in each sub-region
   local selections = {}
@@ -39,7 +38,26 @@ end
 local diff_selection = function()
   -- Find the differences between the two hukns
   if #current_selections == 2 then
-    local diff = vim.text.diff(current_selections[1], current_selections[2], {
+
+    -- Skip if the selections are identical
+    if current_selections[1] == current_selections[2] then
+      return
+    end
+
+    local l1 = string.len(current_selections[1])
+    local l2 = string.len(current_selections[2])
+
+    local long_sel = l1 > l2 and current_selections[1] or current_selections[2]
+    local short_sel = l1 < l2 and current_selections[1] or current_selections[2]
+
+    -- If long_sel and short_sel are the same, just assing the selections by
+    -- hand
+    if long_sel == short_sel then
+      long_sel = current_selections[1]
+      short_sel = current_selections[2]
+    end
+
+    local diff = vim.text.diff(long_sel, short_sel, {
       result_type = 'indices',
       ignore_cr_at_eol = true,
       algorithm = 'minimal',
@@ -58,13 +76,13 @@ local diff_selection = function()
         removed_line[#removed_line + 1] = { hunk[1], hunk[2] }
         for i = 0, hunk[2] - 1 do
           removed[#removed + 1] =
-            vim.fn.split(current_selections[1], '\n')[hunk[1] + i]
+            vim.fn.split(long_sel, '\n')[hunk[1] + i]
         end
 
         added_line[#added_line + 1] = { hunk[3], hunk[4] }
         for i = 0, hunk[4] - 1 do
           added[#added + 1] =
-            vim.fn.split(current_selections[2], '\n')[hunk[3] + i]
+            vim.fn.split(short_sel, '\n')[hunk[3] + i]
         end
       end
     end
@@ -75,9 +93,11 @@ local diff_selection = function()
   return nil
 end
 
-local use_worddiffs = function() end
+-- TODO: Make my own
+-- local use_worddiffs = function() end
 
-local diffthis = function()
+---@return nil
+_G.diffthis = function(mode)
   -- Get the selections
   add_selection()
 
@@ -137,6 +157,7 @@ local diffthis = function()
   end
 end
 
+---@return nil
 local diffoff = function()
   for bufnr, extmark_ids in pairs(buff_extmarks) do
     -- If no extmark_ids, continue
@@ -160,10 +181,10 @@ local diffoff = function()
 end
 
 -- Create keymaps
-vim.keymap.set({ 'x' }, '<leader>dt', diffthis, { desc = 'Visual diff this' })
-vim.keymap.set(
-  { 'x', 'n' },
-  '<leader>dx',
-  diffoff,
+vim.keymap.set( { 'x', 'n' }, '<leader>dx', diffoff,
   { desc = 'Visual diff off' }
 )
+vim.keymap.set({ 'n', 'x' }, '<leader>dv', function()
+  vim.go.opfunc = 'v:lua.diffthis'
+  return 'g@'
+end, { desc = 'Visual diff this', expr = true })
