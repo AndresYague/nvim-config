@@ -43,16 +43,7 @@ local diff_selection = function()
       return
     end
 
-    local l1 = string.len(current_selections[1])
-    local l2 = string.len(current_selections[2])
-
-    -- The reason to do it this way is that if l1 == l2, then long_sel and
-    -- short_sel will select a different string. The reason being that the
-    -- comparison will be always false and the last statement will be chosen.
-    local long_sel = l1 > l2 and current_selections[1] or current_selections[2]
-    local short_sel = l1 > l2 and current_selections[2] or current_selections[1]
-
-    local diff = vim.text.diff(long_sel, short_sel, {
+    local diff = vim.text.diff(current_selections[1], current_selections[2], {
       result_type = 'indices',
       ignore_cr_at_eol = true,
       algorithm = 'minimal',
@@ -65,32 +56,31 @@ local diff_selection = function()
     local removed_line = {}
     local added_line = {}
 
-    if type(diff[1]) == 'table' then
-      -- Extract added and removed
-      for _, hunk in ipairs(diff) do
-        removed_line[#removed_line + 1] = { hunk[1], hunk[2] }
-        for i = 0, hunk[2] - 1 do
-          removed[#removed + 1] = vim.fn.split(long_sel, '\n')[hunk[1] + i]
-        end
+    -- Extract added and removed
+    assert(type(diff) == 'table')
+    for _, hunk in ipairs(diff) do
+      removed_line[#removed_line + 1] = { hunk[1], hunk[2] }
+      for i = 0, hunk[2] - 1 do
+        removed[#removed + 1] =
+          vim.fn.split(current_selections[1], '\n')[hunk[1] + i]
+      end
 
-        added_line[#added_line + 1] = { hunk[3], hunk[4] }
-        for i = 0, hunk[4] - 1 do
-          added[#added + 1] = vim.fn.split(short_sel, '\n')[hunk[3] + i]
-        end
+      added_line[#added_line + 1] = { hunk[3], hunk[4] }
+      for i = 0, hunk[4] - 1 do
+        added[#added + 1] =
+          vim.fn.split(current_selections[2], '\n')[hunk[3] + i]
       end
     end
 
-    return { wdiff.run_word_diff(removed, added), removed_line, added_line }
+    return { { wdiff.run_word_diff(removed, added) }, removed_line, added_line }
   end
 
   return nil
 end
 
--- TODO: Make my own
--- local use_worddiffs = function() end
-
 ---@param mode string
 ---@return nil
+---@diagnostic disable-next-line: unused-local
 _G.diffthis = function(mode)
   -- Get the selections
   add_selection()
@@ -104,49 +94,43 @@ _G.diffthis = function(mode)
   local wd = diffs[1]
   local rem_add = { diffs[2], diffs[3] }
 
-  -- Do extmarks for added and removed
-  for k, selection in ipairs(selection_range) do
-    local bufnr = buffers[k]
-    local anchor = selection[1]
+  for i = 1, 2 do
+    local changes = wd[i]
+    local offset = rem_add[i][1][1] - 1
+    local buffnr = buffers[i]
 
-    for _, changed in ipairs(rem_add) do
-      for j = 1, #changed do
-        local offset = changed[j][1] - 1
-        local count = changed[j][2]
+    if buff_extmarks[buffnr] == nil then
+      buff_extmarks[buffnr] = {}
+    end
 
-        if buff_extmarks[bufnr] == nil then
-          buff_extmarks[bufnr] = {}
-        end
+    for _, change in ipairs(changes) do
+      local lnum = selection_range[i][1] + offset + change[1] - 1
+      ---@diagnostic disable-next-line: param-type-mismatch
+      local line_len = vim.fn.len(vim.fn.getline(lnum))
 
-        for i = 0, count - 1 do
-          local lnum = anchor + offset + i
-          local line_len = vim.fn.len(vim.fn.getline(lnum))
+      local col_sta = 0
+      local col_end = line_len
+      if #change > 0 then
+        col_sta = change[3] - 1
+        col_end = vim.fn.min { change[4] - 1, col_end }
 
-          local col_sta = 0
-          local col_end = line_len
-          if #wd > 0 then
-            col_sta = wd[i + 1][3] - 1
-            col_end = vim.fn.min { wd[i + 1][4] - 1, col_end }
-
-            if col_end == col_sta then
-              if col_end < line_len then
-                col_end = col_end + 1
-              else
-                col_sta = col_sta - 1
-              end
-            end
+        if col_end == col_sta then
+          if col_end < line_len then
+            col_end = col_end + 1
+          else
+            col_sta = col_sta - 1
           end
-
-          table.insert(
-            buff_extmarks[bufnr],
-            vim.api.nvim_buf_set_extmark(bufnr, namespace, lnum - 1, col_sta, {
-              hl_group = 'DiffText',
-              virt_text_pos = 'overlay',
-              end_col = col_end,
-            })
-          )
         end
       end
+
+      table.insert(
+        buff_extmarks[buffnr],
+        vim.api.nvim_buf_set_extmark(buffnr, namespace, lnum - 1, col_sta, {
+          hl_group = 'DiffText',
+          virt_text_pos = 'overlay',
+          end_col = col_end,
+        })
+      )
     end
   end
 
