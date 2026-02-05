@@ -2,6 +2,7 @@ local current_selections = {}
 local selection_range = {}
 local buffers = {}
 local buff_extmarks = {}
+local old_func
 
 -- Using the word-diff from gitsigns
 local wdiff = require 'gitsigns.diff_int'
@@ -137,6 +138,9 @@ _G.diffthis = function(mode)
   -- Delete the keymap that was previously defined because we do not need it
   -- anymore
   vim.keymap.del({ 'o' }, 'v')
+
+  -- Restore the old opfunc
+  vim.go.opfunc = old_func
 end
 
 ---@return nil
@@ -170,6 +174,7 @@ vim.keymap.set(
   { desc = 'Visual diff off' }
 )
 vim.keymap.set({ 'n', 'x' }, '<leader>dv', function()
+  old_func = vim.go.opfunc
   vim.go.opfunc = 'v:lua.diffthis'
 
   -- Define the keymap in this callback so we have access to this keymap only
