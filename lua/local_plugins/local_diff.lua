@@ -38,7 +38,6 @@ end
 local diff_selection = function()
   -- Find the differences between the two hukns
   if #current_selections == 2 then
-
     -- Skip if the selections are identical
     if current_selections[1] == current_selections[2] then
       return
@@ -47,15 +46,11 @@ local diff_selection = function()
     local l1 = string.len(current_selections[1])
     local l2 = string.len(current_selections[2])
 
+    -- The reason to do it this way is that if l1 == l2, then long_sel and
+    -- short_sel will select a different string. The reason being that the
+    -- comparison will be always false and the last statement will be chosen.
     local long_sel = l1 > l2 and current_selections[1] or current_selections[2]
-    local short_sel = l1 < l2 and current_selections[1] or current_selections[2]
-
-    -- If long_sel and short_sel are the same, just assing the selections by
-    -- hand
-    if long_sel == short_sel then
-      long_sel = current_selections[1]
-      short_sel = current_selections[2]
-    end
+    local short_sel = l1 > l2 and current_selections[2] or current_selections[1]
 
     local diff = vim.text.diff(long_sel, short_sel, {
       result_type = 'indices',
@@ -75,14 +70,12 @@ local diff_selection = function()
       for _, hunk in ipairs(diff) do
         removed_line[#removed_line + 1] = { hunk[1], hunk[2] }
         for i = 0, hunk[2] - 1 do
-          removed[#removed + 1] =
-            vim.fn.split(long_sel, '\n')[hunk[1] + i]
+          removed[#removed + 1] = vim.fn.split(long_sel, '\n')[hunk[1] + i]
         end
 
         added_line[#added_line + 1] = { hunk[3], hunk[4] }
         for i = 0, hunk[4] - 1 do
-          added[#added + 1] =
-            vim.fn.split(short_sel, '\n')[hunk[3] + i]
+          added[#added + 1] = vim.fn.split(short_sel, '\n')[hunk[3] + i]
         end
       end
     end
@@ -96,6 +89,7 @@ end
 -- TODO: Make my own
 -- local use_worddiffs = function() end
 
+---@param mode string
 ---@return nil
 _G.diffthis = function(mode)
   -- Get the selections
@@ -155,6 +149,10 @@ _G.diffthis = function(mode)
       end
     end
   end
+
+  -- Delete the keymap that was previously defined because we do not need it
+  -- anymore
+  vim.keymap.del({ 'o' }, 'v')
 end
 
 ---@return nil
@@ -181,10 +179,18 @@ local diffoff = function()
 end
 
 -- Create keymaps
-vim.keymap.set( { 'x', 'n' }, '<leader>dx', diffoff,
+vim.keymap.set(
+  { 'x', 'n' },
+  '<leader>dx',
+  diffoff,
   { desc = 'Visual diff off' }
 )
 vim.keymap.set({ 'n', 'x' }, '<leader>dv', function()
   vim.go.opfunc = 'v:lua.diffthis'
+
+  -- Define the keymap in this callback so we have access to this keymap only
+  -- here
+  vim.keymap.set({ 'o' }, 'v', '<leader>', { desc = 'Visual diff line' })
+
   return 'g@'
-end, { desc = 'Visual diff this', expr = true })
+end, { desc = 'Visual diff', expr = true })
