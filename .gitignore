@@ -1,2 +1,4 @@
 nvim-pack-lock.json
 colorscheme.txt
+lua/inactive
+snippets
