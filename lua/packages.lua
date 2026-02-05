@@ -33,9 +33,10 @@ vim.pack.add {
   'https://github.com/windwp/nvim-autopairs',
   'https://github.com/ysmb-wtsg/in-and-out.nvim',
 
-  -- git
+  -- vcs
   'https://github.com/lewis6991/gitsigns.nvim',
   'https://github.com/tpope/vim-fugitive',
+  'https://github.com/NicolasGB/jj.nvim.git',
 
   -- lsp
   'https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim',
@@ -98,7 +99,7 @@ require 'plugins.snacks-nvim'
 
 require 'plugins.colorschemes'
 require 'plugins.editing'
-require 'plugins.git'
+require 'plugins.vcs'
 require 'plugins.lsp'
 require 'plugins.lualine'
 require 'plugins.noice'
