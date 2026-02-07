@@ -97,7 +97,7 @@ require('lualine').setup {
         -- Recorder
         function()
           return require('recorder').displaySlots()
-              .. require('recorder').recordingStatus()
+            .. require('recorder').recordingStatus()
         end,
       },
       -- NOTE: Uncomment if we want to see "@recording"
@@ -116,16 +116,14 @@ require('lualine').setup {
     lualine_y = { 'selectioncount', 'progress', 'location' },
     lualine_z = { { 'datetime', style = '%a %d-%m-%y %H:%M' } },
   },
-  inactive_sections = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = { 'filename' },
-    lualine_x = { 'location' },
-    lualine_y = {},
-    lualine_z = {},
-  },
+  inactive_sections = {},
   tabline = {},
   winbar = {},
   inactive_winbar = {},
-  extensions = {},
+  extensions = {
+    'fugitive',
+    'oil',
+    'quickfix',
+    'mason',
+  },
 }
