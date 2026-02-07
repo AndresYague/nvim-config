@@ -124,10 +124,26 @@ _G.diffthis = function(mode)
         end
       end
 
+      -- Highlight groups specific for the type of diff
+      -- This changes the color of the characters themseleves
+      -- with diffAdded, diffRemoved, etc. The backgrounds such as
+      -- GitSignsAddInline reverse the colors of background and characters.
+      local hl_fg, hl_bg
+      if change[2] == 'add' then
+        hl_fg = 'diffAdded'
+        hl_bg = 'GitSignsAddInline'
+      elseif change[2] == 'delete' then
+        hl_fg = 'diffRemoved'
+        hl_bg = 'GitSignsDeleteInline'
+      else
+        hl_fg = 'diffChanged'
+        hl_bg = 'GitSignsChangeInline'
+      end
+
       table.insert(
         buff_extmarks[buffnr],
         vim.api.nvim_buf_set_extmark(buffnr, namespace, lnum - 1, col_sta, {
-          hl_group = 'DiffText',
+          hl_group = {hl_bg, hl_fg},
           virt_text_pos = 'overlay',
           end_col = col_end,
         })
