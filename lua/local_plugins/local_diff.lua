@@ -15,6 +15,27 @@ local add_selection = function()
   -- Visually selected region
   local regions = vim.fn.getregionpos(vim.fn.getpos "'[", vim.fn.getpos "']")
 
+  -- Show selected region with the operator
+  for _, region in ipairs(regions) do
+    local bufnr = region[1][1]
+    local l_num = region[1][2]
+    local end_col = vim.fn.len(vim.fn.getline(l_num))
+
+    if buff_extmarks[bufnr] == nil then
+      buff_extmarks[bufnr] = {}
+    end
+
+    table.insert(
+      buff_extmarks[bufnr],
+      vim.api.nvim_buf_set_extmark(bufnr, namespace, l_num - 1, 0, {
+        hl_group = 'Folded',
+        virt_text_pos = 'overlay',
+        end_row = l_num - 1,
+        end_col = end_col,
+      })
+    )
+  end
+
   -- Get all lines in each sub-region
   local selections = {}
   local ranges = {}
@@ -94,6 +115,13 @@ _G.diffthis = function(mode)
 
   local wd = diffs[1]
   local rem_add = { diffs[2], diffs[3] }
+
+  -- Delete preliminary region marking in this buffer
+  for bufnr, extmark_ids in pairs(buff_extmarks) do
+    for _, extmark_id in ipairs(extmark_ids) do
+      vim.api.nvim_buf_del_extmark(bufnr, namespace, extmark_id)
+    end
+  end
 
   for i = 1, 2 do
     local changes = wd[i]
