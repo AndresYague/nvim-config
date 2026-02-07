@@ -49,6 +49,8 @@ local add_selection = function()
   -- Make sure we always keep the last 2 selections
   if #current_selections == 2 then
     current_selections = { current_selections[2] }
+    buffers = { buffers[2] }
+    selection_range = { selection_range[2] }
   end
   current_selections[#current_selections + 1] = vim.fn.join(selections, '\n')
 
@@ -134,15 +136,10 @@ _G.diffthis = function(mode)
 
     for _, change in ipairs(changes) do
       local lnum = selection_range[i][1] + offset + change[1] - 1
-      ---@diagnostic disable-next-line: param-type-mismatch
-      local line_len = vim.fn.len(vim.fn.getline(lnum))
 
-      local col_sta = 0
-      local col_end = line_len
-      if #change > 0 then
-        col_sta = change[3] - 1
-        col_end = vim.fn.min { change[4] - 1, col_end }
-      end
+      -- Set up the first and last changed column
+      local col_sta = change[3] - 1
+      local col_end = change[4] - 1
 
       -- Highlight groups specific for the type of diff
       -- This changes the color of the characters themseleves
