@@ -13,16 +13,16 @@ local namespace = vim.api.nvim_create_namespace 'local_diff'
 ---@return nil
 local add_selection = function()
   -- Visually selected region
-  local region = vim.fn.getregionpos(vim.fn.getpos "'[", vim.fn.getpos "']")
+  local regions = vim.fn.getregionpos(vim.fn.getpos "'[", vim.fn.getpos "']")
 
   -- Get all lines in each sub-region
   local selections = {}
   local ranges = {}
-  for _, positions in ipairs(region) do
+  for _, region in ipairs(regions) do
     -- Save each line whole
     -- the line number is in positions[1][2]
-    selections[#selections + 1] = vim.fn.getline(positions[1][2])
-    ranges[#ranges + 1] = positions[1][2]
+    selections[#selections + 1] = vim.fn.getline(region[1][2])
+    ranges[#ranges + 1] = region[1][2]
   end
 
   -- Make sure we always keep the last 2 selections
@@ -32,7 +32,7 @@ local add_selection = function()
   current_selections[#current_selections + 1] = vim.fn.join(selections, '\n')
 
   selection_range[#selection_range + 1] = ranges
-  buffers[#buffers + 1] = region[1][1][1]
+  buffers[#buffers + 1] = regions[1][1][1]
 end
 
 ---@return nil | table
@@ -114,14 +114,6 @@ _G.diffthis = function(mode)
       if #change > 0 then
         col_sta = change[3] - 1
         col_end = vim.fn.min { change[4] - 1, col_end }
-
-        if col_end == col_sta then
-          if col_end < line_len then
-            col_end = col_end + 1
-          else
-            col_sta = col_sta - 1
-          end
-        end
       end
 
       -- Highlight groups specific for the type of diff
@@ -143,7 +135,7 @@ _G.diffthis = function(mode)
       table.insert(
         buff_extmarks[buffnr],
         vim.api.nvim_buf_set_extmark(buffnr, namespace, lnum - 1, col_sta, {
-          hl_group = {hl_bg, hl_fg},
+          hl_group = { hl_bg, hl_fg },
           virt_text_pos = 'overlay',
           end_col = col_end,
         })
