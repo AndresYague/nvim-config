@@ -11,6 +11,29 @@ local wdiff = require 'gitsigns.diff_int'
 local namespace = vim.api.nvim_create_namespace 'local_diff'
 
 ---@return nil
+local diffoff = function()
+  for bufnr, extmark_ids in pairs(buff_extmarks) do
+    -- If no extmark_ids, continue
+    if extmark_ids == nil then
+      goto continue
+    end
+
+    -- Delete all extmarks in this buffer
+    for _, extmark_id in ipairs(extmark_ids) do
+      vim.api.nvim_buf_del_extmark(bufnr, namespace, extmark_id)
+    end
+
+    ::continue::
+  end
+
+  -- Clean all tables
+  current_selections = {}
+  selection_range = {}
+  buffers = {}
+  buff_extmarks = {}
+end
+
+---@return nil
 local add_selection = function()
   -- Visually selected region
   local regions = vim.fn.getregionpos(vim.fn.getpos "'[", vim.fn.getpos "']")
@@ -64,6 +87,8 @@ local diff_selection = function()
   if #current_selections == 2 then
     -- Skip if the selections are identical
     if current_selections[1] == current_selections[2] then
+      vim.notify 'No difference'
+      diffoff()
       return
     end
 
@@ -124,6 +149,13 @@ _G.diffthis = function(mode)
       vim.api.nvim_buf_del_extmark(bufnr, namespace, extmark_id)
     end
   end
+  buff_extmarks = {}
+
+  if wd[1][1] == nil then
+    vim.notify 'Not the same number of lines'
+    diffoff()
+    return nil
+  end
 
   for i = 1, 2 do
     local changes = wd[i]
@@ -174,29 +206,6 @@ _G.diffthis = function(mode)
 
   -- Restore the old opfunc
   vim.go.opfunc = old_func
-end
-
----@return nil
-local diffoff = function()
-  for bufnr, extmark_ids in pairs(buff_extmarks) do
-    -- If no extmark_ids, continue
-    if extmark_ids == nil then
-      goto continue
-    end
-
-    -- Delete all extmarks in this buffer
-    for _, extmark_id in ipairs(extmark_ids) do
-      vim.api.nvim_buf_del_extmark(bufnr, namespace, extmark_id)
-    end
-
-    ::continue::
-  end
-
-  -- Clean all tables
-  current_selections = {}
-  selection_range = {}
-  buffers = {}
-  buff_extmarks = {}
 end
 
 -- Create keymaps
