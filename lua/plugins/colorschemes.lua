@@ -1,3 +1,4 @@
+require('rose-pine').setup {}
 require('nightfox').setup {
   options = {
     dim_inactive = true,

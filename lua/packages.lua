@@ -20,6 +20,7 @@ vim.pack.add {
   --[[ ================================================================= ]]
 
   -- colorschemes
+  'https://github.com/rose-pine/neovim',
   'https://github.com/EdenEast/nightfox.nvim',
   'https://github.com/folke/tokyonight.nvim',
   'https://github.com/rebelot/kanagawa.nvim',
