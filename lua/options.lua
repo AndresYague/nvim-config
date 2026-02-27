@@ -16,6 +16,10 @@ vim.g.have_nerd_font = true
 vim.o.number = true
 vim.o.relativenumber = true
 
+-- Turn on behaviour to change relative number to
+-- absolute numbers in insert mode
+Change_relnum = true
+
 -- Enable mouse mode
 vim.o.mouse = 'a'
 

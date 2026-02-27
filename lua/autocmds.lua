@@ -74,19 +74,35 @@ vim.api.nvim_create_autocmd('BufWinLeave', {
 })
 
 -- Change relativenumber when changing modes
-local change_relnum =
-  vim.api.nvim_create_augroup('Change relnum', { clear = true })
-vim.api.nvim_create_autocmd('ModeChanged', {
-  group = change_relnum,
-  pattern = '*:i',
-  callback = function()
-    vim.o.relativenumber = false
-  end,
-})
-vim.api.nvim_create_autocmd('ModeChanged', {
-  group = change_relnum,
-  pattern = '*:n',
-  callback = function()
-    vim.o.relativenumber = true
-  end,
-})
+-- Do nothing if user sets off any of the number options
+if Change_relnum then
+  local relative_change = vim.o.number and vim.o.relativenumber
+  local change_relnum_g =
+    vim.api.nvim_create_augroup('Change relnum', { clear = true })
+
+  vim.api.nvim_create_autocmd('OptionSet', {
+    group = change_relnum_g,
+    pattern = '*number',
+    callback = function()
+      relative_change = vim.o.number and vim.o.relativenumber
+    end,
+  })
+  vim.api.nvim_create_autocmd('ModeChanged', {
+    group = change_relnum_g,
+    pattern = '*:i',
+    callback = function()
+      if relative_change then
+        vim.o.relativenumber = false
+      end
+    end,
+  })
+  vim.api.nvim_create_autocmd('ModeChanged', {
+    group = change_relnum_g,
+    pattern = '*:n',
+    callback = function()
+      if relative_change then
+        vim.o.relativenumber = true
+      end
+    end,
+  })
+end
