@@ -29,6 +29,12 @@ Snacks.setup {
           action = ':Oil',
         },
         {
+          icon = ' ',
+          key = 'n',
+          desc = 'New file',
+          action = ':new | only',
+        },
+        {
           icon = ' ',
           key = 's',
           desc = 'Restore Session',
