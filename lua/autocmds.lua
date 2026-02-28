@@ -31,6 +31,7 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
       vim.opt.foldmethod = 'syntax'
     end
   end,
+  desc = 'Create folds using treesitter',
 })
 
 -- fugitive keybinds with autocmd
@@ -60,6 +61,7 @@ vim.api.nvim_create_autocmd('BufEnter', {
       end, { expr = true, desc = 'Close the diff windows' })
     end
   end,
+  desc = 'Create the fugitive diffsplit keymaps',
 })
 vim.api.nvim_create_autocmd('BufWinLeave', {
   group = fugitive_group,
@@ -71,6 +73,7 @@ vim.api.nvim_create_autocmd('BufWinLeave', {
       vim.keymap.del('n', 'gq')
     end
   end,
+  desc = 'Clear the fugitive diffsplit keymaps',
 })
 
 -- Loadview for this file if it exists
@@ -97,10 +100,11 @@ if Change_relnum then
 
   vim.api.nvim_create_autocmd('OptionSet', {
     group = change_relnum_g,
-    pattern = '*number',
+    pattern = { 'number', 'relativenumber' },
     callback = function()
       relative_change = vim.o.number and vim.o.relativenumber
     end,
+    desc = 'Track whether relative_change should be set',
   })
   vim.api.nvim_create_autocmd('ModeChanged', {
     group = change_relnum_g,
@@ -110,6 +114,7 @@ if Change_relnum then
         vim.o.relativenumber = false
       end
     end,
+    desc = 'Change from relativenumber to absolute numbers',
   })
   vim.api.nvim_create_autocmd('ModeChanged', {
     group = change_relnum_g,
@@ -119,5 +124,6 @@ if Change_relnum then
         vim.o.relativenumber = true
       end
     end,
+    desc = 'Change from absolute numbers to relativenumber',
   })
 end
