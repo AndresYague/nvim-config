@@ -73,6 +73,21 @@ vim.api.nvim_create_autocmd('BufWinLeave', {
   end,
 })
 
+-- Loadview for this file if it exists
+local loadview_g = vim.api.nvim_create_augroup('Loadview', { clear = true })
+vim.api.nvim_create_autocmd('BufWinEnter', {
+  group = loadview_g,
+  pattern = '?*',
+  command = 'silent! loadview',
+  desc = 'Load this buffer view if it exists',
+})
+vim.api.nvim_create_autocmd('BufWinLeave', {
+  group = loadview_g,
+  pattern = '?*',
+  command = 'mkview',
+  desc = 'Save this buffer view',
+})
+
 -- Change relativenumber when changing modes
 -- Do nothing if user sets off any of the number options
 if Change_relnum then
