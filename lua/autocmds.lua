@@ -101,8 +101,10 @@ if Change_relnum then
   vim.api.nvim_create_autocmd('OptionSet', {
     group = change_relnum_g,
     pattern = { 'number', 'relativenumber' },
-    callback = function()
-      relative_change = vim.o.number and vim.o.relativenumber
+    callback = function(event)
+      if event.file ~= "" then
+        relative_change = vim.o.number and vim.o.relativenumber
+      end
     end,
     desc = 'Track whether relative_change should be set',
   })
