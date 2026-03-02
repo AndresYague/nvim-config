@@ -93,39 +93,37 @@ vim.api.nvim_create_autocmd('BufWinLeave', {
 
 -- Change relativenumber when changing modes
 -- Do nothing if user sets off any of the number options
-if Change_relnum then
-  local relative_change = vim.o.number and vim.o.relativenumber
-  local change_relnum_g =
-    vim.api.nvim_create_augroup('Change relnum', { clear = true })
+local relative_change = vim.o.number and vim.o.relativenumber
+local change_relnum_g =
+  vim.api.nvim_create_augroup('Change relnum', { clear = true })
 
-  vim.api.nvim_create_autocmd('OptionSet', {
-    group = change_relnum_g,
-    pattern = { 'number', 'relativenumber' },
-    callback = function(event)
-      if event.file ~= "" then
-        relative_change = vim.o.number and vim.o.relativenumber
-      end
-    end,
-    desc = 'Track whether relative_change should be set',
-  })
-  vim.api.nvim_create_autocmd('ModeChanged', {
-    group = change_relnum_g,
-    pattern = '*:i',
-    callback = function()
-      if relative_change then
-        vim.o.relativenumber = false
-      end
-    end,
-    desc = 'Change from relativenumber to absolute numbers',
-  })
-  vim.api.nvim_create_autocmd('ModeChanged', {
-    group = change_relnum_g,
-    pattern = '*:n',
-    callback = function()
-      if relative_change then
-        vim.o.relativenumber = true
-      end
-    end,
-    desc = 'Change from absolute numbers to relativenumber',
-  })
-end
+vim.api.nvim_create_autocmd('OptionSet', {
+  group = change_relnum_g,
+  pattern = { 'number', 'relativenumber' },
+  callback = function(event)
+    if event.file ~= '' then
+      relative_change = vim.o.number and vim.o.relativenumber
+    end
+  end,
+  desc = 'Track whether relative_change should be set',
+})
+vim.api.nvim_create_autocmd('ModeChanged', {
+  group = change_relnum_g,
+  pattern = '*:i',
+  callback = function()
+    if relative_change and Change_relnum then
+      vim.o.relativenumber = false
+    end
+  end,
+  desc = 'Change from relativenumber to absolute numbers',
+})
+vim.api.nvim_create_autocmd('ModeChanged', {
+  group = change_relnum_g,
+  pattern = '*:n',
+  callback = function()
+    if relative_change and Change_relnum then
+      vim.o.relativenumber = true
+    end
+  end,
+  desc = 'Change from absolute numbers to relativenumber',
+})

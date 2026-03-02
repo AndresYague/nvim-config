@@ -18,6 +18,8 @@ vim.o.relativenumber = true
 
 -- Turn on behaviour to change relative number to
 -- absolute numbers in insert mode
+-- NOTE: This is a global variable
+-- TODO: Make it nvim option
 Change_relnum = true
 
 -- Enable mouse mode
