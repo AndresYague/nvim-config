@@ -134,18 +134,18 @@ end, { desc = 'Open terminal horizontally (cwd)' })
 -- Move line up and down
 vim.keymap.set(
   'n',
-  '<M-j>',
+  '<M-down>',
   "<cmd>execute 'move .+' . v:count1<cr>==",
   { desc = 'Move Down' }
 )
 vim.keymap.set(
   'n',
-  '<M-k>',
+  '<M-up>',
   "<cmd>execute 'move .-' . (v:count1 + 1)<cr>==",
   { desc = 'Move Up' }
 )
-vim.keymap.set('i', '<M-j>', '<esc><cmd>m .+1<cr>==gi', { desc = 'Move Down' })
-vim.keymap.set('i', '<M-k>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move Up' })
+vim.keymap.set('i', '<M-down>', '<esc><cmd>m .+1<cr>==gi', { desc = 'Move Down' })
+vim.keymap.set('i', '<M-up>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move Up' })
 
 -- Make j and k move visual lines
 vim.keymap.set('n', 'j', 'gj', { desc = 'Line Down' })

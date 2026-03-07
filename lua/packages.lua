@@ -56,6 +56,12 @@ vim.pack.add {
   'https://github.com/MunifTanjim/nui.nvim',
   'https://github.com/folke/noice.nvim',
 
+  -- multicursor
+  {
+    src = 'https://github.com/jake-stewart/multicursor.nvim',
+    version = '1.0',
+  },
+
   -- oil
   'https://github.com/stevearc/oil.nvim',
 
@@ -102,6 +108,7 @@ require 'plugins.editing'
 require 'plugins.vcs'
 require 'plugins.lsp'
 require 'plugins.lualine'
+require 'plugins.multicursor'
 require 'plugins.noice'
 require 'plugins.oil'
 require 'plugins.orgmode'
