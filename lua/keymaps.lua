@@ -147,6 +147,18 @@ vim.keymap.set(
 vim.keymap.set('i', '<M-j>', '<esc><cmd>m .+1<cr>==gi', { desc = 'Move Down' })
 vim.keymap.set('i', '<M-k>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move Up' })
 
+-- Make j and k move visual lines
+vim.keymap.set('n', 'j', 'gj', { desc = 'Line Down' })
+vim.keymap.set('n', 'k', 'gk', { desc = 'Line Up' })
+
+-- Clear all the marks
+vim.keymap.set(
+  'n',
+  '<leader>dm',
+  '<cmd>delmarks a-z<CR>',
+  { desc = 'Delete makrs' }
+)
+
 -- Keymaps for diffmode
 -- NOTE: There are keymaps that appear once fugitive is being used
 -- see "autocmds.lua"
