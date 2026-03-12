@@ -274,6 +274,20 @@ vim.api.nvim_create_autocmd('User', {
       })
       :map '<leader>up'
 
+    -- Toggle git blame
+    Snacks.toggle
+      .new({
+        id = 'gitsigns-blame',
+        name = 'Gitsigns Blame',
+        get = function()
+          return require('gitsigns.config').config.current_line_blame
+        end,
+        set = function()
+          require('gitsigns').toggle_current_line_blame()
+        end,
+      })
+      :map '<leader>ub'
+
     -- Toggle move-enclosing ts
     Snacks.toggle
       .new({
