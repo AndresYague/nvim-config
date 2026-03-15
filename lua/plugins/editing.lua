@@ -2,10 +2,7 @@ require('nvim-autopairs').setup {
   ignored_next_char = '',
 }
 
-require('todo-comments').setup {
-  event = 'VimEnter',
-  opts = { signs = true },
-}
+require('todo-comments').setup {}
 
 require('conform').setup {
   notify_on_error = false,

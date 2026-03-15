@@ -3,8 +3,6 @@ require('persistence').setup {
 }
 require('move-enclosing').setup {}
 require('print-debug').setup {}
-require('nvim-surround').setup()
-require('flash').setup()
 require('fish-files').setup()
 
 require('colorizer').setup({ '*' }, {
