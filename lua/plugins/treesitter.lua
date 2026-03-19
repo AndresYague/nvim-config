@@ -79,7 +79,7 @@ vim.keymap.set('n', '<leader>cs', function()
   require('nvim-treesitter-textobjects.swap').swap_next '@parameter.inner'
 end, { desc = 'Swap next' })
 vim.keymap.set('n', '<leader>cS', function()
-  require('nvim-treesitter-textobjects.swap').swap_previous '@parameter.outer'
+  require('nvim-treesitter-textobjects.swap').swap_previous '@parameter.inner'
 end, { desc = 'Swap previous' })
 
 -- Function and classes selections
@@ -121,20 +121,6 @@ vim.keymap.set({ 'x', 'o' }, 'il', function()
     'textobjects'
   )
 end, { desc = 'Inside block' })
-
--- Comment selections
-vim.keymap.set({ 'x', 'o' }, 'ac', function()
-  require('nvim-treesitter-textobjects.select').select_textobject(
-    '@comment.outer',
-    'textobjects'
-  )
-end, { desc = 'Around comment' })
-vim.keymap.set({ 'x', 'o' }, 'ic', function()
-  require('nvim-treesitter-textobjects.select').select_textobject(
-    '@comment.inner',
-    'textobjects'
-  )
-end, { desc = 'Inside comment' })
 
 -- Moves
 -- Functions
@@ -294,7 +280,7 @@ local ts_repeat_move = require 'nvim-treesitter-textobjects.repeatable_move'
 
 -- Repeat movement with ; and ,
 -- vim way: ; goes to the direction you were moving.
--- NOTE: using ñ and Ñ respectively to avoid conflicts
+-- NOTE: using ñ and Ñ respectively to avoid conflicts with flash
 vim.keymap.set({ 'n', 'x', 'o' }, 'ñ', ts_repeat_move.repeat_last_move)
 vim.keymap.set({ 'n', 'x', 'o' }, 'Ñ', ts_repeat_move.repeat_last_move_opposite)
 

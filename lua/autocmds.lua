@@ -99,7 +99,7 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
   command = 'silent! loadview',
   desc = 'Load this buffer view if it exists',
 })
-vim.api.nvim_create_autocmd({'BufUnload', 'BufWinLeave'}, {
+vim.api.nvim_create_autocmd({ 'BufUnload', 'BufWinLeave' }, {
   group = loadview_g,
   pattern = '?*',
   command = 'mkview',
