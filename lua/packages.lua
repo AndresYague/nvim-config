@@ -125,3 +125,7 @@ require 'plugins.which-key'
 require 'local_plugins.floating_term'
 require 'local_plugins.mng_plugs'
 require 'local_plugins.local_diff'
+
+-- Activate nvim plugins
+vim.cmd.packadd { args = { 'nvim.undotree' } }
+vim.cmd.packadd { args = { 'termdebug' } }
