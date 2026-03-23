@@ -83,9 +83,9 @@ vim.api.nvim_create_autocmd('DiffUpdated', {
   }),
   callback = function()
     if vim.o.diff then
-      _ = pcall(vim.keymap.del, { 'o', 'x' }, 'p')
+      _ = pcall(vim.keymap.del, 'o', 'p')
     else
-      vim.keymap.set({ 'o', 'x' }, 'p', '}', { desc = 'Next empty line' })
+      vim.keymap.set('o', 'p', '}', { desc = 'Next empty line' })
     end
   end,
   desc = 'Clear or add p as operator mode',

@@ -32,8 +32,8 @@ vim.keymap.set({ 'o', 'x' }, 'ir', 'i[', { desc = 'inner []' })
 vim.keymap.set({ 'o', 'x' }, 'ar', 'a[', { desc = '[] block' })
 
 -- Remap paragraph operator
-vim.keymap.set({ 'o', 'x' }, 'p', '}', { desc = 'Next empty line' })
-vim.keymap.set({ 'o', 'x' }, 'P', '{', { desc = 'Prev empty line' })
+vim.keymap.set('o', 'p', '}', { desc = 'Next empty line' })
+vim.keymap.set('o', 'P', '{', { desc = 'Prev empty line' })
 
 -- Diagnostic keymaps
 vim.keymap.set(
