@@ -127,5 +127,5 @@ require 'local_plugins.mng_plugs'
 require 'local_plugins.local_diff'
 
 -- Activate nvim plugins
-vim.cmd.packadd { args = { 'nvim.undotree' } }
-vim.cmd.packadd { args = { 'termdebug' } }
+vim.cmd.packadd { args = { 'nvim.undotree' }, bang = true }
+vim.cmd.packadd { args = { 'termdebug' }, bang = true }

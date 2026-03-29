@@ -160,7 +160,7 @@ vim.keymap.set(
   'n',
   '<leader>dm',
   '<cmd>delmarks a-z<CR>',
-  { desc = 'Delete makrs' }
+  { desc = 'Delete marks' }
 )
 
 -- Keymaps for diffmode
