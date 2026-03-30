@@ -22,14 +22,21 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
       return
     end
 
-    if pcall(vim.treesitter.get_parser) then
-      vim.treesitter.start()
-      vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-      vim.opt.foldmethod = 'expr'
-      vim.opt.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-    else
-      vim.opt.foldmethod = 'syntax'
-    end
+    -- FIXME: For some reason pcall cannot suppress the error message from
+    -- get_parser when a parser is not found. This results in extremely noisy
+    -- error messages when entering a non-treesitter supported buffer.
+    -- Commenting out for now until the bug is fixed or I find a workaround
+    -- if pcall(vim.treesitter.get_parser) then
+    --   vim.treesitter.start()
+    --   vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+    --   vim.opt.foldmethod = 'expr'
+    --   vim.opt.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    -- else
+    --   vim.opt.foldmethod = 'syntax'
+    -- end
+
+    -- HACK: Just defaulting to syntax until the above is fixed
+    vim.opt.foldmethod = 'syntax'
   end,
   desc = 'Create folds using treesitter',
 })
