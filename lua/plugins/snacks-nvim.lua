@@ -322,6 +322,39 @@ vim.api.nvim_create_autocmd('User', {
       })
       :map '<leader>um'
 
+    -- Toggle for no neck pain
+    Snacks.toggle
+      .new({
+        id = 'no-neck-pain',
+        name = 'No neck pain',
+        get = function()
+          local state = require('no-neck-pain').state
+          if state then
+            return state.enabled
+          else
+            return false
+          end
+        end,
+        set = function()
+          require('no-neck-pain').toggle()
+        end,
+      })
+      :map '<leader>up'
+
+    -- Toggle for relative number change
+    Snacks.toggle
+      .new({
+        id = 'rel_number_change',
+        name = 'Relative num change',
+        get = function()
+          return Change_relnum
+        end,
+        set = function()
+          Change_relnum = not Change_relnum
+        end,
+      })
+      :map '<leader>uf'
+
     -- Fully custom toggle for colorizer
     Snacks.toggle
       .new({
@@ -336,7 +369,7 @@ vim.api.nvim_create_autocmd('User', {
       })
       :map '<leader>uz'
 
-    -- Fully custom toggle for gitsigns
+    -- Toggle for gitsigns
     Snacks.toggle
       .new({
         id = 'gitsigns-word-diff',
@@ -372,20 +405,6 @@ vim.api.nvim_create_autocmd('User', {
         end,
       })
       :map '<leader>uv'
-
-    -- Fully custom toggle for relative number change
-    Snacks.toggle
-      .new({
-        id = 'rel_number_change',
-        name = 'Relative num change',
-        get = function()
-          return Change_relnum
-        end,
-        set = function()
-          Change_relnum = not Change_relnum
-        end,
-      })
-      :map '<leader>uf'
   end,
 })
 

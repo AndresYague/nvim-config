@@ -73,6 +73,7 @@ vim.pack.add {
   'https://github.com/folke/persistence.nvim',
   'https://github.com/kylechui/nvim-surround',
   'https://github.com/AndresYague/fish-files.nvim',
+  'https://github.com/shortcuts/no-neck-pain.nvim.git',
 
   -- previewers
   'https://github.com/OXY2DEV/markview.nvim',
