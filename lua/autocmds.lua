@@ -134,7 +134,7 @@ vim.api.nvim_create_autocmd('ModeChanged', {
 })
 vim.api.nvim_create_autocmd('ModeChanged', {
   group = change_relnum_g,
-  pattern = '*:n',
+  pattern = 'i:n',
   callback = function()
     if relative_change and Change_relnum then
       vim.o.relativenumber = true
