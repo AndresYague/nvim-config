@@ -18,9 +18,17 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- Uncomment to enable inlay hints automatically
     -- vim.lsp.inlay_hint.enable()
 
+    -- Set up foldmethod and foldexpr
+    vim.opt.foldmethod = 'expr'
+    vim.opt.foldexpr = 'v:lua.vim.lsp.foldexpr()'
+
     -- Create a function that lets us more easily define mappings
     -- specific for LSP related items. It sets the mode, buffer and
     -- description for us each time.
+    ---@param keys string
+    ---@param func function
+    ---@param desc string
+    ---@param mode? string|string[]
     local map = function(keys, func, desc, mode)
       mode = mode or 'n'
       vim.keymap.set(
@@ -39,62 +47,36 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- or a suggestion from your LSP for this to activate.
     map('<leader>ca', vim.lsp.buf.code_action, 'Code Action', { 'n', 'x' })
 
-    -- This function resolves a difference between neovim nightly (version 0.11) and stable (version 0.10)
-    ---@param client vim.lsp.Client
-    ---@param method vim.lsp.protocol.Method
-    ---@param bufnr? integer some lsp support methods only in specific files
-    ---@return boolean
-    local function client_supports_method(client, method, bufnr)
-      if vim.fn.has 'nvim-0.11' == 1 then
-        -- Remove diagnostics until typing is fixed
-        ---@diagnostic disable-next-line: param-type-mismatch
-        return client:supports_method(method, bufnr)
-      else
-        -- Remove diagnostics until typing is fixed
-        ---@diagnostic disable-next-line: param-type-mismatch
-        return client.supports_method(method, { bufnr = bufnr })
-      end
-    end
-
     -- The following two autocommands are used to highlight references of the
     -- word under your cursor when your cursor rests there for a little while.
-    --    See `:help CursorHold` for information about when this is executed
+    -- See `:help CursorHold` for information about when this is executed
     --
-    -- When you move your cursor, the highlights will be cleared (the second autocommand).
-    local client = vim.lsp.get_client_by_id(event.data.client_id)
-    if
-      client
-      and client_supports_method(
-        client,
-        vim.lsp.protocol.Methods.textDocument_documentHighlight,
-        event.buf
-      )
-    then
-      local highlight_augroup =
-        vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
-      vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-        buffer = event.buf,
-        group = highlight_augroup,
-        callback = vim.lsp.buf.document_highlight,
-      })
+    -- When you move your cursor, the highlights will be cleared (the second
+    -- autocommand).
+    local highlight_augroup =
+        vim.api.nvim_create_augroup('lsp-highlight', { clear = true })
+    vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+      buffer = event.buf,
+      group = highlight_augroup,
+      callback = vim.lsp.buf.document_highlight,
+    })
 
-      vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-        buffer = event.buf,
-        group = highlight_augroup,
-        callback = vim.lsp.buf.clear_references,
-      })
+    vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+      buffer = event.buf,
+      group = highlight_augroup,
+      callback = vim.lsp.buf.clear_references,
+    })
 
-      vim.api.nvim_create_autocmd('LspDetach', {
-        group = vim.api.nvim_create_augroup('lsp-detach', { clear = true }),
-        callback = function(event2)
-          vim.lsp.buf.clear_references()
-          vim.api.nvim_clear_autocmds {
-            group = 'lsp-highlight',
-            buffer = event2.buf,
-          }
-        end,
-      })
-    end
+    vim.api.nvim_create_autocmd('LspDetach', {
+      group = vim.api.nvim_create_augroup('lsp-detach', { clear = true }),
+      callback = function(event2)
+        vim.lsp.buf.clear_references()
+        vim.api.nvim_clear_autocmds {
+          group = 'lsp-highlight',
+          buffer = event2.buf,
+        }
+      end,
+    })
   end,
 })
 
@@ -126,94 +108,62 @@ vim.diagnostic.config {
   },
 }
 
---  Get LSP capabilities from blink for the lsp
-local capabilities = require('blink.cmp').get_lsp_capabilities()
-
--- Enable the following language servers
-local servers = {
-  bashls = {},
-  clangd = {},
-  cmake = {},
-  lua_ls = {
-    settings = {
-      Lua = {
-        completion = {
-          callSnippet = 'Replace',
-        },
-        -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-        diagnostics = { disable = { 'missing-fields' } },
-      },
-    },
-  },
-  pylsp = {},
-  taplo = {},
-  texlab = {},
-}
-
 -- Ensure the servers and tools above are installed
 -- You can add other tools here that you want Mason to install
 -- for you, so that they are available from within Neovim.
-local ensure_installed = vim.tbl_keys(servers or {})
-vim.list_extend(ensure_installed, {
+local all_tools = {
   'autopep8',
+  'bacon-ls',
+  'bash-language-server',
   'bibtex-tidy',
   'clang-format',
+  'clangd',
+  'cmake-language-server',
   'cmakelang',
   'cmakelint',
   'codelldb',
   'debugpy',
   'flake8',
+  'gopls',
   'isort',
+  'json-lsp',
   'jupytext',
   'local-lua-debugger-vscode',
+  'lua-language-server',
   'markdownlint',
   'mypy',
   'pydocstyle',
+  'python-lsp-server',
   'shfmt',
   'stylua',
-  'stylua',
+  'taplo',
   'tex-fmt',
-})
+  'texlab',
+}
 require('mason-tool-installer').setup {
-  ensure_installed = ensure_installed,
+  ensure_installed = all_tools,
 }
 
-require('mason-lspconfig').setup {
-  ensure_installed = {}, -- explicitly set to an empty table, see above
-  automatic_installation = false,
-  automatic_enable = true,
-  handlers = {
-    function(server_name)
-      local server = servers[server_name] or {}
-      -- This handles overriding only values explicitly passed
-      -- by the server configuration above. Useful when disabling
-      -- certain features of an LSP (for example, turning off formatting for ts_ls)
-      server.capabilities = vim.tbl_deep_extend(
-        'force',
-        {},
-        capabilities,
-        server.capabilities or {}
-      )
-      vim.lsp.config(server_name, server.capabilities)
-    end,
-  },
+-- Only activate the servers. Also, LSPs may have different names
+-- in nvim than the tools have in mason, such as lua-language-server -> lua_ls
+-- so write those correctly here
+local all_servers = {
+  'bacon-ls',
+  'bashls',
+  'clangd',
+  'cmake',
+  'gopls',
+  'json-lsp',
+  'lua_ls',
+  'pylsp',
+  'stylua',
+  'taplo',
+  'texlab',
 }
+vim.lsp.enable(all_servers)
 
--- Remove undesired mappings from LSP
-local remove_lsp_mapping = function(mode, lhs)
-  local map_desc = vim.fn.maparg(lhs, mode, false, true).desc
-  if map_desc == nil or string.find(map_desc, 'vim%.lsp') == nil then
-    return
-  end
-  vim.keymap.del(mode, lhs)
-end
-
-remove_lsp_mapping('n', 'gra')
-remove_lsp_mapping('x', 'gra')
-remove_lsp_mapping('n', 'gri')
-remove_lsp_mapping('n', 'grr')
-remove_lsp_mapping('n', 'grn')
-remove_lsp_mapping('n', 'grt')
-remove_lsp_mapping('n', 'gd')
-remove_lsp_mapping('n', 'gD')
-remove_lsp_mapping('n', 'gO')
+-- Get LSP capabilities from blink for the lsp and add them to the servers
+vim.lsp.config(
+  '*',
+  { capabilities = require('blink.cmp').get_lsp_capabilities() }
+)

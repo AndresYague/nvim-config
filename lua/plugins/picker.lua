@@ -169,7 +169,28 @@ end, { desc = 'Undo History' })
 vim.keymap.set({ 'n' }, '<leader>uC', function()
   Snacks.picker.colorschemes()
 end, { desc = 'Colorschemes' })
+
 -- LSP
+
+-- Remove undesired mappings from LSP
+local remove_lsp_mapping = function(mode, lhs)
+  local map_desc = vim.fn.maparg(lhs, mode, false, true).desc
+  if map_desc == nil or string.find(map_desc, 'vim%.lsp') == nil then
+    return
+  end
+  vim.keymap.del(mode, lhs)
+end
+remove_lsp_mapping('n', 'gra')
+remove_lsp_mapping('x', 'gra')
+remove_lsp_mapping('n', 'gri')
+remove_lsp_mapping('n', 'grr')
+remove_lsp_mapping('n', 'grn')
+remove_lsp_mapping('n', 'grt')
+remove_lsp_mapping('n', 'gd')
+remove_lsp_mapping('n', 'gD')
+remove_lsp_mapping('n', 'gO')
+
+-- Add the picker lsp mappings
 vim.keymap.set({ 'n' }, 'gd', function()
   Snacks.picker.lsp_definitions()
 end, { desc = 'Goto Definition' })

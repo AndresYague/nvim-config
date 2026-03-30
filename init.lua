@@ -19,9 +19,7 @@ require 'autocmds'
 require 'health'
 
 -- Load language specific options and autocmds
-require 'languages.cpp'
-require 'languages.lua'
-require 'languages.python'
+require 'filetypes'
 
 -- Load the previously saved colorscheme
 require 'local_plugins.mng_colorschemes'

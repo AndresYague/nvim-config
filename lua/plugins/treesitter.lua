@@ -4,7 +4,7 @@ require('treesitter-context').setup {
   max_lines = '30%',
 }
 
-require('nvim-treesitter').install {
+local parsers = {
   'bash',
   'c',
   'comment',
@@ -40,6 +40,18 @@ require('nvim-treesitter').install {
   'xml',
   'yaml',
 }
+require('nvim-treesitter').install(parsers)
+
+-- Start the parser in all the above filetypes
+vim.api.nvim_create_autocmd({ 'FileType' }, {
+  pattern = parsers,
+  callback = function()
+    -- Start treesitter for highlighting and folds
+    vim.treesitter.start()
+    vim.opt.foldmethod = 'expr'
+    vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+  end,
+})
 
 require('nvim-treesitter-textobjects').setup {
   select = {
@@ -282,7 +294,11 @@ local ts_repeat_move = require 'nvim-treesitter-textobjects.repeatable_move'
 -- vim way: ; goes to the direction you were moving.
 -- NOTE: using ñ and Ñ respectively to avoid conflicts with flash
 vim.keymap.set({ 'n', 'x', 'o' }, 'ñ', ts_repeat_move.repeat_last_move)
-vim.keymap.set({ 'n', 'x', 'o' }, 'Ñ', ts_repeat_move.repeat_last_move_opposite)
+vim.keymap.set(
+  { 'n', 'x', 'o' },
+  'Ñ',
+  ts_repeat_move.repeat_last_move_opposite
+)
 
 -- Treesitter context keymaps
 -- Jump to previous context
