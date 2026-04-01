@@ -180,15 +180,16 @@ local remove_lsp_mapping = function(mode, lhs)
   end
   vim.keymap.del(mode, lhs)
 end
-remove_lsp_mapping('n', 'gra')
-remove_lsp_mapping('x', 'gra')
-remove_lsp_mapping('n', 'gri')
-remove_lsp_mapping('n', 'grr')
-remove_lsp_mapping('n', 'grn')
-remove_lsp_mapping('n', 'grt')
-remove_lsp_mapping('n', 'gd')
 remove_lsp_mapping('n', 'gD')
 remove_lsp_mapping('n', 'gO')
+remove_lsp_mapping('n', 'gd')
+remove_lsp_mapping('n', 'gra')
+remove_lsp_mapping('n', 'gri')
+remove_lsp_mapping('n', 'grn')
+remove_lsp_mapping('n', 'grr')
+remove_lsp_mapping('n', 'grt')
+remove_lsp_mapping('n', 'grx')
+remove_lsp_mapping('x', 'gra')
 
 -- Add the picker lsp mappings
 vim.keymap.set({ 'n' }, 'gd', function()
