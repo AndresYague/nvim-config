@@ -163,7 +163,9 @@ local all_servers = {
 vim.lsp.enable(all_servers)
 
 -- Get LSP capabilities from blink for the lsp and add them to the servers
-vim.lsp.config(
-  '*',
-  { capabilities = require('blink.cmp').get_lsp_capabilities() }
-)
+for _, server in pairs(all_servers) do
+  vim.lsp.config(
+    server,
+    { capabilities = require('blink.cmp').get_lsp_capabilities() }
+  )
+end
