@@ -108,6 +108,9 @@ require('lualine').setup {
       -- },
     },
     lualine_x = {
+      function()
+        return vim.ui.progress_status()
+      end,
       '%S', -- This can be used because vim.o.showcmdloc = 'statusline' is in the opts
       'encoding',
       'fileformat',

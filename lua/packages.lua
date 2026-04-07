@@ -129,3 +129,4 @@ require 'local_plugins.local_diff'
 -- Activate nvim plugins
 vim.cmd.packadd { args = { 'nvim.undotree' }, bang = true }
 vim.cmd.packadd { args = { 'termdebug' }, bang = true }
+vim.cmd.packadd { args = { 'nvim.difftool' }, bang = true }

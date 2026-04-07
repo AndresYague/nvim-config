@@ -42,6 +42,7 @@ local add_selection = function()
   for _, region in ipairs(regions) do
     local bufnr = region[1][1]
     local l_num = region[1][2]
+---@diagnostic disable-next-line: param-type-mismatch
     local end_col = vim.fn.len(vim.fn.getline(l_num))
 
     if buff_extmarks[bufnr] == nil then
