@@ -15,6 +15,7 @@ require('lazydev').setup {
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
   callback = function(event)
+    local client = vim.lsp.get_client_by_id(event.data.client_id)
     -- Uncomment to enable inlay hints automatically
     -- vim.lsp.inlay_hint.enable()
 
@@ -53,19 +54,24 @@ vim.api.nvim_create_autocmd('LspAttach', {
     --
     -- When you move your cursor, the highlights will be cleared (the second
     -- autocommand).
-    local highlight_augroup =
-        vim.api.nvim_create_augroup('lsp-highlight', { clear = true })
-    vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-      buffer = event.buf,
-      group = highlight_augroup,
-      callback = vim.lsp.buf.document_highlight,
-    })
+    -- Only do so if the lsp client supports it
+    if client.server_capabilities.documentHighlightProvider then
 
-    vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-      buffer = event.buf,
-      group = highlight_augroup,
-      callback = vim.lsp.buf.clear_references,
-    })
+      local highlight_augroup =
+        vim.api.nvim_create_augroup('lsp-highlight', { clear = true })
+
+      vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+        buffer = event.buf,
+        group = highlight_augroup,
+        callback = vim.lsp.buf.document_highlight,
+      })
+
+      vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+        buffer = event.buf,
+        group = highlight_augroup,
+        callback = vim.lsp.buf.clear_references,
+      })
+    end
 
     vim.api.nvim_create_autocmd('LspDetach', {
       group = vim.api.nvim_create_augroup('lsp-detach', { clear = true }),
