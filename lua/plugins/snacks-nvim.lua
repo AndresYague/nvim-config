@@ -310,8 +310,24 @@ vim.api.nvim_create_autocmd('User', {
         get = function()
           local buffer = vim.api.nvim_get_current_buf()
           if not require('markview.state').buf_attached(buffer) then
-            require('markview.commands').attach(buffer)
-            require('markview.commands').disable(buffer)
+            -- This function checks for errors from pcall and makes sure we are
+            -- only ignoring parser errors
+            ---@param success boolean
+            ---@param error string?
+            ---@return nil
+            local function check_error(success, error)
+              if not success then
+                assert(error ~= nil)
+                local match = string.match(error, 'Parser not found')
+                if match == nil then
+                  error(error)
+                end
+              end
+            end
+
+            -- Suppress treesitter errors from markview
+            check_error(pcall(require('markview.commands').attach, buffer))
+            check_error(pcall(require('markview.commands').disable, buffer))
           end
           return require('markview.state').get_buffer_state(buffer, false).enable
         end,
