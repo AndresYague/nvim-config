@@ -55,21 +55,32 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- When you move your cursor, the highlights will be cleared (the second
     -- autocommand).
     -- Only do so if the lsp client supports it
+    ---@diagnostic disable-next-line: need-check-nil
     if client.server_capabilities.documentHighlightProvider then
-
       local highlight_augroup =
-        vim.api.nvim_create_augroup('lsp-highlight', { clear = true })
+          vim.api.nvim_create_augroup('lsp-highlight', { clear = true })
+
+      -- Ignore fugitive files
+      local match_str = 'fugitive://'
 
       vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
         buffer = event.buf,
         group = highlight_augroup,
-        callback = vim.lsp.buf.document_highlight,
+        callback = function()
+          if event.file:sub(1, match_str:len()) ~= match_str then
+            vim.lsp.buf.document_highlight()
+          end
+        end,
       })
 
       vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
         buffer = event.buf,
         group = highlight_augroup,
-        callback = vim.lsp.buf.clear_references,
+        callback = function()
+          if event.file:sub(1, match_str:len()) ~= match_str then
+            vim.lsp.buf.clear_references()
+          end
+        end,
       })
     end
 

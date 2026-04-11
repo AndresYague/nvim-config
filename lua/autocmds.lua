@@ -29,7 +29,7 @@ vim.api.nvim_create_autocmd('BufEnter', {
       vim.keymap.set('n', 'gq', function()
         local cmd = ''
         for _, b in ipairs(vim.api.nvim_list_bufs()) do
-          if string.find(vim.api.nvim_buf_get_name(b), 'fugitive://') then
+          if string.find(vim.api.nvim_buf_get_name(b), match_str) then
             cmd = cmd .. '<cmd>bwipeout ' .. b .. '<CR>'
           end
         end
@@ -43,7 +43,7 @@ vim.api.nvim_create_autocmd('BufEnter', {
 vim.api.nvim_create_autocmd('BufWinLeave', {
   group = fugitive_group,
   callback = function(event)
-    local match_str = 'fugitive:///'
+    local match_str = 'fugitive://'
     if event.file:sub(1, match_str:len()) == match_str then
       vim.keymap.del('n', 'gh')
       vim.keymap.del('n', 'gl')
