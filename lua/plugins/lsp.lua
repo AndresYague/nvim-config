@@ -1,5 +1,6 @@
 -- Setup mason early for lsp capabilities below
 require('mason').setup()
+require('mason-lspconfig').setup()
 
 require('lazydev').setup {
   library = {
@@ -177,7 +178,6 @@ local all_servers = {
   'taplo',
   'texlab',
 }
-vim.lsp.enable(all_servers)
 
 -- Get LSP capabilities from blink for the lsp and add them to the servers
 for _, server in pairs(all_servers) do
@@ -186,3 +186,6 @@ for _, server in pairs(all_servers) do
     { capabilities = require('blink.cmp').get_lsp_capabilities() }
   )
 end
+
+-- Enable servers
+vim.lsp.enable(all_servers)
