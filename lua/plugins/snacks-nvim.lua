@@ -290,7 +290,7 @@ vim.api.nvim_create_autocmd('User', {
           require('nvim-autopairs').toggle()
         end,
       })
-      :map '<leader>up'
+      :map '<leader>uP'
 
     -- Toggle git blame
     Snacks.toggle
