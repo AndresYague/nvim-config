@@ -148,7 +148,12 @@ vim.keymap.set(
   "<cmd>execute 'move .-' . (v:count1 + 1)<cr>==",
   { desc = 'Move Up' }
 )
-vim.keymap.set('i', '<M-down>', '<esc><cmd>m .+1<cr>==gi', { desc = 'Move Down' })
+vim.keymap.set(
+  'i',
+  '<M-down>',
+  '<esc><cmd>m .+1<cr>==gi',
+  { desc = 'Move Down' }
+)
 vim.keymap.set('i', '<M-up>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move Up' })
 
 -- Make j and k move visual lines
