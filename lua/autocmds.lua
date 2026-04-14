@@ -1,5 +1,22 @@
-local utils = require('../utils')
 -- Custom functions
+
+-- This function checks for errors from pcall and makes sure we are
+-- only ignoring the errors given in the "ignore_table"
+---@param ignore_table string[]
+---@param success boolean
+---@param error string?
+---@return nil
+local ignore_errors = function(ignore_table, success, error)
+  if not success then
+    assert(error ~= nil)
+    for _, ignore in ipairs(ignore_table) do
+      local match = string.match(error, ignore)
+      if match == nil then
+        error(error)
+      end
+    end
+  end
+end
 
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
@@ -61,7 +78,7 @@ vim.api.nvim_create_autocmd('DiffUpdated', {
   }),
   callback = function()
     if vim.o.diff then
-      utils.ignore_errors(
+      ignore_errors(
         { 'No such mapping' },
         pcall(vim.keymap.del, 'o', 'p')
       )

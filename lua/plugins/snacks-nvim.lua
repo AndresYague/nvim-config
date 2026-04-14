@@ -1,7 +1,23 @@
-local utils = require('../../utils')
-
 local Snacks = require 'snacks'
 local devicons = require 'nvim-web-devicons'
+
+-- This function checks for errors from pcall and makes sure we are
+-- only ignoring the errors given in the "ignore_table"
+---@param ignore_table string[]
+---@param success boolean
+---@param error string?
+---@return nil
+local ignore_errors = function(ignore_table, success, error)
+  if not success then
+    assert(error ~= nil)
+    for _, ignore in ipairs(ignore_table) do
+      local match = string.match(error, ignore)
+      if match == nil then
+        error(error)
+      end
+    end
+  end
+end
 
 Snacks.setup {
   -- Deactivates things for files too large
@@ -313,11 +329,11 @@ vim.api.nvim_create_autocmd('User', {
           local buffer = vim.api.nvim_get_current_buf()
           if not require('markview.state').buf_attached(buffer) then
             -- Suppress treesitter errors from markview
-            utils.ignore_errors(
+            ignore_errors(
               { 'Parser not found' },
               pcall(require('markview.commands').attach, buffer)
             )
-            utils.ignore_errors(
+            ignore_errors(
               { 'Parser not found' },
               pcall(require('markview.commands').disable, buffer)
             )
