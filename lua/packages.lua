@@ -20,12 +20,12 @@ vim.pack.add {
   --[[ ================================================================= ]]
 
   -- colorschemes
-  'https://github.com/rose-pine/neovim',
+  'https://github.com/AndresYague/dracula.nvim',
   'https://github.com/EdenEast/nightfox.nvim',
+  'https://github.com/catppuccin/nvim',
   'https://github.com/folke/tokyonight.nvim',
   'https://github.com/rebelot/kanagawa.nvim',
-  'https://github.com/catppuccin/nvim',
-  'https://github.com/AndresYague/dracula.nvim',
+  'https://github.com/rose-pine/neovim',
 
   -- editing
   'https://github.com/folke/todo-comments.nvim',
@@ -35,23 +35,23 @@ vim.pack.add {
   'https://github.com/ysmb-wtsg/in-and-out.nvim',
 
   -- vcs
+  'https://github.com/NicolasGB/jj.nvim.git',
   'https://github.com/lewis6991/gitsigns.nvim',
   'https://github.com/tpope/vim-fugitive',
-  'https://github.com/NicolasGB/jj.nvim.git',
 
   -- lsp
   'https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim',
   'https://github.com/folke/lazydev.nvim',
-  'https://github.com/mason-org/mason.nvim',
   'https://github.com/mason-org/mason-lspconfig.nvim',
+  'https://github.com/mason-org/mason.nvim',
   'https://github.com/neovim/nvim-lspconfig',
 
   -- lualine
   'https://github.com/nvim-lualine/lualine.nvim',
 
   -- orgmode
-  'https://github.com/nvim-orgmode/orgmode',
   'https://github.com/nvim-orgmode/org-bullets.nvim',
+  'https://github.com/nvim-orgmode/orgmode',
 
   -- noice
   'https://github.com/MunifTanjim/nui.nvim',
@@ -67,13 +67,13 @@ vim.pack.add {
   'https://github.com/stevearc/oil.nvim',
 
   -- others
+  'https://github.com/AndresYague/fish-files.nvim',
   'https://github.com/AndresYague/move-enclosing.nvim',
   'https://github.com/AndresYague/nvim-colorizer.lua',
   'https://github.com/AndresYague/print-debug.nvim',
   'https://github.com/folke/flash.nvim',
   'https://github.com/folke/persistence.nvim',
   'https://github.com/kylechui/nvim-surround',
-  'https://github.com/AndresYague/fish-files.nvim',
   'https://github.com/shortcuts/no-neck-pain.nvim.git',
 
   -- previewers
