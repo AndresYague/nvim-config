@@ -21,7 +21,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- vim.lsp.inlay_hint.enable()
 
     -- Set up foldmethod and foldexpr
-    vim.opt.foldmethod = 'expr'
+    -- Do not overwrite the diff method
+    ---@diagnostic disable-next-line: undefined-field
+    if vim.opt.foldmethod:get() ~= 'diff' then
+      vim.opt.foldmethod = 'expr'
+    end
     vim.opt.foldexpr = 'v:lua.vim.lsp.foldexpr()'
 
     -- Create a function that lets us more easily define mappings
@@ -59,7 +63,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     ---@diagnostic disable-next-line: need-check-nil
     if client.server_capabilities.documentHighlightProvider then
       local highlight_augroup =
-          vim.api.nvim_create_augroup('lsp-highlight', { clear = true })
+        vim.api.nvim_create_augroup('lsp-highlight', { clear = true })
 
       -- Ignore fugitive files
       local match_str = 'fugitive://'
