@@ -41,6 +41,18 @@ Snacks.setup {
           action = ":lua Snacks.dashboard.pick('live_grep')",
         },
         {
+          icon = '󰸗 ',
+          key = 'a',
+          desc = 'Agenda',
+          action = ':Org agenda a',
+        },
+        {
+          icon = '󰎜 ',
+          key = 'c',
+          desc = 'Capture note',
+          action = ':Org capture t',
+        },
+        {
           icon = ' ',
           key = 'l',
           desc = 'Oil',
@@ -57,6 +69,12 @@ Snacks.setup {
           key = 's',
           desc = 'Restore Session',
           action = ":lua require('persistence').load()",
+        },
+        {
+          icon = '󰄱 ',
+          key = 'i',
+          desc = 'Intro',
+          action = ':intro',
         },
         { icon = ' ', key = 'q', desc = 'Quit', action = ':qa' },
       },
