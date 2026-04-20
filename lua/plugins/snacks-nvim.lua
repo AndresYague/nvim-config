@@ -5,16 +5,21 @@ local devicons = require 'nvim-web-devicons'
 -- only ignoring the errors given in the "ignore_table"
 ---@param ignore_table string[]
 ---@param success boolean
----@param error string?
+---@param err_str string?
 ---@return nil
-local ignore_errors = function(ignore_table, success, error)
+local ignore_errors = function(ignore_table, success, err_str)
   if not success then
-    assert(error ~= nil)
+    local err_in_tbl = false
+    assert(err_str ~= nil)
     for _, ignore in ipairs(ignore_table) do
-      local match = string.match(error, ignore)
-      if match == nil then
-        error(error)
+      local match = string.match(err_str, ignore)
+      if match ~= nil then
+        err_in_tbl = true
+        break
       end
+    end
+    if not err_in_tbl then
+      error(err_str)
     end
   end
 end
@@ -348,11 +353,11 @@ vim.api.nvim_create_autocmd('User', {
           if not require('markview.state').buf_attached(buffer) then
             -- Suppress treesitter errors from markview
             ignore_errors(
-              { 'Parser not found' },
+              { 'Parser could not be created' },
               pcall(require('markview.commands').attach, buffer)
             )
             ignore_errors(
-              { 'Parser not found' },
+              { 'Parser could not be created' },
               pcall(require('markview.commands').disable, buffer)
             )
           end
