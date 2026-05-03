@@ -3,7 +3,6 @@ vim.pack.add {
   --[[ ================================================================= ]]
   -- General dependencies
   'https://github.com/nvim-tree/nvim-web-devicons',
-  'https://github.com/rcarriga/nvim-notify',
 
   -- blink
   -- NOTE: The version is specified so the rust fuzzy find can be compiled
@@ -52,10 +51,6 @@ vim.pack.add {
   -- orgmode
   'https://github.com/nvim-orgmode/org-bullets.nvim',
   'https://github.com/nvim-orgmode/orgmode',
-
-  -- noice
-  'https://github.com/MunifTanjim/nui.nvim',
-  'https://github.com/folke/noice.nvim',
 
   -- multicursor
   {
@@ -107,11 +102,9 @@ require 'plugins.snacks-nvim'
 
 require 'plugins.colorschemes'
 require 'plugins.editing'
-require 'plugins.vcs'
 require 'plugins.lsp'
 require 'plugins.lualine'
 require 'plugins.multicursor'
-require 'plugins.noice'
 require 'plugins.oil'
 require 'plugins.orgmode'
 require 'plugins.others'
@@ -120,6 +113,8 @@ require 'plugins.previewers'
 require 'plugins.quicklist'
 require 'plugins.recorder'
 require 'plugins.treesitter'
+require 'plugins.ui2'
+require 'plugins.vcs'
 require 'plugins.which-key'
 
 -- Local plugins
