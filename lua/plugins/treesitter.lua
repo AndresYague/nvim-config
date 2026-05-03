@@ -45,11 +45,24 @@ require('nvim-treesitter').install(parsers)
 -- Start the parser in all the above filetypes
 vim.api.nvim_create_autocmd({ 'FileType' }, {
   pattern = parsers,
-  callback = function()
+  callback = function(args)
+    -- NOTE: args.match contains the filetype
+    local language = vim.treesitter.language.get_lang(args.match)
+    if not language then
+      return
+    end
+
     -- Start treesitter for highlighting and folds
-    vim.treesitter.start()
+    -- assuming the languages in "parsers" got installed
+    vim.treesitter.start(args.buf, language)
     vim.opt.foldmethod = 'expr'
     vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+
+    -- Add indent if it has it
+    if vim.treesitter.query.get(language, 'indents') then
+      -- enables treesitter based indentation
+      vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    end
   end,
 })
 
@@ -66,7 +79,7 @@ require('nvim-treesitter-textobjects').setup {
     -- mapping query_strings to modes.
     selection_modes = {
       ['@parameter.outer'] = 'v', -- charwise
-      ['@function.outer'] = 'V',  -- linewise
+      ['@function.outer'] = 'V', -- linewise
     },
     -- If you set this to `true` (default is `false`) then any textobject is
     -- extended to include preceding or succeeding whitespace. Succeeding
