@@ -183,12 +183,9 @@ local all_servers = {
   'texlab',
 }
 
--- Get LSP capabilities from blink for the lsp and add them to the servers
+-- Configure every server with the default setup
 for _, server in pairs(all_servers) do
-  vim.lsp.config(
-    server,
-    { capabilities = require('blink.cmp').get_lsp_capabilities() }
-  )
+  vim.lsp.config(server, {})
 end
 
 -- Enable servers
