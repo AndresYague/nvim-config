@@ -77,9 +77,6 @@ vim.pack.add {
   -- quicklist
   'https://github.com/stevearc/quicker.nvim',
 
-  -- recorder
-  'https://github.com/AndresYague/nvim-recorder',
-
   -- snacks
   'https://github.com/folke/snacks.nvim',
 
@@ -111,7 +108,6 @@ require 'plugins.others'
 require 'plugins.picker' -- Must come after plugins.lsp
 require 'plugins.previewers'
 require 'plugins.quicklist'
-require 'plugins.recorder'
 require 'plugins.treesitter'
 require 'plugins.ui2'
 require 'plugins.vcs'

@@ -42,7 +42,7 @@ local add_selection = function()
   for _, region in ipairs(regions) do
     local bufnr = region[1][1]
     local l_num = region[1][2]
----@diagnostic disable-next-line: param-type-mismatch
+    ---@diagnostic disable-next-line: param-type-mismatch
     local end_col = vim.fn.len(vim.fn.getline(l_num))
 
     if buff_extmarks[bufnr] == nil then
@@ -153,7 +153,11 @@ _G.diffthis = function(mode)
   buff_extmarks = {}
 
   if wd[1][1] == nil then
-    vim.notify 'Not the same number of lines'
+    vim.notify(
+      'Not the same number of lines',
+      vim.log.levels.INFO,
+      { title = 'Visual diff' }
+    )
     diffoff()
     return nil
   end
