@@ -63,7 +63,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     ---@diagnostic disable-next-line: need-check-nil
     if client.server_capabilities.documentHighlightProvider then
       local highlight_augroup =
-        vim.api.nvim_create_augroup('lsp-highlight', { clear = true })
+          vim.api.nvim_create_augroup('lsp-highlight', { clear = true })
 
       -- Ignore fugitive files
       local match_str = 'fugitive://'
@@ -145,7 +145,10 @@ local all_tools = {
   'cmakelint',
   'codelldb',
   'debugpy',
+  'findent',
   'flake8',
+  'fortitude',
+  'fortls',
   'gopls',
   'isort',
   'json-lsp',
@@ -174,6 +177,7 @@ local all_servers = {
   'bashls',
   'clangd',
   'cmake',
+  'fortls',
   'gopls',
   'json-lsp',
   'lua_ls',
