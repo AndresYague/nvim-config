@@ -162,15 +162,11 @@ Snacks.setup {
     },
   },
 
-  -- Lazygit
-  lazygit = { enabled = true },
   -- Better notifications
   notifier = { enabled = true },
-  -- Scratch space
-  scratch = { enabled = true },
   -- Smooth scrolling
   scroll = { enabled = true },
-  -- Status column on its own
+  -- Status column on its own so that we do not cover the symbols for todo-nvim
   statuscolumn = { enabled = true },
   -- Toggle things
   toggle = { enabled = true },
