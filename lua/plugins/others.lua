@@ -7,7 +7,7 @@ require('fish-files').setup()
 
 require('colorizer').setup({ '*' }, {
   RRGGBBAA = true, -- #RRGGBBAA hex codes
-  css = true,      -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+  css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
   mode = 'background',
 })
 
@@ -30,9 +30,39 @@ end, { desc = 'Load last session' })
 vim.keymap.set('n', '<leader>qd', function()
   require('persistence').stop()
 end, { desc = 'Do not save session' })
--- Restart keymap (NOTE: Uses persistence)
+
+-- Restart keymap (NOTE: Uses persistence and, possibly, snacks explorer)
 vim.keymap.set('n', '<leader>qr', function()
-  vim.cmd.restart 'lua require("persistence").load()'
+  -- Check every window and close the non file ones
+  -- this fixes an issue with file-explorer creating
+  -- windows again
+  local explorer_was_open = false
+  for _, win_id in ipairs(vim.api.nvim_list_wins()) do
+    local bufname = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(win_id))
+    -- If bufname is empty, this window will be closed
+    if bufname:len() == 0 then
+      -- Check for window titles in this bufname. Because snacks explorer
+      -- names one of the windows "Explorer", this allows us to figure out if
+      -- the explorer was indeed open, and make it open again upon restart
+      local titles = vim.api.nvim_win_get_config(win_id).title
+      if titles then
+        for _, name in pairs(titles) do
+          if name[1] == 'Explorer' then
+            explorer_was_open = true
+          end
+        end
+      end
+
+      -- Close non-file window
+      vim.api.nvim_win_close(win_id, true)
+    end
+  end
+
+  if explorer_was_open then
+    vim.cmd.restart "lua require('persistence').load(); require('snacks').explorer()"
+  else
+    vim.cmd.restart "lua require('persistence').load()"
+  end
 end, { desc = 'Restart session' })
 
 -- Flash keymaps
