@@ -79,7 +79,7 @@ require('nvim-treesitter-textobjects').setup {
     -- mapping query_strings to modes.
     selection_modes = {
       ['@parameter.outer'] = 'v', -- charwise
-      ['@function.outer'] = 'V', -- linewise
+      ['@function.outer'] = 'V',  -- linewise
     },
     -- If you set this to `true` (default is `false`) then any textobject is
     -- extended to include preceding or succeeding whitespace. Succeeding
