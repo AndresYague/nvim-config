@@ -142,3 +142,35 @@ vim.api.nvim_create_autocmd('ModeChanged', {
   end,
   desc = 'Change from absolute numbers to relativenumber',
 })
+
+-- Create registers keymaps
+---@param letter string Register name
+local register_keymap = function(letter)
+  vim.keymap.set('n', '<leader>r' .. letter, function()
+    vim.notify(
+      vim.fn.getreg(letter),
+      vim.log.levels.INFO,
+      { title = 'Register ' .. letter .. ': ' }
+    )
+  end, { desc = 'Echo @' .. letter })
+end
+
+local register_aug = vim.api.nvim_create_augroup('Registers', { clear = true })
+vim.api.nvim_create_autocmd('VimEnter', {
+  group = register_aug,
+  callback = function()
+    ('abcdefghijklmnopqrstuvwxyz'):gsub('.', function(letter)
+      local content = vim.fn.getreg(letter)
+      if content:len() > 0 then
+        register_keymap(letter)
+      end
+    end)
+  end,
+})
+vim.api.nvim_create_autocmd('RecordingLeave', {
+  group = register_aug,
+  callback = function()
+    local letter = vim.fn.reg_recording()
+    register_keymap(letter)
+  end,
+})

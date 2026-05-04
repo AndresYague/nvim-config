@@ -189,3 +189,16 @@ vim.keymap.set('n', '<leader>cc', 'i<C-R>=', { desc = 'Calculator insert' })
 
 -- Use the calculator in normal mode (requires having bc installed)
 vim.keymap.set('x', '<leader>cc', ':!bc<CR>', { desc = 'Line calculator' })
+
+-- Clear the given registers or all
+vim.keymap.set('n', '<leader>r<space>', function()
+  ('abcdefghijklmnopqrstuvwxyz'):gsub('.', function(letter)
+    if vim.fn.getreg(letter):len() > 0 then
+      vim.fn.setreg(letter, '')
+      vim.keymap.del('n', '<leader>r' .. letter)
+    end
+  end)
+
+  -- Write to the ShaDa file to remove the memory of the registers
+  vim.cmd('wshada!')
+end, { desc = 'Clear all registers' })

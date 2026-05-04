@@ -93,12 +93,28 @@ require('lualine').setup {
       'branch',
       'diff',
       'searchcount',
-      {
-        -- Recorder
-        function()
-          return require('recorder').displaySlots()
-        end,
-      },
+      function()
+        -- Go into each letter register and figure out if it has anything in it
+        -- if it does, then save it into "records", which will be displayed in
+        -- the lualine
+        local records = ''
+
+        -- This trick makes a loop over every letter of the alphabet mapping
+        -- the anonymous function to it.
+        -- Adapted from https://stackoverflow.com/a/832414
+        ('abcdefghijklmnopqrstuvwxyz'):gsub('.', function(letter)
+          if vim.fn.getreg(letter):len() > 0 then
+            records = records .. letter
+          end
+        end)
+
+        -- Only add the @ symbol if at least one register is not empty
+        if records:len() > 0 then
+          records = '@' .. records
+        end
+
+        return records
+      end,
     },
     lualine_x = {
       '%S', -- This can be used because vim.o.showcmdloc = 'statusline' is in the opts
