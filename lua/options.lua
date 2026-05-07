@@ -81,8 +81,5 @@ vim.o.scrolloff = 1
 -- instead raise a dialog asking if you wish to save the current file(s)
 vim.o.confirm = true
 
--- This fixes lualine not showing the non-ex commands
-vim.o.showcmdloc = 'statusline'
-
 -- Set conceallevel
 vim.o.conceallevel = 2

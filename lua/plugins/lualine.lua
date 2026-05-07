@@ -117,7 +117,6 @@ require('lualine').setup {
       end,
     },
     lualine_x = {
-      '%S', -- This can be used because vim.o.showcmdloc = 'statusline' is in the opts
       'encoding',
       'fileformat',
       'filetype',
