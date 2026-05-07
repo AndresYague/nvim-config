@@ -39,16 +39,14 @@ require('blink.cmp').setup {
   },
 
   completion = {
-    documentation = { auto_show = false, auto_show_delay_ms = 500 },
+    documentation = { auto_show = true, auto_show_delay_ms = 500 },
+    list = { selection = { preselect = true, auto_insert = false } },
+    ghost_text = { enabled = true },
   },
 
   sources = {
-    default = { 'lsp', 'path', 'snippets', 'lazydev', 'buffer' },
+    default = { 'lsp', 'path', 'snippets', 'buffer' },
     providers = {
-      lazydev = {
-        module = 'lazydev.integrations.blink',
-        score_offset = 100,
-      },
       snippets = {
         opts = {
           friendly_snippets = true,

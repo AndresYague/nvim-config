@@ -2,13 +2,6 @@
 require('mason').setup()
 require('mason-lspconfig').setup()
 
-require('lazydev').setup {
-  library = {
-    -- Load luvit types when the `vim.uv` word is found
-    { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
-  },
-}
-
 --  This function gets run when an LSP attaches to a particular buffer.
 --    That is to say, every time a new file is opened that is associated with
 --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
@@ -16,7 +9,7 @@ require('lazydev').setup {
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
   callback = function(event)
-    local client = vim.lsp.get_client_by_id(event.data.client_id)
+    local client = assert(vim.lsp.get_client_by_id(event.data.client_id))
     -- Uncomment to enable inlay hints automatically
     -- vim.lsp.inlay_hint.enable()
 
