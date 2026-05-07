@@ -26,8 +26,12 @@ end, { desc = 'Select session to load' })
 vim.keymap.set('n', '<leader>ql', function()
   require('persistence').load { last = true }
 end, { desc = 'Load last session' })
--- stop Persistence => session won't be saved on exit
+-- select a session to delete
 vim.keymap.set('n', '<leader>qd', function()
+  require('persistence').delete()
+end, { desc = 'Select session to delete' })
+-- stop Persistence => session won't be saved on exit
+vim.keymap.set('n', '<leader>qn', function()
   require('persistence').stop()
 end, { desc = 'Do not save session' })
 

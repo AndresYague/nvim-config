@@ -67,7 +67,7 @@ vim.pack.add {
   'https://github.com/AndresYague/nvim-colorizer.lua',
   'https://github.com/AndresYague/print-debug.nvim',
   'https://github.com/folke/flash.nvim',
-  'https://github.com/folke/persistence.nvim',
+  'https://github.com/AndresYague/persistence.nvim',
   'https://github.com/kylechui/nvim-surround',
   'https://github.com/shortcuts/no-neck-pain.nvim.git',
 
