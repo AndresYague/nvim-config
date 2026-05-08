@@ -38,7 +38,7 @@ vim.pack.add {
   'https://github.com/lewis6991/gitsigns.nvim',
   'https://github.com/tpope/vim-fugitive',
 
-  -- lsp
+  -- lsp_config
   'https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim',
   'https://github.com/mason-org/mason-lspconfig.nvim',
   'https://github.com/mason-org/mason.nvim',
@@ -98,7 +98,7 @@ require 'plugins.snacks-nvim'
 
 require 'plugins.colorschemes'
 require 'plugins.editing'
-require 'plugins.lsp'
+require 'plugins.lsp_config' -- Cannot be named just "lsp" for mks to work well
 require 'plugins.lualine'
 require 'plugins.multicursor'
 require 'plugins.oil'
