@@ -29,9 +29,6 @@ vim.pack.add {
   -- editing
   'https://github.com/folke/todo-comments.nvim',
   'https://github.com/rafamadriz/friendly-snippets',
-  'https://github.com/stevearc/conform.nvim',
-  'https://github.com/windwp/nvim-autopairs',
-  'https://github.com/ysmb-wtsg/in-and-out.nvim',
 
   -- vcs
   'https://github.com/NicolasGB/jj.nvim.git',
@@ -62,7 +59,6 @@ vim.pack.add {
 
   -- others
   'https://github.com/AndresYague/fish-files.nvim',
-  'https://github.com/AndresYague/move-enclosing.nvim',
   'https://github.com/AndresYague/nvim-colorizer.lua',
   'https://github.com/AndresYague/print-debug.nvim',
   'https://github.com/folke/flash.nvim',

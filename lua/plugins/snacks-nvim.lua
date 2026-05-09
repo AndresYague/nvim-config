@@ -297,20 +297,6 @@ vim.api.nvim_create_autocmd('User', {
       })
       :map '<leader>ut'
 
-    -- Toggle autopairs
-    Snacks.toggle
-      .new({
-        id = 'nvim-autopairs',
-        name = 'Autopairs',
-        get = function()
-          return not require('nvim-autopairs').state.disabled
-        end,
-        set = function()
-          require('nvim-autopairs').toggle()
-        end,
-      })
-      :map '<leader>uP'
-
     -- Toggle git blame
     Snacks.toggle
       .new({
@@ -324,20 +310,6 @@ vim.api.nvim_create_autocmd('User', {
         end,
       })
       :map '<leader>ub'
-
-    -- Toggle move-enclosing ts
-    Snacks.toggle
-      .new({
-        id = 'move-enclosing',
-        name = 'Move Enclosing TS',
-        get = function()
-          return require('move-enclosing').use_ts
-        end,
-        set = function()
-          require('move-enclosing').toggle_ts()
-        end,
-      })
-      :map '<leader>ue'
 
     -- Toggle Markview
     Snacks.toggle

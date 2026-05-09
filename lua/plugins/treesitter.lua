@@ -23,7 +23,6 @@ local parsers = {
   'luap',
   'markdown',
   'markdown_inline',
-  -- 'norg', -- NOTE: norg is not supported by nvim-treesitter yet
   'printf',
   'python',
   'query',

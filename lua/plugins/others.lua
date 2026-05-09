@@ -1,7 +1,6 @@
 require('persistence').setup {
   event = 'BufReadPre', -- this will only start session saving when an actual file was opened
 }
-require('move-enclosing').setup {}
 require('print-debug').setup {}
 require('fish-files').setup()
 
@@ -10,6 +9,11 @@ require('colorizer').setup({ '*' }, {
   css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
   mode = 'background',
 })
+
+require('flash').setup {
+  label = { style = 'inline' },
+  rainbow = { enabled = true },
+}
 
 -- Persistence keymaps
 -- Close current session
