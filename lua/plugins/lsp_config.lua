@@ -21,6 +21,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
     vim.opt.foldexpr = 'v:lua.vim.lsp.foldexpr()'
 
+    -- This ensures that whenever you call hover in an LSP buffer,
+    -- it uses rounded borders
+    vim.keymap.set('n', 'K', function()
+      vim.lsp.buf.hover { border = 'rounded' }
+    end, { buffer = event.buf })
+
     -- Create a function that lets us more easily define mappings
     -- specific for LSP related items. It sets the mode, buffer and
     -- description for us each time.
@@ -56,7 +62,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     ---@diagnostic disable-next-line: need-check-nil
     if client.server_capabilities.documentHighlightProvider then
       local highlight_augroup =
-          vim.api.nvim_create_augroup('lsp-highlight', { clear = true })
+        vim.api.nvim_create_augroup('lsp-highlight', { clear = true })
 
       -- Ignore fugitive files
       local match_str = 'fugitive://'
@@ -185,5 +191,10 @@ for _, server in pairs(all_servers) do
   vim.lsp.config(server, {})
 end
 
--- Enable servers
-vim.lsp.enable(all_servers)
+-- lua_ls configuration with lazydev
+require('lazydev').setup {
+  library = {
+    -- Load luvit types when the `vim.uv` word is found
+    { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+  },
+}

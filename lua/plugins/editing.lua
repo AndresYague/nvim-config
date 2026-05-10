@@ -22,14 +22,23 @@ require('blink.cmp').setup {
   },
 
   completion = {
-    documentation = { auto_show = true, auto_show_delay_ms = 500 },
+    documentation = {
+      auto_show = true,
+      auto_show_delay_ms = 500,
+      window = { border = 'rounded' },
+    },
     list = { selection = { preselect = true, auto_insert = false } },
     ghost_text = { enabled = true },
+    menu = { border = 'rounded' },
   },
 
   sources = {
-    default = { 'lsp', 'path', 'snippets', 'buffer' },
+    default = { 'lsp', 'path', 'snippets', 'lazydev', 'buffer' },
     providers = {
+      lazydev = {
+        module = 'lazydev.integrations.blink',
+        score_offset = 100,
+      },
       snippets = {
         opts = {
           friendly_snippets = true,
@@ -40,5 +49,8 @@ require('blink.cmp').setup {
 
   snippets = { preset = 'default' },
   fuzzy = { implementation = 'prefer_rust_with_warning' },
-  signature = { enabled = true },
+  signature = {
+    enabled = true,
+    window = { border = 'rounded' },
+  },
 }
