@@ -3,6 +3,10 @@ vim.pack.add {
   --[[ ================================================================= ]]
   -- General dependencies
   'https://github.com/nvim-tree/nvim-web-devicons',
+  {
+    src = 'https://github.com/nvim-lua/plenary.nvim', -- This is for code_companion
+    version = 'master',
+  },
 
   -- nvim-cmp
   'https://github.com/hrsh7th/nvim-cmp',
@@ -26,6 +30,9 @@ vim.pack.add {
   'https://github.com/folke/tokyonight.nvim',
   'https://github.com/rebelot/kanagawa.nvim',
   'https://github.com/rose-pine/neovim',
+
+  -- code_companion
+  'https://github.com/olimorris/codecompanion.nvim',
 
   -- editing
   'https://github.com/folke/todo-comments.nvim',
@@ -100,6 +107,7 @@ vim.pack.add {
 require 'plugins.snacks-nvim'
 require 'plugins.lsp_setup' -- Cannot be named just "lsp" for mks to work well
 
+require 'plugins.code_companion'
 require 'plugins.colorschemes'
 require 'plugins.editing'
 require 'plugins.lualine'
