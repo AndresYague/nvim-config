@@ -24,5 +24,3 @@ require('gitsigns').setup {
     end, { desc = 'Stage/Unstage Hunk' })
   end,
 }
-
-require('jj').setup {}

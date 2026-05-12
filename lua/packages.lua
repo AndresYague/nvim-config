@@ -29,9 +29,10 @@ vim.pack.add {
   -- editing
   'https://github.com/folke/todo-comments.nvim',
   'https://github.com/rafamadriz/friendly-snippets',
+  'https://github.com/windwp/nvim-autopairs',
+  'https://github.com/ysmb-wtsg/in-and-out.nvim',
 
   -- vcs
-  'https://github.com/NicolasGB/jj.nvim.git',
   'https://github.com/lewis6991/gitsigns.nvim',
   'https://github.com/tpope/vim-fugitive',
 

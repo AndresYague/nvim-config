@@ -297,6 +297,20 @@ vim.api.nvim_create_autocmd('User', {
       })
       :map '<leader>ut'
 
+    -- Toggle autopairs
+    Snacks.toggle
+      .new({
+        id = 'nvim-autopairs',
+        name = 'Autopairs',
+        get = function()
+          return not require('nvim-autopairs').state.disabled
+        end,
+        set = function()
+          require('nvim-autopairs').toggle()
+        end,
+      })
+      :map '<leader>uP'
+
     -- Toggle git blame
     Snacks.toggle
       .new({
