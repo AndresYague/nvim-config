@@ -198,3 +198,25 @@ require('lazydev').setup {
     { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
   },
 }
+
+-- Configure pylsp
+vim.lsp.config('pylsp', {
+  settings = {
+    pylsp = {
+      plugins = {
+        flake8 = {
+          enabled = true,
+        },
+        mypy = {
+          enabled = true,
+        },
+        isort = {
+          enabled = true,
+        },
+        pydocstyle = {
+          enabled = true,
+        },
+      },
+    },
+  },
+})
