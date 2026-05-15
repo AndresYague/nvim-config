@@ -62,7 +62,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     ---@diagnostic disable-next-line: need-check-nil
     if client.server_capabilities.documentHighlightProvider then
       local highlight_augroup =
-        vim.api.nvim_create_augroup('lsp-highlight', { clear = true })
+          vim.api.nvim_create_augroup('lsp-highlight', { clear = true })
 
       -- Ignore fugitive files
       local match_str = 'fugitive://'
@@ -199,24 +199,6 @@ require('lazydev').setup {
   },
 }
 
--- Configure pylsp
-vim.lsp.config('pylsp', {
-  settings = {
-    pylsp = {
-      plugins = {
-        flake8 = {
-          enabled = true,
-        },
-        mypy = {
-          enabled = true,
-        },
-        isort = {
-          enabled = true,
-        },
-        pydocstyle = {
-          enabled = true,
-        },
-      },
-    },
-  },
-})
+-- Enable the servers
+-- This calls the configuration in lsp/
+vim.lsp.enable(all_servers)
