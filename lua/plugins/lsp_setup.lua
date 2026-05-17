@@ -158,6 +158,7 @@ local all_tools = {
   'mypy',
   'pydocstyle',
   'python-lsp-server',
+  'shellcheck',
   'shfmt',
   'stylua',
   'taplo',

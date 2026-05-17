@@ -4,12 +4,13 @@ vim.pack.add {
   -- General dependencies
   'https://github.com/nvim-tree/nvim-web-devicons',
 
-  -- blink
-  -- NOTE: The version is specified so the rust fuzzy find can be compiled
-  {
-    src = 'https://github.com/saghen/blink.cmp',
-    version = vim.version.range '1.*',
-  },
+  -- nvim-cmp
+  'https://github.com/hrsh7th/nvim-cmp',
+  'https://github.com/L3MON4D3/LuaSnip',         -- Snippet engine
+  'https://github.com/hrsh7th/cmp-buffer',       -- Buffer text source
+  'https://github.com/hrsh7th/cmp-nvim-lsp',     -- LSP source
+  'https://github.com/hrsh7th/cmp-path',         -- File system paths source
+  'https://github.com/saadparwaiz1/cmp_luasnip', -- Snippet source
 
   -- treesitter
   {

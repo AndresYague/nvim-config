@@ -19,45 +19,31 @@ vim.keymap.set({ 'n' }, '<leader>cf', function()
   vim.lsp.buf.format { async = true }
 end, { desc = 'Format buffer' })
 
-require('blink.cmp').setup {
-  keymap = {
-    preset = 'default',
-  },
+local cmp = require 'cmp'
+local luasnip = require 'luasnip'
 
-  appearance = {
-    nerd_font_variant = 'mono',
-  },
+-- Load friendly_snippets
+require('luasnip.loaders.from_vscode').lazy_load()
 
-  completion = {
-    documentation = {
-      auto_show = true,
-      auto_show_delay_ms = 500,
-      window = { border = 'rounded' },
-    },
-    list = { selection = { preselect = true, auto_insert = false } },
-    ghost_text = { enabled = true },
-    menu = { border = 'rounded' },
+cmp.setup {
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
   },
-
-  sources = {
-    default = { 'lsp', 'path', 'snippets', 'lazydev', 'buffer' },
-    providers = {
-      lazydev = {
-        module = 'lazydev.integrations.blink',
-        score_offset = 100,
-      },
-      snippets = {
-        opts = {
-          friendly_snippets = true,
-        },
-      },
-    },
+  mapping = cmp.mapping.preset.insert {
+    ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-d>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<C-y>'] = cmp.mapping.confirm { select = true },
   },
-
-  snippets = { preset = 'default' },
-  fuzzy = { implementation = 'prefer_rust_with_warning' },
-  signature = {
-    enabled = true,
-    window = { border = 'rounded' },
-  },
+  sources = cmp.config.sources({
+    { name = 'lazydev', group_index = 0 }, -- Set index to 0 to bypass standard LuaLS duplicates
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+  }, {
+    { name = 'buffer' },
+    { name = 'path' },
+  }),
 }
