@@ -37,6 +37,20 @@ cmp.setup {
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.abort(),
     ['<C-y>'] = cmp.mapping.confirm { select = true },
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if luasnip.jumpable(1) then
+        luasnip.jump(1)
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
   },
   sources = cmp.config.sources({
     { name = 'lazydev', group_index = 0 }, -- Set index to 0 to bypass standard LuaLS duplicates
