@@ -20,7 +20,7 @@ vim.pack.add {
   --[[ ================================================================= ]]
 
   -- colorschemes
-  'https://github.com/AndresYague/dracula.nvim',
+  'https://codeberg.org/AndresYague/dracula.nvim',
   'https://github.com/EdenEast/nightfox.nvim',
   'https://github.com/catppuccin/nvim',
   'https://github.com/folke/tokyonight.nvim',
@@ -61,14 +61,14 @@ vim.pack.add {
   'https://github.com/stevearc/oil.nvim',
 
   -- others
-  'https://github.com/AndresYague/fish-files.nvim',
-  'https://github.com/AndresYague/nvim-colorizer.lua',
-  'https://github.com/AndresYague/print-debug.nvim',
+  'https://codeberg.org/AndresYague/fish-files.nvim',
+  'https://codeberg.org/AndresYague/nvim-colorizer.lua',
+  'https://codeberg.org/AndresYague/print-debug.nvim',
   'https://github.com/folke/flash.nvim',
-  'https://github.com/AndresYague/persistence.nvim',
+  'https://codeberg.org/AndresYague/persistence.nvim',
   'https://github.com/kylechui/nvim-surround',
   {
-    src = 'https://github.com/AndresYague/no-neck-pain.nvim.git',
+    src = 'https://codeberg.org/AndresYague/no-neck-pain.nvim',
     version = 'my_main',
   },
 
