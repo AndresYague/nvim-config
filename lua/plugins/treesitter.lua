@@ -7,6 +7,7 @@ require('treesitter-context').setup {
 local parsers = {
   'bash',
   'c',
+  'cmake',
   'comment',
   'cpp',
   'css',

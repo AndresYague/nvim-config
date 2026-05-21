@@ -163,13 +163,15 @@ Snacks.setup {
   },
 
   -- Better notifications
-  notifier = { enabled = true },
+  notifier = { enabled = false },
   -- Smooth scrolling
   scroll = { enabled = true },
   -- Status column on its own so that we do not cover the symbols for todo-nvim
   statuscolumn = { enabled = true },
   -- Toggle things
   toggle = { enabled = true },
+  -- Terminal
+  terminal = { enabled = false },
   -- Zen/Zoom mode
   zen = { enabled = true },
 
@@ -243,6 +245,9 @@ Snacks.setup {
     },
   },
 }
+
+-- Disable animations by default
+vim.g.snacks_animate = false
 
 local visual_bold = false
 
@@ -413,6 +418,24 @@ vim.api.nvim_create_autocmd('User', {
       })
       :map '<leader>uw'
 
+    -- Toggle for codelens
+    Snacks.toggle
+      .new({
+        id = 'codelens',
+        name = 'Codelens',
+        get = function()
+          return vim.lsp.codelens.is_enabled()
+        end,
+        set = function()
+          if vim.lsp.codelens.is_enabled() then
+            vim.lsp.codelens.enable(false)
+          else
+            vim.lsp.codelens.enable(true)
+          end
+        end,
+      })
+      :map '<leader>uk'
+
     -- Fully custom toggle for visual_bold
     Snacks.toggle
       .new({
@@ -438,9 +461,6 @@ vim.api.nvim_create_autocmd('User', {
   end,
 })
 
--- Disable animations by default
-vim.g.snacks_animate = false
-
 vim.keymap.set('n', '<C-w>z', function()
   Snacks.zen()
 end, { desc = 'Toggle Zen Mode' })
@@ -456,9 +476,6 @@ end, { desc = 'Git Browse' })
 vim.keymap.set('n', '<leader>gg', function()
   Snacks.lazygit()
 end, { desc = 'Lazygit' })
-vim.keymap.set('n', '<leader>uN', function()
-  Snacks.notifier.hide()
-end, { desc = 'Dismiss All Notifications' })
 vim.keymap.set('n', '<leader>uu', function()
   require('undotree').open()
 end, { desc = 'Toggle Undotree window' })

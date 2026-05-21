@@ -52,6 +52,15 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- or a suggestion from your LSP for this to activate.
     map('<leader>ca', vim.lsp.buf.code_action, 'Code Action', { 'n', 'x' })
 
+    -- Go to references
+    map('gr', vim.lsp.buf.references, 'references', { 'n', 'x' })
+
+    -- Go to type definition
+    map('gy', vim.lsp.buf.type_definition, 'type definition', { 'n', 'x' })
+
+    -- Enable codelens
+    map('gl', vim.lsp.codelens.run, 'codelens', { 'n', 'x' })
+
     -- The following two autocommands are used to highlight references of the
     -- word under your cursor when your cursor rests there for a little while.
     -- See `:help CursorHold` for information about when this is executed
@@ -148,6 +157,7 @@ local all_tools = {
   'flake8',
   'fortitude',
   'fortls',
+  'fprettify',
   'gopls',
   'isort',
   'json-lsp',

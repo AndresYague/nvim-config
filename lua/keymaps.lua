@@ -1,6 +1,25 @@
 -- Clear highlights on search when pressing <Esc> in normal mode
 vim.keymap.set('n', '<Esc>', vim.cmd.nohlsearch)
 
+-- Paste over selections without losing initially yanked text
+vim.keymap.set(
+  'x',
+  'p',
+  '"_dP', -- Put new selection in blackhole buffer
+  { desc = 'Paste over selections without losing initially yanked text' }
+)
+
+-- Do not move the cursor after J
+vim.keymap.set('n', 'J', 'mzJ`z', { desc = 'Join [count] lines' })
+
+-- Replace word under cursor
+vim.keymap.set(
+  'n',
+  '<leader>m',
+  ':%s/\\<<C-R><C-W>\\>/<C-R><C-W>/gI<left><left><left>',
+  { desc = 'Join [count] lines' }
+)
+
 -- Execute
 vim.keymap.set(
   { 'n', 'v' },
@@ -200,5 +219,5 @@ vim.keymap.set('n', '<leader>r<space>', function()
   end)
 
   -- Write to the ShaDa file to remove the memory of the registers
-  vim.cmd('wshada!')
+  vim.cmd 'wshada!'
 end, { desc = 'Clear all registers' })
