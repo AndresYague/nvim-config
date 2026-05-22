@@ -40,7 +40,7 @@ vim.keymap.set(
   { desc = 'Print lua line' }
 )
 
--- Remap redo
+-- Remap redo like helix
 vim.keymap.set('n', 'U', '<C-R>', { desc = 'Redo' })
 
 -- Remap alternate-file
@@ -51,8 +51,13 @@ vim.keymap.set({ 'o', 'x' }, 'ir', 'i[', { desc = 'inner []' })
 vim.keymap.set({ 'o', 'x' }, 'ar', 'a[', { desc = '[] block' })
 
 -- Remap paragraph operator
-vim.keymap.set('o', 'p', '}', { desc = 'Next empty line' })
-vim.keymap.set('o', 'P', '{', { desc = 'Prev empty line' })
+-- The V forces operator-pending to work linewise (:h o_V)
+vim.keymap.set({ 'o', 'x' }, 'p', 'V}', { desc = 'Next empty line' })
+vim.keymap.set({ 'o', 'x' }, 'P', 'V{', { desc = 'Prev empty line' })
+
+-- Remap 0 and $ like helix
+vim.keymap.set({ 'n', 'o', 'x' }, 'gh', '0', { desc = 'Go to line start' })
+vim.keymap.set({ 'n', 'o', 'x' }, 'gl', '$', { desc = 'Go to line end' })
 
 -- Diagnostic keymaps
 vim.keymap.set(
