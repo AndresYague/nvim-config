@@ -181,6 +181,7 @@ local plug_sync = function()
   -- Find all plugins in file
   local plugins_in_file = find_plugins_in_file()
 
+  local deleted = 0
   -- For every plugin in  loaded_plugins, check if it is in plugins_in_file
   -- if not, remove it
   for _, plugin_table in ipairs(loaded_plugins) do
@@ -193,9 +194,18 @@ local plug_sync = function()
     end
 
     if not found then
+      deleted = deleted + 1
       vim.pack.del { plugin_table.spec.name }
     end
   end
+
+  local msg
+  if deleted == 1 then
+    msg = ' plugin removed'
+  else
+    msg = ' plugins removed'
+  end
+  vim.notify(deleted .. msg)
 end
 
 -- Keymap to delete plugin under the cursor
