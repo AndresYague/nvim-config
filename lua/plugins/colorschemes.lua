@@ -85,13 +85,13 @@ require('tokyonight').setup {
   --- You can override specific color groups to use other groups or a hex color
   --- function will be called with a ColorScheme table
   --- @param colors ColorScheme
----@diagnostic disable-next-line: unused-local
+  ---@diagnostic disable-next-line: unused-local
   on_colors = function(colors) end,
 
   --- You can override specific highlights to use other groups or a hex color
   --- function will be called with a Highlights and ColorScheme table
   --- @param highlights tokyonight.Highlights
   --- @param colors ColorScheme
----@diagnostic disable-next-line: unused-local
+  ---@diagnostic disable-next-line: unused-local
   on_highlights = function(highlights, colors) end,
 }

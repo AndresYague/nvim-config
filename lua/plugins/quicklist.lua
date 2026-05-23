@@ -31,8 +31,8 @@ require('quicker').setup {
       desc = 'Collapse quickfix context',
     },
   },
-  -- NOTE: Callback function to run any custom logic or keymaps for the quickfix buffer
-  -- on_qf = function(bufnr) end,
+  -- NOTE: Callback function to run any custom logic or keymaps for the
+  -- quickfix buffer on_qf = function(bufnr) end,
   edit = {
     -- Enable editing the quickfix like a normal buffer
     enabled = true,

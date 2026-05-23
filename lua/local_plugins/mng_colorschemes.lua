@@ -4,7 +4,7 @@ local priority = ''
 
 -- Find where we save the colorscheme file
 local cs_path =
-    vim.fs.joinpath(vim.fs.abspath(vim.fn.stdpath 'config'), 'colorscheme.txt')
+  vim.fs.joinpath(vim.fs.abspath(vim.fn.stdpath 'config'), 'colorscheme.txt')
 
 -- When requiring this file, read the color
 local fread = io.open(cs_path, 'r')

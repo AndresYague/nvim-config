@@ -68,7 +68,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     ---@diagnostic disable-next-line: need-check-nil
     if client.server_capabilities.documentHighlightProvider then
       local highlight_augroup =
-          vim.api.nvim_create_augroup('lsp-highlight', { clear = true })
+        vim.api.nvim_create_augroup('lsp-highlight', { clear = true })
 
       -- Ignore fugitive files
       local match_str = 'fugitive://'

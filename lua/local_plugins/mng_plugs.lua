@@ -94,7 +94,7 @@ local find_plugins_in_file = function()
     local is_source = true
     for _, node, _ in query:iter_captures(tree:root(), 0) do
       local name =
-          vim.treesitter.get_node_text(node, vim.api.nvim_get_current_buf())
+        vim.treesitter.get_node_text(node, vim.api.nvim_get_current_buf())
 
       -- Only look at strings in "vim.pack.add"
       if node:type() == 'dot_index_expression' then
@@ -168,7 +168,10 @@ local plug_sync = function()
   -- Make sure "vim.pack.add" is in the file
   local lines = vim.api.nvim_buf_get_lines(0, 0, -1, true)
   if not vim.tbl_contains(lines, 'vim.pack.add {') then
-    vim.notify("Wrong file, run where 'vim.pack.add' is located", vim.log.levels.INFO)
+    vim.notify(
+      "Wrong file, run where 'vim.pack.add' is located",
+      vim.log.levels.INFO
+    )
     return
   end
 

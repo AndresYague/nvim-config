@@ -6,10 +6,10 @@ vim.pack.add {
 
   -- nvim-cmp
   'https://github.com/hrsh7th/nvim-cmp',
-  'https://github.com/L3MON4D3/LuaSnip',         -- Snippet engine
-  'https://github.com/hrsh7th/cmp-buffer',       -- Buffer text source
-  'https://github.com/hrsh7th/cmp-nvim-lsp',     -- LSP source
-  'https://github.com/hrsh7th/cmp-path',         -- File system paths source
+  'https://github.com/L3MON4D3/LuaSnip', -- Snippet engine
+  'https://github.com/hrsh7th/cmp-buffer', -- Buffer text source
+  'https://github.com/hrsh7th/cmp-nvim-lsp', -- LSP source
+  'https://github.com/hrsh7th/cmp-path', -- File system paths source
   'https://github.com/saadparwaiz1/cmp_luasnip', -- Snippet source
 
   -- treesitter

@@ -1,5 +1,5 @@
 require('gitsigns').setup {
-  numhl = true, -- Toggle with `:Gitsigns toggle_numhl`
+  numhl = true,              -- Toggle with `:Gitsigns toggle_numhl`
   current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
   -- NOTE: Not needed bufnr here as keyamp applies to current buffer
   on_attach = function( --[[ bufnr ]])

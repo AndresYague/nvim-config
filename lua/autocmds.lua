@@ -110,7 +110,7 @@ vim.api.nvim_create_autocmd({ 'BufUnload', 'BufWinLeave' }, {
 -- Do nothing if user sets off any of the number options
 local relative_change = vim.o.number and vim.o.relativenumber
 local change_relnum_g =
-    vim.api.nvim_create_augroup('Change relnum', { clear = true })
+  vim.api.nvim_create_augroup('Change relnum', { clear = true })
 
 vim.api.nvim_create_autocmd('OptionSet', {
   group = change_relnum_g,
