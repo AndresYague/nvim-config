@@ -17,7 +17,7 @@ vim.keymap.set(
   'n',
   '<leader>m',
   ':%s/\\<<C-R><C-W>\\>/<C-R><C-W>/gI<left><left><left>',
-  { desc = 'Join [count] lines' }
+  { desc = 'Replace all <word> under the cursor' }
 )
 
 -- Execute
@@ -201,9 +201,13 @@ vim.keymap.set(
   '<cmd>Gvdiffsplit!<CR>',
   { desc = 'Do a Gvdiffsplit!' }
 )
-vim.keymap.set('n', '<leader>dt', '<cmd>diffthis<CR>', { desc = 'Diff this' })
+vim.keymap.set(
+  { 'n', 'v' },
+  '<leader>dt',
+  '<cmd>diffthis<CR>',
+  { desc = 'Diff this' }
+)
 vim.keymap.set('n', '<leader>do', '<cmd>diffoff!<CR>', { desc = 'Diff off' })
-vim.keymap.set('v', '<leader>dt', '<cmd>diffthis<CR>', { desc = 'Diff this' })
 
 -- Mason window display
 vim.keymap.set('n', '<leader>cm', '<cmd>Mason<CR>', { desc = 'Mason window' })
@@ -226,3 +230,17 @@ vim.keymap.set('n', '<leader>r<space>', function()
   -- Write to the ShaDa file to remove the memory of the registers
   vim.cmd 'wshada!'
 end, { desc = 'Clear all registers' })
+
+-- Remove trailing whitespace
+vim.keymap.set(
+  'n',
+  '<leader>dw',
+  'mz:%s/\\s\\+$//<CR><cmd>noh<CR>`z',
+  { desc = 'Delete trailing whitespace in file' }
+)
+vim.keymap.set(
+  'x',
+  '<leader>dw',
+  "mz:s/\\s\\+$//<CR><cmd>noh<CR>`z",
+  { desc = 'Delete trailing whitespace' }
+)
