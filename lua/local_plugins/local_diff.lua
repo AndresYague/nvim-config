@@ -225,8 +225,10 @@ vim.keymap.set({ 'n', 'x' }, '<leader>dv', function()
   vim.go.opfunc = 'v:lua.diffthis'
 
   -- Define the keymap in this callback so we have access to this keymap only
-  -- here
-  vim.keymap.set({ 'o' }, 'v', '<leader>', { desc = 'Visual diff line' })
+  -- here. Tapping v again takes the line by repeating the operator-pending mode
+  -- keymap.
+  vim.keymap.set({ 'o' }, 'v', 'g@', { desc = 'Visual diff line' })
 
+  -- Start operator-pending mode
   return 'g@'
 end, { desc = 'Visual diff', expr = true })
