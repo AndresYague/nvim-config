@@ -244,3 +244,20 @@ vim.keymap.set(
   'mz:s/\\s\\+$//<CR><cmd>noh<CR>`z',
   { desc = 'Delete trailing whitespace' }
 )
+
+-- Grep using vimgrep easily
+vim.keymap.set('n', '<leader>sv', function()
+  vim.ui.input({ prompt = 'Regexp: ' }, function(regexp)
+    if regexp:len() == 0 then
+      return
+    end
+
+    vim.ui.input({ prompt = 'file extension: ' }, function(ext)
+      local s = 'vimgrep "' .. regexp .. '" **/*'
+      if ext:len() > 0 then
+        s = s .. '.' .. ext
+      end
+      vim.cmd(s)
+    end)
+  end)
+end, { desc = 'Find string using vimgrep' })
