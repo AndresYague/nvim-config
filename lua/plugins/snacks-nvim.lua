@@ -457,6 +457,22 @@ vim.api.nvim_create_autocmd('User', {
             end
           end,
         })
+        :map '<leader>uV'
+    Snacks.toggle
+        .new({
+          id = 'virtual_edit',
+          name = 'Virtual Edit',
+          get = function()
+            return vim.o.virtualedit == 'all'
+          end,
+          set = function()
+            if vim.o.virtualedit == 'all' then
+              vim.o.virtualedit = ''
+            else
+              vim.o.virtualedit = 'all'
+            end
+          end,
+        })
         :map '<leader>uv'
   end,
 })
