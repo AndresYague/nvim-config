@@ -95,18 +95,18 @@ vim.pack.add {
   'https://github.com/folke/which-key.nvim',
 }
 
--- Make sure snacks-nvim loads ASAP
+-- Make sure snacks-nvim and lsp_setup load ASAP
 require 'plugins.snacks-nvim'
+require 'plugins.lsp_setup' -- Cannot be named just "lsp" for mks to work well
 
 require 'plugins.colorschemes'
 require 'plugins.editing'
-require 'plugins.lsp_setup' -- Cannot be named just "lsp" for mks to work well
 require 'plugins.lualine'
 require 'plugins.multicursor'
 require 'plugins.oil'
 require 'plugins.orgmode'
 require 'plugins.others'
-require 'plugins.picker' -- Must come after plugins.lsp
+require 'plugins.picker'
 require 'plugins.previewers'
 require 'plugins.quicklist'
 require 'plugins.treesitter'
