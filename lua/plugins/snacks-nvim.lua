@@ -426,11 +426,11 @@ vim.api.nvim_create_autocmd('User', {
           get = function()
             return vim.lsp.codelens.is_enabled()
           end,
-          set = function()
-            if vim.lsp.codelens.is_enabled() then
-              vim.lsp.codelens.enable(false)
-            else
+          set = function(is_disabled)
+            if is_disabled then
               vim.lsp.codelens.enable(true)
+            else
+              vim.lsp.codelens.enable(false)
             end
           end,
         })
@@ -444,20 +444,23 @@ vim.api.nvim_create_autocmd('User', {
           get = function()
             return visual_bold
           end,
-          set = function(state)
-            if state then
+          set = function(is_disabled)
+            if is_disabled then
               vim.cmd.highlight {
                 args = { 'link Visual IncSearch' },
                 bang = true,
               }
-              visual_bold = true
             else
               vim.cmd.highlight { args = { 'link Visual NONE' } }
-              visual_bold = false
             end
+
+            -- Toggle the flag
+            visual_bold = not visual_bold
           end,
         })
         :map '<leader>uV'
+
+    -- Toggle for virtual edit
     Snacks.toggle
         .new({
           id = 'virtual_edit',
@@ -465,15 +468,51 @@ vim.api.nvim_create_autocmd('User', {
           get = function()
             return vim.o.virtualedit == 'all'
           end,
-          set = function()
-            if vim.o.virtualedit == 'all' then
-              vim.o.virtualedit = ''
-            else
+          set = function(is_disabled)
+            if is_disabled then
               vim.o.virtualedit = 'all'
+            else
+              vim.o.virtualedit = ''
             end
           end,
         })
         :map '<leader>uv'
+
+    -- Toggle for automatic fold close when exiting it
+    Snacks.toggle
+        .new({
+          id = 'auto_fold_close',
+          name = 'Automatic fold closing',
+          get = function()
+            return vim.o.foldclose == 'all'
+          end,
+          set = function(is_disabled)
+            if is_disabled then
+              vim.o.foldclose = 'all'
+            else
+              vim.o.foldclose = ''
+            end
+          end,
+        })
+        :map '<leader>uFc'
+
+    -- Toggle for automatic fold opening when entering it
+    Snacks.toggle
+        .new({
+          id = 'auto_fold_open',
+          name = 'Automatic fold opening',
+          get = function()
+            return vim.o.foldopen == 'all'
+          end,
+          set = function(is_disabled)
+            if is_disabled then
+              vim.o.foldopen = 'all'
+            else
+              vim.o.foldopen = ''
+            end
+          end,
+        })
+        :map '<leader>uFo'
   end,
 })
 
