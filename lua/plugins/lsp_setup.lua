@@ -13,14 +13,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- Uncomment to enable inlay hints automatically
     -- vim.lsp.inlay_hint.enable()
 
-    -- Set up foldmethod and foldexpr
-    -- Do not overwrite the diff method
-    ---@diagnostic disable-next-line: undefined-field
-    if vim.opt.foldmethod:get() ~= 'diff' then
-      vim.opt.foldmethod = 'expr'
-    end
-    vim.opt.foldexpr = 'v:lua.vim.lsp.foldexpr()'
-
     -- This ensures that whenever you call hover in an LSP buffer,
     -- it uses rounded borders
     vim.keymap.set('n', 'K', function()

@@ -280,27 +280,6 @@ vim.keymap.set({ 'n', 'x', 'o' }, '[C', function()
   )
 end, { desc = 'Previous conditional end' })
 
--- Folds
--- You can also use captures from other query groups like `locals.scm` or `folds.scm`
-vim.keymap.set({ 'n', 'x', 'o' }, ']z', function()
-  require('nvim-treesitter-textobjects.move').goto_next_start('@fold', 'folds')
-end, { desc = 'Next fold start' })
-vim.keymap.set({ 'n', 'x', 'o' }, ']Z', function()
-  require('nvim-treesitter-textobjects.move').goto_next_end('@fold', 'folds')
-end, { desc = 'Next fold end' })
-vim.keymap.set({ 'n', 'x', 'o' }, '[z', function()
-  require('nvim-treesitter-textobjects.move').goto_previous_start(
-    '@fold',
-    'folds'
-  )
-end, { desc = 'Next fold start' })
-vim.keymap.set({ 'n', 'x', 'o' }, '[Z', function()
-  require('nvim-treesitter-textobjects.move').goto_previous_end(
-    '@fold',
-    'folds'
-  )
-end, { desc = 'Next fold end' })
-
 local ts_repeat_move = require 'nvim-treesitter-textobjects.repeatable_move'
 
 -- Repeat movement with ; and ,
