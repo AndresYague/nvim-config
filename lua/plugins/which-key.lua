@@ -20,6 +20,7 @@ require('which-key').setup {
       { pattern = 'plugin', icon = ' ', color = 'blue' },
       { pattern = 'remove', icon = ' ', color = 'red' },
       { pattern = 'register', icon = '󰠷 ', color = 'blue' },
+      { pattern = 'replace', icon = ' ', color = 'yellow' },
       { pattern = 'org', icon = ' ' },
       { pattern = 'file', icon = ' ', color = 'white' },
       { pattern = 'diff', icon = ' ', color = 'yellow' },

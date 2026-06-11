@@ -18,11 +18,5 @@ require 'autocmds'
 -- Load health
 require 'health'
 
--- Load language specific options and autocmds
-require 'filetypes'
-
 -- Load the previously saved colorscheme
 require 'local_plugins.mng_colorschemes'
-
--- The modeline
--- vim: ts=2 sts=2 sw=2 et
