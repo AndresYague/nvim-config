@@ -86,7 +86,7 @@ Snacks.setup {
     },
     sections = {
       { section = 'header' },
-      { section = 'keys',  gap = 1, padding = 1 },
+      { section = 'keys', gap = 1, padding = 1 },
     },
   },
 
@@ -266,253 +266,253 @@ vim.api.nvim_create_autocmd('User', {
     Snacks.toggle.option('spell', { name = 'Spelling' }):map '<leader>us'
     Snacks.toggle.option('wrap', { name = 'Wrap' }):map '<leader>uW'
     Snacks.toggle
-        .option('relativenumber', { name = 'Relative Number' })
-        :map '<leader>uL'
+      .option('relativenumber', { name = 'Relative Number' })
+      :map '<leader>uL'
     Snacks.toggle.diagnostics():map '<leader>ud'
     Snacks.toggle.line_number():map '<leader>ul'
     Snacks.toggle
-        .option('conceallevel', {
-          off = 0,
-          on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2,
-        })
-        :map '<leader>uc'
+      .option('conceallevel', {
+        off = 0,
+        on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2,
+      })
+      :map '<leader>uc'
     Snacks.toggle.treesitter():map '<leader>uT'
     Snacks.toggle.inlay_hints():map '<leader>uh'
     Snacks.toggle.indent():map '<leader>ug'
     Snacks.toggle.dim():map '<leader>uD'
     Snacks.toggle.animate():map '<leader>ua'
     Snacks.toggle
-        .option('cursorline', { name = 'Cursor Line' })
-        :map '<leader>uR'
+      .option('cursorline', { name = 'Cursor Line' })
+      :map '<leader>uR'
     Snacks.toggle
-        .option('cursorcolumn', { name = 'Cursor Column' })
-        :map '<leader>ur'
+      .option('cursorcolumn', { name = 'Cursor Column' })
+      :map '<leader>ur'
 
     -- Toggle context
     Snacks.toggle
-        .new({
-          id = 'treesitter-context',
-          name = 'Treesitter Context',
-          get = function()
-            return require('treesitter-context').enabled()
-          end,
-          set = function()
-            require('treesitter-context').toggle()
-          end,
-        })
-        :map '<leader>ut'
+      .new({
+        id = 'treesitter-context',
+        name = 'Treesitter Context',
+        get = function()
+          return require('treesitter-context').enabled()
+        end,
+        set = function()
+          require('treesitter-context').toggle()
+        end,
+      })
+      :map '<leader>ut'
 
     -- Toggle autopairs
     Snacks.toggle
-        .new({
-          id = 'nvim-autopairs',
-          name = 'Autopairs',
-          get = function()
-            return not require('nvim-autopairs').state.disabled
-          end,
-          set = function()
-            require('nvim-autopairs').toggle()
-          end,
-        })
-        :map '<leader>uP'
+      .new({
+        id = 'nvim-autopairs',
+        name = 'Autopairs',
+        get = function()
+          return not require('nvim-autopairs').state.disabled
+        end,
+        set = function()
+          require('nvim-autopairs').toggle()
+        end,
+      })
+      :map '<leader>uP'
 
     -- Toggle git blame
     Snacks.toggle
-        .new({
-          id = 'gitsigns-blame',
-          name = 'Gitsigns Blame',
-          get = function()
-            return require('gitsigns.config').config.current_line_blame
-          end,
-          set = function()
-            require('gitsigns').toggle_current_line_blame()
-          end,
-        })
-        :map '<leader>ub'
+      .new({
+        id = 'gitsigns-blame',
+        name = 'Gitsigns Blame',
+        get = function()
+          return require('gitsigns.config').config.current_line_blame
+        end,
+        set = function()
+          require('gitsigns').toggle_current_line_blame()
+        end,
+      })
+      :map '<leader>ub'
 
     -- Toggle Markview
     Snacks.toggle
-        .new({
-          id = 'markview',
-          name = 'Markview',
-          get = function()
-            local buffer = vim.api.nvim_get_current_buf()
-            if not require('markview.state').buf_attached(buffer) then
-              -- Suppress treesitter errors from markview
-              ignore_errors(
-                { 'Parser could not be created' },
-                pcall(require('markview.commands').attach, buffer)
-              )
-              ignore_errors(
-                { 'Parser could not be created' },
-                pcall(require('markview.commands').disable, buffer)
-              )
-            end
-            return require('markview.state').get_buffer_state(buffer, false).enable
-          end,
-          set = function()
-            local buffer = vim.api.nvim_get_current_buf()
-            require('markview.commands').toggle(buffer)
-          end,
-        })
-        :map '<leader>um'
+      .new({
+        id = 'markview',
+        name = 'Markview',
+        get = function()
+          local buffer = vim.api.nvim_get_current_buf()
+          if not require('markview.state').buf_attached(buffer) then
+            -- Suppress treesitter errors from markview
+            ignore_errors(
+              { 'Parser could not be created' },
+              pcall(require('markview.commands').attach, buffer)
+            )
+            ignore_errors(
+              { 'Parser could not be created' },
+              pcall(require('markview.commands').disable, buffer)
+            )
+          end
+          return require('markview.state').get_buffer_state(buffer, false).enable
+        end,
+        set = function()
+          local buffer = vim.api.nvim_get_current_buf()
+          require('markview.commands').toggle(buffer)
+        end,
+      })
+      :map '<leader>um'
 
     -- Toggle for no neck pain
     Snacks.toggle
-        .new({
-          id = 'no-neck-pain',
-          name = 'No neck pain',
-          get = function()
-            local state = require('no-neck-pain').state
-            if state then
-              return state.enabled
-            else
-              return false
-            end
-          end,
-          set = function()
-            require('no-neck-pain').toggle()
-          end,
-        })
-        :map '<leader>up'
+      .new({
+        id = 'no-neck-pain',
+        name = 'No neck pain',
+        get = function()
+          local state = require('no-neck-pain').state
+          if state then
+            return state.enabled
+          else
+            return false
+          end
+        end,
+        set = function()
+          require('no-neck-pain').toggle()
+        end,
+      })
+      :map '<leader>up'
 
     -- Toggle for relative number change
     Snacks.toggle
-        .new({
-          id = 'rel_number_change',
-          name = 'Relative num change',
-          get = function()
-            return Change_relnum
-          end,
-          set = function()
-            Change_relnum = not Change_relnum
-          end,
-        })
-        :map '<leader>uf'
+      .new({
+        id = 'rel_number_change',
+        name = 'Relative num change',
+        get = function()
+          return Change_relnum
+        end,
+        set = function()
+          Change_relnum = not Change_relnum
+        end,
+      })
+      :map '<leader>uf'
 
     -- Fully custom toggle for colorizer
     Snacks.toggle
-        .new({
-          id = 'colorizer',
-          name = 'Colorizer',
-          get = function()
-            return require('colorizer').is_buffer_attached(0)
-          end,
-          set = function()
-            vim.cmd 'ColorizerToggle'
-          end,
-        })
-        :map '<leader>uz'
+      .new({
+        id = 'colorizer',
+        name = 'Colorizer',
+        get = function()
+          return require('colorizer').is_buffer_attached(0)
+        end,
+        set = function()
+          vim.cmd 'ColorizerToggle'
+        end,
+      })
+      :map '<leader>uz'
 
     -- Toggle for gitsigns
     Snacks.toggle
-        .new({
-          id = 'gitsigns-word-diff',
-          name = 'Word diff',
-          get = function()
-            return require('gitsigns.config').config.word_diff
-          end,
-          set = function()
-            require('gitsigns').toggle_word_diff()
-          end,
-        })
-        :map '<leader>uw'
+      .new({
+        id = 'gitsigns-word-diff',
+        name = 'Word diff',
+        get = function()
+          return require('gitsigns.config').config.word_diff
+        end,
+        set = function()
+          require('gitsigns').toggle_word_diff()
+        end,
+      })
+      :map '<leader>uw'
 
     -- Toggle for codelens
     Snacks.toggle
-        .new({
-          id = 'codelens',
-          name = 'Codelens',
-          get = function()
-            return vim.lsp.codelens.is_enabled()
-          end,
-          set = function(is_disabled)
-            if is_disabled then
-              vim.lsp.codelens.enable(true)
-            else
-              vim.lsp.codelens.enable(false)
-            end
-          end,
-        })
-        :map '<leader>uk'
+      .new({
+        id = 'codelens',
+        name = 'Codelens',
+        get = function()
+          return vim.lsp.codelens.is_enabled()
+        end,
+        set = function(is_disabled)
+          if is_disabled then
+            vim.lsp.codelens.enable(true)
+          else
+            vim.lsp.codelens.enable(false)
+          end
+        end,
+      })
+      :map '<leader>uk'
 
     -- Fully custom toggle for visual_bold
     Snacks.toggle
-        .new({
-          id = 'visual_bold',
-          name = 'Visual Bold',
-          get = function()
-            return visual_bold
-          end,
-          set = function(is_disabled)
-            if is_disabled then
-              vim.cmd.highlight {
-                args = { 'link Visual IncSearch' },
-                bang = true,
-              }
-            else
-              vim.cmd.highlight { args = { 'link Visual NONE' } }
-            end
+      .new({
+        id = 'visual_bold',
+        name = 'Visual Bold',
+        get = function()
+          return visual_bold
+        end,
+        set = function(is_disabled)
+          if is_disabled then
+            vim.cmd.highlight {
+              args = { 'link Visual IncSearch' },
+              bang = true,
+            }
+          else
+            vim.cmd.highlight { args = { 'link Visual NONE' } }
+          end
 
-            -- Toggle the flag
-            visual_bold = not visual_bold
-          end,
-        })
-        :map '<leader>uV'
+          -- Toggle the flag
+          visual_bold = not visual_bold
+        end,
+      })
+      :map '<leader>uV'
 
     -- Toggle for virtual edit
     Snacks.toggle
-        .new({
-          id = 'virtual_edit',
-          name = 'Virtual Edit',
-          get = function()
-            return vim.o.virtualedit == 'all'
-          end,
-          set = function(is_disabled)
-            if is_disabled then
-              vim.o.virtualedit = 'all'
-            else
-              vim.o.virtualedit = ''
-            end
-          end,
-        })
-        :map '<leader>uv'
+      .new({
+        id = 'virtual_edit',
+        name = 'Virtual Edit',
+        get = function()
+          return vim.o.virtualedit == 'all'
+        end,
+        set = function(is_disabled)
+          if is_disabled then
+            vim.o.virtualedit = 'all'
+          else
+            vim.o.virtualedit = ''
+          end
+        end,
+      })
+      :map '<leader>uv'
 
     -- Toggle for automatic fold close when exiting it
     Snacks.toggle
-        .new({
-          id = 'auto_fold_close',
-          name = 'Automatic fold closing',
-          get = function()
-            return vim.o.foldclose == 'all'
-          end,
-          set = function(is_disabled)
-            if is_disabled then
-              vim.o.foldclose = 'all'
-            else
-              vim.o.foldclose = ''
-            end
-          end,
-        })
-        :map '<leader>uFc'
+      .new({
+        id = 'auto_fold_close',
+        name = 'Automatic fold closing',
+        get = function()
+          return vim.o.foldclose == 'all'
+        end,
+        set = function(is_disabled)
+          if is_disabled then
+            vim.o.foldclose = 'all'
+          else
+            vim.o.foldclose = ''
+          end
+        end,
+      })
+      :map '<leader>uFc'
 
     -- Toggle for automatic fold opening when entering it
     Snacks.toggle
-        .new({
-          id = 'auto_fold_open',
-          name = 'Automatic fold opening',
-          get = function()
-            return vim.o.foldopen == 'all'
-          end,
-          set = function(is_disabled)
-            if is_disabled then
-              vim.o.foldopen = 'all'
-            else
-              vim.o.foldopen = ''
-            end
-          end,
-        })
-        :map '<leader>uFo'
+      .new({
+        id = 'auto_fold_open',
+        name = 'Automatic fold opening',
+        get = function()
+          return vim.o.foldopen == 'all'
+        end,
+        set = function(is_disabled)
+          if is_disabled then
+            vim.o.foldopen = 'all'
+          else
+            vim.o.foldopen = ''
+          end
+        end,
+      })
+      :map '<leader>uFo'
   end,
 })
 
