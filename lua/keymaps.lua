@@ -20,26 +20,6 @@ vim.keymap.set(
   { desc = 'Replace all <word> under the cursor' }
 )
 
--- Execute
-vim.keymap.set(
-  { 'n', 'v' },
-  '<leader>xx',
-  ':.lua<CR>',
-  { desc = 'Execute lua line' }
-)
-vim.keymap.set(
-  { 'n' },
-  '<leader>xf',
-  ':%lua<CR>',
-  { desc = 'Execute lua file' }
-)
-vim.keymap.set(
-  { 'n' },
-  '<leader>xp',
-  'yy:lua vim.print(<C-R>")<CR>',
-  { desc = 'Print lua line' }
-)
-
 -- Remap redo like helix
 vim.keymap.set('n', 'U', '<C-R>', { desc = 'Redo' })
 
