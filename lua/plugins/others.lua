@@ -11,8 +11,22 @@ require('colorizer').setup({ '*' }, {
 })
 
 require('flash').setup {
-  label = { style = 'inline' },
-  rainbow = { enabled = true },
+  label = { style = 'overlay', rainbow = { enabled = true } },
+  modes = {
+    char = {
+      -- jump_labels = true,
+      char_actions = function( --[[motion]])
+        return {
+          [','] = 'next',
+          [';'] = 'prev',
+          -- If removing these motions, pressing f again does not advance
+          -- the search
+          -- [motion:lower()] = "next",
+          -- [motion:upper()] = "prev",
+        }
+      end,
+    },
+  },
 }
 
 -- Persistence keymaps
@@ -86,9 +100,6 @@ end, { desc = 'Remote Flash' })
 vim.keymap.set({ 'o', 'x' }, 'R', function()
   require('flash').treesitter_search()
 end, { desc = 'Treesitter Search' })
-vim.keymap.set({ 'c' }, '<c-s>', function()
-  require('flash').toggle()
-end, { desc = 'Toggle Flash Search' })
 
 -- Fish-files keymaps
 vim.keymap.set(

@@ -376,20 +376,6 @@ vim.api.nvim_create_autocmd('User', {
       })
       :map '<leader>up'
 
-    -- Toggle for relative number change
-    Snacks.toggle
-      .new({
-        id = 'rel_number_change',
-        name = 'Relative num change',
-        get = function()
-          return Change_relnum
-        end,
-        set = function()
-          Change_relnum = not Change_relnum
-        end,
-      })
-      :map '<leader>uf'
-
     -- Fully custom toggle for colorizer
     Snacks.toggle
       .new({
