@@ -1,11 +1,6 @@
 -- Load all the options
 require 'options'
 
--- Make the vim shell "fish"
-vim.opt.shell = 'fish'
-vim.opt.foldlevelstart = 99
-vim.opt.concealcursor = 'nc'
-
 -- Load keymaps they have to come before loading which-key
 require 'keymaps'
 

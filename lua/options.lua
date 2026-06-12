@@ -12,6 +12,16 @@ vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 
+-- Make the vim shell "fish"
+vim.opt.shell = 'fish'
+
+-- Fold level so they are all open
+vim.opt.foldlevelstart = 99
+
+-- Only conceal text in normal and command line editing,
+-- show it in insert or visual mode.
+vim.opt.concealcursor = 'nc'
+
 -- Make line numbers default
 vim.o.number = true
 vim.o.relativenumber = true
