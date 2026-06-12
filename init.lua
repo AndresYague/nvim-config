@@ -15,8 +15,5 @@ require 'packages'
 -- Load autocommands
 require 'autocmds'
 
--- Load health
-require 'health'
-
 -- Load the previously saved colorscheme
 require 'local_plugins.mng_colorschemes'
