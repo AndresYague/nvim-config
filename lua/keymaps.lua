@@ -233,18 +233,10 @@ vim.keymap.set(
 )
 
 -- Grep using vimgrep easily
-vim.keymap.set('n', '<leader>sv', function()
-  vim.ui.input({ prompt = 'Regexp: ' }, function(regexp)
-    if regexp:len() == 0 then
-      return
-    end
-
-    vim.ui.input({ prompt = 'file extension: ' }, function(ext)
-      local s = 'vimgrep "' .. regexp .. '" **/*'
-      if ext:len() > 0 then
-        s = s .. '.' .. ext
-      end
-      vim.cmd(s)
-    end)
-  end)
-end, { desc = 'Find string using vimgrep' })
+-- Use current word as default
+vim.keymap.set(
+  'n',
+  '<leader>sv',
+  ':vimgrep <C-R><C-W> **/*',
+  { desc = 'Find string using vimgrep' }
+)
