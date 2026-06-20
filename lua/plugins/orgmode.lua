@@ -13,6 +13,17 @@ require('orgmode').setup {
       org_agenda_later = 'l',
     },
   },
+  org_agenda_custom_commands = {
+    c = {
+      description = 'Clocks',
+      types = {
+        {
+          type = 'tags',
+          match = 'clocks',
+        },
+      },
+    },
+  },
 }
 
 require('org-bullets').setup()

@@ -58,9 +58,15 @@ Snacks.setup {
           action = ':Org agenda t',
         },
         {
-          icon = '󰎜 ',
+          icon = ' ',
           key = 'c',
-          desc = 'Capture note',
+          desc = 'Clocks',
+          action = ':Org agenda c',
+        },
+        {
+          icon = '󰎜 ',
+          key = 'p',
+          desc = 'Capture task',
           action = ':Org capture t',
         },
         {
