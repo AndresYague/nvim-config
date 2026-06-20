@@ -50,6 +50,7 @@ vim.pack.add {
   -- orgmode
   'https://github.com/nvim-orgmode/org-bullets.nvim',
   'https://github.com/nvim-orgmode/orgmode',
+  'https://github.com/hugginsio/org-virtual-clocktime.nvim.git',
 
   -- multicursor
   {

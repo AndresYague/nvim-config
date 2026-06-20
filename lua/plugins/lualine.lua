@@ -94,6 +94,10 @@ require('lualine').setup {
       'diff',
       'searchcount',
       function()
+        -- Show the current total clocktime in orgmode
+        return require('orgmode').statusline_debounced()
+      end,
+      function()
         -- Go into each letter register and figure out if it has anything in it
         -- if it does, then save it into "records", which will be displayed in
         -- the lualine

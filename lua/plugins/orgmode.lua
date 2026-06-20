@@ -16,3 +16,4 @@ require('orgmode').setup {
 }
 
 require('org-bullets').setup()
+require('org-virtual-clocktime').setup()
