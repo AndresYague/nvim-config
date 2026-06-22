@@ -4,7 +4,7 @@ vim.pack.add {
   -- General dependencies
   'https://github.com/nvim-tree/nvim-web-devicons',
   {
-    src = 'https://github.com/nvim-lua/plenary.nvim', -- This is for code_companion
+    src = 'https://github.com/nvim-lua/plenary.nvim', -- This is for code_companion and none-ls
     version = 'master',
   },
 
@@ -50,6 +50,7 @@ vim.pack.add {
   'https://github.com/mason-org/mason-lspconfig.nvim',
   'https://github.com/mason-org/mason.nvim',
   'https://github.com/neovim/nvim-lspconfig',
+  'https://github.com/nvimtools/none-ls.nvim', -- Using this for fortls
 
   -- lualine
   'https://github.com/nvim-lualine/lualine.nvim',

@@ -169,6 +169,14 @@ require('mason-tool-installer').setup {
   ensure_installed = all_tools,
 }
 
+-- HACK: Using none-ls (null-ls) to attach the formatter to fortls
+require('null-ls').setup {
+  sources = {
+    -- Hooks up fprettify from Mason as a recognized LSP formatter
+    require('null-ls').builtins.formatting.fprettify,
+  },
+}
+
 -- Only activate the servers. Also, LSPs may have different names
 -- in nvim than the tools have in mason, such as lua-language-server -> lua_ls
 -- so write those correctly here
