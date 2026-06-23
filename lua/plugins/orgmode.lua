@@ -13,6 +13,8 @@ require('orgmode').setup {
       org_agenda_later = 'l',
     },
   },
+
+  -- Define an agenda item for the clocks
   org_agenda_custom_commands = {
     c = {
       description = 'Clocks',
@@ -25,6 +27,52 @@ require('orgmode').setup {
     },
   },
 }
+
+-- Clocks keymaps
+-- TODO: Make pickers out of some of these...
+vim.keymap.set(
+  'n',
+  '<leader>kk',
+  ':Org agenda c<CR>',
+  { desc = 'Access clocks' }
+)
+
+vim.keymap.set(
+  'n',
+  '<leader>kj',
+  function ()
+    require('orgmode').clock:org_clock_goto()
+  end,
+  { desc = 'Go to current clock' }
+)
+
+vim.keymap.set(
+  'n',
+  '<leader>ki',
+  function ()
+    require('orgmode').clock:org_clock_in()
+  end,
+  { desc = 'Clock in' }
+)
+
+vim.keymap.set(
+  'n',
+  '<leader>ko',
+  function ()
+    require('orgmode').clock:org_clock_out()
+  end,
+  { desc = 'Clock out' }
+)
+
+vim.keymap.set(
+  'n',
+  '<leader>kq',
+  function ()
+    require('orgmode').clock:org_clock_cancel()
+  end,
+  { desc = 'Cancel clock' }
+)
+
 
 require('org-bullets').setup()
 require('org-virtual-clocktime').setup()

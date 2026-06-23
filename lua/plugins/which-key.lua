@@ -24,6 +24,7 @@ require('which-key').setup {
       { pattern = 'org', icon = ' ' },
       { pattern = 'file', icon = ' ', color = 'white' },
       { pattern = 'diff', icon = ' ', color = 'yellow' },
+      { pattern = 'clocks', icon = ' ', color = 'green' },
     },
   },
 
@@ -36,6 +37,7 @@ require('which-key').setup {
     { '<leader>g', group = 'Git' },
     { '<leader>h', group = 'Git Hunk' },
     { '<leader>j', group = 'Hook files' },
+    { '<leader>k', group = 'Clocks' },
     { '<leader>o', group = 'Org mode' },
     { '<leader>p', group = 'Plugin' },
     { '<leader>q', group = 'Sessions' },
