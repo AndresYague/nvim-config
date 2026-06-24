@@ -6,7 +6,7 @@ require('fish-files').setup()
 
 require('colorizer').setup({ '*' }, {
   RRGGBBAA = true, -- #RRGGBBAA hex codes
-  css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+  css = true,      -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
   mode = 'background',
 })
 
@@ -80,11 +80,19 @@ vim.keymap.set('n', '<leader>qr', function()
     end
   end
 
+  local cmd_restart = "lua require('persistence').load()"
   if explorer_was_open then
-    vim.cmd.restart "lua require('persistence').load(); require('snacks').explorer()"
-  else
-    vim.cmd.restart "lua require('persistence').load()"
+    cmd_restart = cmd_restart .. "; require('snacks').explorer()"
   end
+
+  local no_neck_state = require('no-neck-pain').state
+  if no_neck_state and no_neck_state.enabled then
+    -- Close no-neck-pain and open it on the way back
+    require('no-neck-pain').toggle()
+    cmd_restart = cmd_restart .. "; require('no-neck-pain').toggle()"
+  end
+
+  vim.cmd.restart(cmd_restart)
 end, { desc = 'Restart session' })
 
 -- Flash keymaps
