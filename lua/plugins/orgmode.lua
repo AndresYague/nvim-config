@@ -51,30 +51,36 @@ end, { desc = 'Clock in' })
 
 -- Go to the current clock and execute "func" in it, then save the file and
 -- come back. If there is no current clock, do nothing.
----@param callable function
+---@param callable function?
 local go_save_return = function(callable)
   -- Record current buffer
   local start_buf = vim.api.nvim_get_current_buf()
+  local is_orgfile = vim.api.nvim_buf_get_name(start_buf):match '%.org' ~= nil
 
   -- Go to clock
   require('orgmode').clock:org_clock_goto()
 
-  -- If we stay in current buffer, end here
-  if start_buf == vim.api.nvim_get_current_buf() then
+  -- If we stay in current buffer, end here, unless we were already in the
+  -- org file
+  if start_buf == vim.api.nvim_get_current_buf() and not is_orgfile then
     return nil
   end
 
   -- Call the passed function
-  callable()
+  if callable ~= nil then
+    callable()
+  end
 
-  -- Save file and come back
-  vim.cmd 'write'
+  -- Save file and come back, but only if we were not in an org file before
+  vim.cmd 'update'
 
-  vim.api.nvim_feedkeys(
-    vim.api.nvim_replace_termcodes('<C-o>', true, false, true),
-    'n',
-    false
-  )
+  if not is_orgfile then
+    vim.api.nvim_feedkeys(
+      vim.api.nvim_replace_termcodes('<C-o>', true, false, true),
+      'n',
+      false
+    )
+  end
 end
 
 vim.keymap.set('n', '<leader>ko', function()
@@ -88,3 +94,7 @@ vim.keymap.set('n', '<leader>kq', function()
     require('orgmode').clock:org_clock_cancel()
   end)
 end, { desc = 'Cancel clock' })
+
+vim.keymap.set('n', '<leader>kr', function()
+  go_save_return()
+end, { desc = 'Refresh clock' })
