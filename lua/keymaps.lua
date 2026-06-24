@@ -32,8 +32,8 @@ vim.keymap.set({ 'o', 'x' }, 'ar', 'a[', { desc = '[] block' })
 
 -- Remap paragraph operator
 -- The V forces operator-pending to work linewise (:h o_V)
-vim.keymap.set({ 'o' }, 'p', 'V}', { desc = 'Next empty line' })
-vim.keymap.set({ 'o' }, 'P', 'V{', { desc = 'Prev empty line' })
+vim.keymap.set('o', 'p', 'V}', { desc = 'Next empty line' })
+vim.keymap.set('o', 'P', 'V{', { desc = 'Prev empty line' })
 
 -- Remap 0 and $ like helix
 vim.keymap.set({ 'n', 'o', 'x' }, 'gh', '0', { desc = 'Go to line start' })

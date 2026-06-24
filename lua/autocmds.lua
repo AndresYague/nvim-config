@@ -11,8 +11,7 @@ local ignore_errors = function(ignore_table, success, err_str)
     local err_in_tbl = false
     assert(err_str ~= nil)
     for _, ignore in ipairs(ignore_table) do
-      local match = string.match(err_str, ignore)
-      if match ~= nil then
+      if string.match(err_str, ignore) ~= nil then
         err_in_tbl = true
         break
       end
@@ -85,7 +84,7 @@ vim.api.nvim_create_autocmd('DiffUpdated', {
     if vim.o.diff then
       ignore_errors({ 'No such mapping' }, pcall(vim.keymap.del, 'o', 'p'))
     else
-      vim.keymap.set('o', 'p', '}', { desc = 'Next empty line' })
+      vim.keymap.set( 'o' , 'p', 'V}', { desc = 'Next empty line' })
     end
   end,
   desc = 'Clear or add p as operator mode',
