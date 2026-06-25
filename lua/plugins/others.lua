@@ -31,7 +31,26 @@ require('flash').setup {
 
 -- Persistence keymaps
 -- Close current session
-vim.keymap.set('n', '<leader>qq', vim.cmd.qa, { desc = 'Quit current session' })
+vim.keymap.set('n', '<leader>qq', function()
+  -- Disable no-neck-pain if it was enabled
+  local np_state = require('no-neck-pain').state
+  if np_state and np_state.enabled then
+    require('no-neck-pain').disable()
+  end
+
+  for _, win_id in ipairs(vim.api.nvim_list_wins()) do
+    local bufname = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(win_id))
+    -- If bufname is empty, this window will be closed
+    if bufname:len() == 0 then
+      -- Close non-file window
+      vim.api.nvim_win_close(win_id, true)
+    end
+  end
+
+  -- Save the session before quitting
+  require('persistence').save()
+  vim.cmd.qa()
+end, { desc = 'Quit current session' })
 -- load the session for the current directory
 vim.keymap.set('n', '<leader>qs', function()
   require('persistence').load()
