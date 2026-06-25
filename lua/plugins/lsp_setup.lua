@@ -60,7 +60,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     ---@diagnostic disable-next-line: need-check-nil
     if client.server_capabilities.documentHighlightProvider then
       local highlight_augroup =
-        vim.api.nvim_create_augroup('lsp-highlight', { clear = true })
+          vim.api.nvim_create_augroup('lsp-highlight', { clear = true })
 
       -- Ignore fugitive files
       local match_str = 'fugitive://'
@@ -212,3 +212,40 @@ require('lazydev').setup {
 -- Enable the servers
 -- This calls the configuration in lsp/
 vim.lsp.enable(all_servers)
+
+-- Commands related to LSPs
+
+-- Command to install mypy stubs using mason's venv
+vim.api.nvim_create_user_command('MypyStubInstall', function(args)
+  vim.fn.stdpath 'data'
+  local mason_mypy_pip = vim.fn.stdpath 'data'
+      .. '/mason/packages/mypy/venv/bin/pip'
+
+  -- Check if pip exists
+  if vim.fn.executable(mason_mypy_pip) == 0 then
+    vim.notify('Mason mypy not found', vim.log.levels.ERROR)
+    return
+  end
+
+  local cmd = mason_mypy_pip .. ' install ' .. args.args
+
+  -- Ryn asynchronously with ouput
+  vim.fn.jobstart(cmd, {
+    on_exit = function(_, code)
+      if code == 0 then
+        vim.notify('Mypy stubs installed successfully', vim.log.levels.INFO)
+      else
+        vim.notify('Failed to install mypy stubs', vim.log.levels.ERROR)
+      end
+    end,
+    stdout_buffered = true,
+    on_stdout = function(_, data)
+      if data then
+        print(table.concat(data, '\n'))
+      end
+    end,
+  })
+end, {
+  nargs = '+',
+  desc = 'Install mypy stubs using Mason venv',
+})
