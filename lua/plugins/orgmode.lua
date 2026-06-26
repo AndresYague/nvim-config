@@ -41,6 +41,11 @@ vim.keymap.set('n', '<leader>kk', function()
   require('orgmode.api.agenda').tags { match_query = 'clocks' }
 end, { desc = 'Access clocks' })
 
+-- Clocks search
+vim.keymap.set('n', '<leader>ks', function()
+  require('orgmode.api.agenda').open_by_key('s')
+end, { desc = 'Search clock by keyword' })
+
 vim.keymap.set('n', '<leader>kj', function()
   require('orgmode').clock:org_clock_goto()
 end, { desc = 'Go to current clock' })
