@@ -87,6 +87,9 @@ vim.pack.add {
   -- quicklist
   'https://github.com/stevearc/quicker.nvim',
 
+  -- remote-sshfs
+  'https://github.com/AndresYague/remote-sshfs.nvim.git',
+
   -- snacks
   'https://github.com/folke/snacks.nvim',
 
@@ -119,6 +122,7 @@ require 'plugins.others'
 require 'plugins.picker'
 require 'plugins.previewers'
 require 'plugins.quicklist'
+require 'plugins.remote-sshfs'
 require 'plugins.treesitter'
 require 'plugins.ui2'
 require 'plugins.vcs'

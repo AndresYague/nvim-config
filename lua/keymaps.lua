@@ -206,11 +206,11 @@ vim.keymap.set('n', '<leader>cc', 'i<C-R>=', { desc = 'Calculator insert' })
 vim.keymap.set('x', '<leader>cc', ':!bc<CR>', { desc = 'Line calculator' })
 
 -- Clear the given registers or all
-vim.keymap.set('n', '<leader>r<space>', function()
+vim.keymap.set('n', '<leader>m<space>', function()
   ('abcdefghijklmnopqrstuvwxyz'):gsub('.', function(letter)
     if vim.fn.getreg(letter):len() > 0 then
       vim.fn.setreg(letter, '')
-      vim.keymap.del('n', '<leader>r' .. letter)
+      vim.keymap.del('n', '<leader>m' .. letter)
     end
   end)
 

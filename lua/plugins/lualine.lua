@@ -115,6 +115,9 @@ require('lualine').setup {
 
         return records
       end,
+      function()
+        return require('remote-sshfs.statusline').status()
+      end,
     },
     lualine_x = {
       function()
