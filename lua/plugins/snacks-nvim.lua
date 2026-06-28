@@ -295,10 +295,10 @@ vim.api.nvim_create_autocmd('User', {
     Snacks.toggle.animate():map '<leader>ua'
     Snacks.toggle
       .option('cursorline', { name = 'Cursor Line' })
-      :map '<leader>uR'
+      :map '<leader>ur'
     Snacks.toggle
       .option('cursorcolumn', { name = 'Cursor Column' })
-      :map '<leader>ur'
+      :map '<leader>uR'
 
     -- Toggle context
     Snacks.toggle

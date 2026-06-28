@@ -15,8 +15,8 @@ vim.keymap.set('i', '<C-H>', function()
   require('in-and-out').in_and_out()
 end)
 
-vim.keymap.set({ 'n' }, '<leader>cf', function()
-  vim.lsp.buf.format { async = true }
+vim.keymap.set({ 'n', 'x' }, '<leader>cf', function()
+  vim.lsp.buf.format()
 end, { desc = 'Format buffer' })
 
 local cmp = require 'cmp'

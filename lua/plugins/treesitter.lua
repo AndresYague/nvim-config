@@ -285,11 +285,17 @@ local ts_repeat_move = require 'nvim-treesitter-textobjects.repeatable_move'
 -- Repeat movement with ; and ,
 -- vim way: ; goes to the direction you were moving.
 -- NOTE: using ñ and Ñ respectively to avoid conflicts with flash
-vim.keymap.set({ 'n', 'x', 'o' }, 'ñ', ts_repeat_move.repeat_last_move)
+vim.keymap.set(
+  { 'n', 'x', 'o' },
+  'ñ',
+  ts_repeat_move.repeat_last_move,
+  { desc = 'Last tree-sitter move' }
+)
 vim.keymap.set(
   { 'n', 'x', 'o' },
   'Ñ',
-  ts_repeat_move.repeat_last_move_opposite
+  ts_repeat_move.repeat_last_move_opposite,
+  { desc = 'Backwards tree-sitter move' }
 )
 
 -- Treesitter context keymaps
