@@ -84,7 +84,7 @@ vim.api.nvim_create_autocmd('DiffUpdated', {
     if vim.o.diff then
       ignore_errors({ 'No such mapping' }, pcall(vim.keymap.del, 'o', 'p'))
     else
-      vim.keymap.set( 'o' , 'p', 'V}', { desc = 'Next empty line' })
+      vim.keymap.set('o', 'p', 'V}', { desc = 'Next empty line' })
     end
   end,
   desc = 'Clear or add p as operator mode',

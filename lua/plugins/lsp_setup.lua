@@ -60,7 +60,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     ---@diagnostic disable-next-line: need-check-nil
     if client.server_capabilities.documentHighlightProvider then
       local highlight_augroup =
-          vim.api.nvim_create_augroup('lsp-highlight', { clear = true })
+        vim.api.nvim_create_augroup('lsp-highlight', { clear = true })
 
       -- Ignore fugitive files
       local match_str = 'fugitive://'
@@ -219,7 +219,7 @@ vim.lsp.enable(all_servers)
 vim.api.nvim_create_user_command('MypyStubInstall', function(args)
   vim.fn.stdpath 'data'
   local mason_mypy_pip = vim.fn.stdpath 'data'
-      .. '/mason/packages/mypy/venv/bin/pip'
+    .. '/mason/packages/mypy/venv/bin/pip'
 
   -- Check if pip exists
   if vim.fn.executable(mason_mypy_pip) == 0 then

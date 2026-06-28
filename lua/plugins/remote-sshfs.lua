@@ -13,18 +13,12 @@ require('remote-sshfs').setup {
   },
 
   sshfs_args = {
-    '-o',
-    'cache=yes',                      -- Enable basic caching
-    '-o',
-    'kernel_cache',                   -- Cache files directly in system memory
-    '-o',
-    'compression=no',                 -- Disable CPU-heavy compression over fast networks
-    '-o',
-    'Ciphers=aes128-gcm@openssh.com', -- Fast, hardware-accelerated cipher
-    '-o',
-    'auto_cache',                     -- Auto invalidate cache if file modifies on server
-    '-o',
-    'reconnect',                      -- Seamlessly handle dropouts
+    '-o cache=yes', -- Enable basic caching
+    '-o kernel_cache', -- Cache files directly in system memory
+    '-o compression=no', -- Disable CPU-heavy compression over fast networks
+    '-o Ciphers=aes128-gcm@openssh.com', -- Fast, hardware-accelerated cipher
+    '-o auto_cache', -- Auto invalidate cache if file modifies on server
+    '-o reconnect', -- Seamlessly handle dropouts
   },
 }
 

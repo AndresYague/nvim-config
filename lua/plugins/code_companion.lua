@@ -16,7 +16,7 @@ require('codecompanion').setup {
       ollama = function()
         return require('codecompanion.adapters').extend('ollama', {
           env = {
-            url = os.getenv 'CODECOMPANION_URL' or "http://localhost:11434",
+            url = os.getenv 'CODECOMPANION_URL' or 'http://localhost:11434',
           },
 
           opts = {
@@ -59,6 +59,8 @@ end, { desc = 'Open chatbot (visual)' })
 -- Keymap to open chatbot in normal mode
 vim.keymap.set('n', '<leader>cb', function()
   -- Make sure that buffer type is not empty
-  if vim.bo.buftype ~= '' then return end
+  if vim.bo.buftype ~= '' then
+    return
+  end
   require('codecompanion').chat()
 end, { desc = 'Open chatbot' })
