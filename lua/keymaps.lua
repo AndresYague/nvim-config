@@ -15,7 +15,7 @@ vim.keymap.set('n', 'J', 'mzJ`z', { desc = 'Join [count] lines' })
 -- Replace word under cursor
 vim.keymap.set(
   'n',
-  '<leader>m',
+  '<leader>sr',
   ':%s/\\<<C-R><C-W>\\>/<C-R><C-W>/gI<left><left><left>',
   { desc = 'Replace all <word> under the cursor' }
 )
