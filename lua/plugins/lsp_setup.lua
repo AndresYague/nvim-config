@@ -144,7 +144,6 @@ local all_tools = {
   'debugpy',
   'findent',
   'fish-lsp',
-  'flake8',
   'fortitude',
   'fortls',
   'fprettify',
@@ -158,12 +157,14 @@ local all_tools = {
   'mypy',
   'pydocstyle',
   'python-lsp-server',
+  'ruff',
   'shellcheck',
   'shfmt',
   'stylua',
   'taplo',
   'tex-fmt',
   'texlab',
+  'zls',
 }
 require('mason-tool-installer').setup {
   ensure_installed = all_tools,
@@ -194,6 +195,7 @@ local all_servers = {
   'stylua',
   'taplo',
   'texlab',
+  'zls',
 }
 
 -- Configure every server with the default setup

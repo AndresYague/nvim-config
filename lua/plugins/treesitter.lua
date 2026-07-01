@@ -39,6 +39,7 @@ local parsers = {
   'vue',
   'xml',
   'yaml',
+  'zig',
 }
 require('nvim-treesitter').install(parsers)
 
