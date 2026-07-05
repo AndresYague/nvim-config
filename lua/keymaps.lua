@@ -54,14 +54,15 @@ vim.keymap.set('n', '<leader>bd', vim.cmd.bd, { desc = 'Buffer delete' })
 vim.keymap.set('n', '<leader>bt', function()
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
     if vim.api.nvim_buf_get_name(buf):match 'term://' then
-      vim.api.nvim_buf_delete(buf, {})
+      vim.api.nvim_buf_delete(buf, {force = true})
     end
   end
 end, { desc = 'Buffer delete terminals' })
 vim.keymap.set('n', '<leader>bo', function()
   local current_buf = vim.api.nvim_get_current_buf()
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-    if buf == current_buf then
+    -- Do not close terminals or current buffer
+    if buf == current_buf or vim.api.nvim_buf_get_name(buf):match 'term://' then
       goto continue
     end
     vim.api.nvim_buf_delete(buf, {})
