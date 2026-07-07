@@ -33,3 +33,10 @@ if priority == '' then
 else
   vim.cmd.colorscheme(priority)
 end
+
+-- Make it so matching parens reverse the color pallete (so they can be
+-- seen clearly)
+vim.api.nvim_set_hl(0, 'MatchParen', {
+  dim = true,
+  reverse = true,
+})
