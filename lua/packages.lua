@@ -8,12 +8,16 @@ vim.pack.add {
     version = 'master',
   },
 
-  -- nvim-cmp
-  'https://github.com/hrsh7th/nvim-cmp',
+  -- nvim-cmp (editing)
   'https://github.com/L3MON4D3/LuaSnip', -- Snippet engine
+  'https://github.com/amarz45/nvim-cmp-buffer-lines', -- Buffer lines
   'https://github.com/hrsh7th/cmp-buffer', -- Buffer text source
+  'https://github.com/hrsh7th/cmp-cmdline', -- command line
   'https://github.com/hrsh7th/cmp-nvim-lsp', -- LSP source
+  'https://github.com/hrsh7th/cmp-omni', -- omni
   'https://github.com/hrsh7th/cmp-path', -- File system paths source
+  'https://github.com/hrsh7th/nvim-cmp',
+  'https://github.com/rafamadriz/friendly-snippets',
   'https://github.com/saadparwaiz1/cmp_luasnip', -- Snippet source
 
   -- treesitter
@@ -36,7 +40,6 @@ vim.pack.add {
 
   -- editing
   'https://github.com/folke/todo-comments.nvim',
-  'https://github.com/rafamadriz/friendly-snippets',
   'https://github.com/windwp/nvim-autopairs',
   'https://github.com/ysmb-wtsg/in-and-out.nvim',
 

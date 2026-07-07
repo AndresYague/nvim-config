@@ -9,6 +9,7 @@ local parsers = {
   'c',
   'cmake',
   'comment',
+  'commonlisp',
   'cpp',
   'css',
   'diff',

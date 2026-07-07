@@ -63,5 +63,33 @@ cmp.setup {
   }, {
     { name = 'buffer' },
     { name = 'path' },
+    { name = 'buffer-lines' },
+    { name = 'omni' },
   }),
 }
+
+-- `/` cmdline setup.
+cmp.setup.cmdline('/', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = 'buffer' },
+  },
+})
+
+-- `:` cmdline setup.
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = 'path' },
+  }, {
+    { name = 'cmdline' },
+  }),
+  matching = {
+    disallow_symbol_nonprefix_matching = false,
+    disallow_fullfuzzy_matching = false,
+    disallow_fuzzy_matching = false,
+    disallow_partial_fuzzy_matching = false,
+    disallow_partial_matching = false,
+    disallow_prefix_unmatching = false,
+  },
+})
