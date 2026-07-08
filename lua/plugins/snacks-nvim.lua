@@ -261,7 +261,10 @@ Snacks.setup {
 -- Disable animations by default
 vim.g.snacks_animate = false
 
+-- Local variables for toggles
 local visual_bold = false
+local match_parens = false
+local old_highlight = nil
 
 vim.api.nvim_create_autocmd('User', {
   callback = function()
@@ -367,7 +370,7 @@ vim.api.nvim_create_autocmd('User', {
           require('markview.commands').toggle(buffer)
         end,
       })
-      :map '<leader>um'
+      :map '<leader>uM'
 
     -- Toggle for no neck pain
     Snacks.toggle
@@ -457,6 +460,32 @@ vim.api.nvim_create_autocmd('User', {
         end,
       })
       :map '<leader>uV'
+
+    -- Fully custom toggle for match_parens
+    Snacks.toggle
+      .new({
+        id = 'match_parens',
+        name = 'Match Parens',
+        get = function()
+          return match_parens
+        end,
+        set = function(is_disabled)
+          if is_disabled then
+            old_highlight = vim.api.nvim_get_hl(0, { name = 'MatchParen' })
+            vim.api.nvim_set_hl(0, 'MatchParen', {
+              dim = true,
+              reverse = true,
+            })
+          else
+            assert(old_highlight ~= nil)
+            vim.api.nvim_set_hl(0, 'MatchParen', old_highlight)
+          end
+
+          -- Toggle the flag
+          match_parens = not match_parens
+        end,
+      })
+      :map '<leader>um'
 
     -- Toggle for virtual edit
     Snacks.toggle
