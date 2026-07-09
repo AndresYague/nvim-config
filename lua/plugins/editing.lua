@@ -63,7 +63,6 @@ cmp.setup {
   }, {
     { name = 'buffer' },
     { name = 'path' },
-    { name = 'buffer-lines' },
     { name = 'omni' },
   }),
 }

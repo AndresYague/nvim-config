@@ -10,7 +10,6 @@ vim.pack.add {
 
   -- nvim-cmp (editing)
   'https://github.com/L3MON4D3/LuaSnip', -- Snippet engine
-  'https://github.com/amarz45/nvim-cmp-buffer-lines', -- Buffer lines
   'https://github.com/hrsh7th/cmp-buffer', -- Buffer text source
   'https://github.com/hrsh7th/cmp-cmdline', -- command line
   'https://github.com/hrsh7th/cmp-nvim-lsp', -- LSP source
