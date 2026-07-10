@@ -93,12 +93,18 @@ Snacks.setup {
           desc = 'Intro',
           action = ':intro',
         },
-        { icon = ' ', key = 'q', desc = 'Quit', action = ':qa' },
+        { icon = ' ', key = 'q', desc = 'Quit', action = ':qa!' },
       },
     },
     sections = {
       { section = 'header' },
       { section = 'keys', gap = 1, padding = 1 },
+
+      -- Open the todo-list at the bottom
+      function()
+        vim.cmd 'Org agenda t'
+        vim.cmd 'wincmd k'
+      end,
     },
   },
 
