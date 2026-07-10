@@ -473,8 +473,8 @@ vim.api.nvim_create_autocmd('User', {
           if is_disabled then
             old_highlight = vim.api.nvim_get_hl(0, { name = 'MatchParen' })
             vim.api.nvim_set_hl(0, 'MatchParen', {
-              dim = true,
               reverse = true,
+              update = true,
             })
           else
             assert(old_highlight ~= nil)
