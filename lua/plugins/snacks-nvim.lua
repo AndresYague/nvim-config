@@ -48,25 +48,25 @@ Snacks.setup {
         {
           icon = '󰸗 ',
           key = 'a',
-          desc = 'Agenda',
+          desc = 'Orgmode Agenda',
           action = ':Org agenda a',
         },
         {
           icon = ' ',
           key = 't',
-          desc = 'Todo',
+          desc = 'Orgmode Todo',
           action = ':Org agenda t',
         },
         {
           icon = ' ',
           key = 'c',
-          desc = 'Clocks',
+          desc = 'Orgmode Clocks',
           action = ':Org agenda c',
         },
         {
           icon = '󰎜 ',
           key = 'p',
-          desc = 'Capture task',
+          desc = 'Orgmode Capture task',
           action = ':Org capture t',
         },
         {
@@ -525,9 +525,6 @@ end, { desc = 'Rename File' })
 vim.keymap.set({ 'n', 'v' }, '<leader>gB', function()
   Snacks.gitbrowse()
 end, { desc = 'Git Browse' })
-vim.keymap.set('n', '<leader>gg', function()
-  Snacks.lazygit()
-end, { desc = 'Lazygit' })
 vim.keymap.set('n', '<leader>uu', function()
   require('undotree').open()
 end, { desc = 'Toggle Undotree window' })
