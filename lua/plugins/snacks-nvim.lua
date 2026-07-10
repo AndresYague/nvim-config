@@ -510,42 +510,6 @@ vim.api.nvim_create_autocmd('User', {
         end,
       })
       :map '<leader>uv'
-
-    -- Toggle for automatic fold close when exiting it
-    Snacks.toggle
-      .new({
-        id = 'auto_fold_close',
-        name = 'Automatic fold closing',
-        get = function()
-          return vim.o.foldclose == 'all'
-        end,
-        set = function(is_disabled)
-          if is_disabled then
-            vim.o.foldclose = 'all'
-          else
-            vim.o.foldclose = ''
-          end
-        end,
-      })
-      :map '<leader>uFc'
-
-    -- Toggle for automatic fold opening when entering it
-    Snacks.toggle
-      .new({
-        id = 'auto_fold_open',
-        name = 'Automatic fold opening',
-        get = function()
-          return vim.o.foldopen == 'all'
-        end,
-        set = function(is_disabled)
-          if is_disabled then
-            vim.o.foldopen = 'all'
-          else
-            vim.o.foldopen = ''
-          end
-        end,
-      })
-      :map '<leader>uFo'
   end,
 })
 

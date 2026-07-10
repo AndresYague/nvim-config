@@ -24,7 +24,7 @@ vim.keymap.set(
 vim.keymap.set('n', 'U', '<C-R>', { desc = 'Redo' })
 
 -- Remap alternate-file
-vim.keymap.set('n', '<leader><BS>', '<C-^>', { desc = 'Alternate file' })
+vim.keymap.set('n', '<leader>a', '<C-^>', { desc = 'Alternate file' })
 
 -- Remap bracket operator
 vim.keymap.set({ 'o', 'x' }, 'ir', 'i[', { desc = 'inner []' })
