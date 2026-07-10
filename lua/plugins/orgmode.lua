@@ -13,9 +13,13 @@ require('orgmode').setup {
   org_todo_keywords = { 'TODO', 'WAITING', '|', 'DONE', 'DELEGATED' },
   org_hide_leading_stars = true,
   mappings = {
+    org = {
+      org_add_note = '<leader>on',
+    },
     agenda = {
       org_agenda_earlier = 'h',
       org_agenda_later = 'l',
+      org_agenda_add_note = '<leader>on',
     },
   },
 
