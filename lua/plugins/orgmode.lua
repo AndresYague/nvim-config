@@ -31,6 +31,21 @@ require('orgmode').setup {
       },
     },
   },
+
+  win_split_mode = function(name)
+    -- Make sure it's not a scratch buffer by passing false as 2nd argument
+    local bufnr = vim.api.nvim_create_buf(false, false)
+    --- Setting buffer name is required
+    vim.api.nvim_buf_set_name(bufnr, name)
+
+    local prct = 0.15
+    local height = math.floor((vim.o.lines * prct))
+
+    vim.api.nvim_open_win(bufnr, true, {
+      height = height,
+      split = 'below',
+    })
+  end,
 }
 
 require('org-bullets').setup()
