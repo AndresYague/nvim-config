@@ -58,9 +58,9 @@ vim.pack.add {
   'https://github.com/nvim-lualine/lualine.nvim',
 
   -- orgmode
+  'https://github.com/hugginsio/org-virtual-clocktime.nvim.git',
   'https://github.com/nvim-orgmode/org-bullets.nvim',
   'https://github.com/nvim-orgmode/orgmode',
-  'https://github.com/hugginsio/org-virtual-clocktime.nvim.git',
 
   -- multicursor
   {
@@ -74,9 +74,9 @@ vim.pack.add {
   -- others
   'https://codeberg.org/AndresYague/fish-files.nvim',
   'https://codeberg.org/AndresYague/nvim-colorizer.lua',
+  'https://codeberg.org/AndresYague/persistence.nvim',
   'https://codeberg.org/AndresYague/print-debug.nvim',
   'https://github.com/folke/flash.nvim',
-  'https://codeberg.org/AndresYague/persistence.nvim',
   'https://github.com/kylechui/nvim-surround',
   {
     src = 'https://codeberg.org/AndresYague/no-neck-pain.nvim',
@@ -132,8 +132,8 @@ require 'plugins.which-key'
 
 -- Local plugins
 require 'local_plugins.floating_term'
-require 'local_plugins.mng_plugs'
 require 'local_plugins.local_diff'
+require 'local_plugins.mng_plugs'
 
 -- Activate nvim plugins
 vim.cmd.packadd { args = { 'nvim.undotree' }, bang = true }
