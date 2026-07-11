@@ -101,7 +101,18 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
 vim.api.nvim_create_autocmd({ 'BufUnload', 'BufWinLeave' }, {
   group = loadview_g,
   pattern = '?*',
-  command = 'mkview',
+  callback = function(event)
+    -- Only save position if this is an actual file
+    if
+      vim.uv.fs_stat(event.file) and vim.uv.fs_stat(event.file).type == 'file'
+    then
+      -- If the buffer is a file but without filename, ingore the error
+      local ret, status = pcall(vim.cmd.mkview)
+      if not ret and status:match 'No file name' == -1 then
+        error(status)
+      end
+    end
+  end,
   desc = 'Save this buffer view',
 })
 
