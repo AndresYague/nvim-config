@@ -528,3 +528,29 @@ end, { desc = 'Git Browse' })
 vim.keymap.set('n', '<leader>uu', function()
   require('undotree').open()
 end, { desc = 'Toggle Undotree window' })
+
+-- Picker for orgmode saved links
+vim.keymap.set('n', '<leader>oll', function()
+  -- Retrieve orgmode links and put them in items for the picker
+  local stored_links = {}
+  for link, desc in pairs(require('orgmode.org.links').stored_links) do
+    table.insert(stored_links, {
+      text = desc,
+      value = string.format('[[%s][%s]]', link, desc),
+    })
+  end
+
+  -- Open the snacks picker
+  Snacks.picker.pick {
+    items = stored_links,
+    format = 'text',
+    layout = 'select',
+    confirm = function(picker, choice)
+      picker:close()
+      if choice then
+        -- Insert the text in orgmode format for a link
+        vim.api.nvim_put({ choice.value }, 'c', true, true)
+      end
+    end,
+  }
+end, { desc = 'List links' })

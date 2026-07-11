@@ -40,6 +40,7 @@ require('which-key').setup {
     { '<leader>j', group = 'Hook files' },
     { '<leader>k', group = 'Clocks' },
     { '<leader>m', group = 'Macro/Registers' },
+    { '<leader>n', group = 'Org roam' },
     { '<leader>o', group = 'Org mode' },
     { '<leader>p', group = 'Plugin' },
     { '<leader>q', group = 'Sessions' },

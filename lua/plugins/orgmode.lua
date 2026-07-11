@@ -52,6 +52,10 @@ require('orgmode').setup {
   end,
 }
 
+require('org-roam').setup {
+  directory = '~/orgfiles/roam',
+}
+
 require('org-bullets').setup()
 require('org-virtual-clocktime').setup()
 

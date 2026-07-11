@@ -58,6 +58,7 @@ vim.pack.add {
   'https://github.com/nvim-lualine/lualine.nvim',
 
   -- orgmode
+  'https://github.com/chipsenkbeil/org-roam.nvim.git',
   'https://github.com/hugginsio/org-virtual-clocktime.nvim.git',
   'https://github.com/nvim-orgmode/org-bullets.nvim',
   'https://github.com/nvim-orgmode/orgmode',
