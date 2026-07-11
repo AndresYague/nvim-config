@@ -10,7 +10,7 @@ require('orgmode').setup {
   hyperlinks = {
     sources = {},
   },
-  org_todo_keywords = { 'TODO', 'WAITING', '|', 'DONE', 'DELEGATED' },
+  org_todo_keywords = { 'TODO(t)', 'WAITING', '|', 'DONE', 'DELEGATED(g)' },
   org_hide_leading_stars = true,
   mappings = {
     org = {

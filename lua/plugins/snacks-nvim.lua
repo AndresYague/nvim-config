@@ -102,8 +102,21 @@ Snacks.setup {
 
       -- Open the todo-list at the bottom
       function()
-        vim.cmd 'Org agenda t'
-        vim.cmd 'wincmd k'
+        -- Count how many todos we have
+        local n_todos = 0
+        for _, file in ipairs(require('orgmode.api').load()) do
+          for _, headline in ipairs(file.headlines) do
+            if headline.todo_type == 'TODO' then
+              n_todos = n_todos + 1
+            end
+          end
+        end
+
+        -- Only open if the agenda has todo items at all
+        if n_todos > 0 then
+          vim.cmd 'Org agenda t'
+          vim.cmd 'wincmd k'
+        end
       end,
     },
   },
