@@ -44,11 +44,14 @@ local parsers = {
 }
 require('nvim-treesitter').install(parsers)
 
+-- Add names of FileType that do not coincide with the name of the parser
+table.insert(parsers, 'sh') -- This is the bash filetype.
+
 -- Start the parser in all the above filetypes
 vim.api.nvim_create_autocmd({ 'FileType' }, {
   pattern = parsers,
   callback = function(args)
-    -- NOTE: args.match contains the filetype
+    -- args.match contains the filetype
     local language = vim.treesitter.language.get_lang(args.match)
     if not language then
       return

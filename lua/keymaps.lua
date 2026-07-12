@@ -54,7 +54,7 @@ vim.keymap.set('n', '<leader>bd', vim.cmd.bd, { desc = 'Buffer delete' })
 vim.keymap.set('n', '<leader>bt', function()
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
     if vim.api.nvim_buf_get_name(buf):match 'term://' then
-      vim.api.nvim_buf_delete(buf, {force = true})
+      vim.api.nvim_buf_delete(buf, { force = true })
     end
   end
 end, { desc = 'Buffer delete terminals' })
@@ -181,7 +181,7 @@ vim.keymap.set(
 )
 
 -- Keymaps for diffmode
--- NOTE: There are keymaps that appear once fugitive is being used
+-- NOTE: There are keymaps that appear once fugitive is being used,
 -- see "autocmds.lua"
 vim.keymap.set(
   'n',

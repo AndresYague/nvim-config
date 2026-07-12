@@ -72,7 +72,8 @@ vim.keymap.set('n', '<leader>qn', function()
   require('persistence').stop()
 end, { desc = 'Do not save session' })
 
--- Restart keymap (NOTE: Uses persistence and, possibly, snacks explorer)
+-- Restart keymap
+-- (NOTE: Uses persistence and, possibly, snacks explorer and no-neck pain)
 vim.keymap.set('n', '<leader>qr', function()
   -- Check every window and close the non file ones
   -- this fixes an issue with file-explorer creating
