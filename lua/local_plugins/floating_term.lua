@@ -36,8 +36,8 @@ local toggle_floating_terminal = function(relsize)
     -- Open terminal if it was not there before
     if vim.bo.buftype ~= 'terminal' then
       vim.cmd.terminal()
+      vim.cmd.startinsert()
     end
-    vim.cmd.startinsert()
   end
 end
 
