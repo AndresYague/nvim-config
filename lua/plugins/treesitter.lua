@@ -13,6 +13,7 @@ local parsers = {
   'cpp',
   'css',
   'diff',
+  'dockerfile',
   'fish',
   'fortran',
   'html',

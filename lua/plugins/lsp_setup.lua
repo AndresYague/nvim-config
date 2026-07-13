@@ -60,7 +60,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     ---@diagnostic disable-next-line: need-check-nil
     if client.server_capabilities.documentHighlightProvider then
       local highlight_augroup =
-        vim.api.nvim_create_augroup('lsp-highlight', { clear = true })
+        vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
 
       -- Ignore fugitive files
       local match_str = 'fugitive://'
@@ -92,10 +92,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- Only clear references if this path can be accessed
         if vim.uv.fs_stat(event.file) then
           vim.lsp.buf.clear_references()
-          vim.api.nvim_clear_autocmds {
+          pcall(vim.api.nvim_clear_autocmds, {
             group = 'lsp-highlight',
             buffer = event2.buf,
-          }
+          })
         end
       end,
     })
