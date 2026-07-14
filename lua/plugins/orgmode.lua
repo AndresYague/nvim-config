@@ -126,3 +126,6 @@ end, { desc = 'Cancel clock' })
 vim.keymap.set('n', '<leader>kr', function()
   go_save_return()
 end, { desc = 'Refresh clock' })
+
+-- Refresh the orgmode clock so its status appears in the lua line
+require('orgmode').clock:init()
