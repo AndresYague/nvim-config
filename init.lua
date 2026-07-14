@@ -9,6 +9,3 @@ require 'packages'
 
 -- Load autocommands
 require 'autocmds'
-
--- Load the previously saved colorscheme
-require 'local_plugins.mng_colorschemes'
