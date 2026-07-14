@@ -99,25 +99,6 @@ Snacks.setup {
     sections = {
       { section = 'header' },
       { section = 'keys', gap = 1, padding = 1 },
-
-      -- Open the todo-list at the bottom
-      function()
-        -- Count how many todos we have
-        local n_todos = 0
-        for _, file in ipairs(require('orgmode.api').load()) do
-          for _, headline in ipairs(file.headlines) do
-            if headline.todo_type == 'TODO' then
-              n_todos = n_todos + 1
-            end
-          end
-        end
-
-        -- Only open if the agenda has todo items at all
-        if n_todos > 0 then
-          vim.cmd 'Org agenda t'
-          vim.cmd 'wincmd k'
-        end
-      end,
     },
   },
 
@@ -567,3 +548,22 @@ vim.keymap.set('n', '<leader>oll', function()
     end,
   }
 end, { desc = 'List links' })
+
+-- Dashboard autocmd
+-- This autocmd opens the Org agenda todo-list as a split in the dashboard
+-- It only does it once
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'SnacksDashboardOpened',
+  once = true,
+  callback = function()
+    local dashboard_win = vim.api.nvim_get_current_win()
+
+    vim.cmd 'Org agenda t'
+
+    vim.schedule(function()
+      if vim.api.nvim_win_is_valid(dashboard_win) then
+        vim.api.nvim_set_current_win(dashboard_win)
+      end
+    end)
+  end,
+})

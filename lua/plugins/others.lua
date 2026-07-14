@@ -81,8 +81,12 @@ vim.keymap.set('n', '<leader>qr', function()
   local explorer_was_open = false
   for _, win_id in ipairs(vim.api.nvim_list_wins()) do
     local bufname = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(win_id))
-    -- If bufname is empty, this window will be closed
-    if bufname:len() == 0 then
+    local buftype = vim.api.nvim_get_option_value(
+      'buftype',
+      { buf = vim.api.nvim_win_get_buf(win_id) }
+    )
+    -- If bufname is empty or buftype is "nofile", this window will be closed
+    if bufname:len() == 0 or buftype:match 'nofile' then
       -- Check for window titles in this bufname. Because snacks explorer
       -- names one of the windows "Explorer", this allows us to figure out if
       -- the explorer was indeed open, and make it open again upon restart
