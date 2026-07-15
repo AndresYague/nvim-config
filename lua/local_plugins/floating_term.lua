@@ -38,6 +38,25 @@ local toggle_floating_terminal = function(relsize)
       vim.cmd.terminal()
       vim.cmd.startinsert()
     end
+
+    -- Go into insert mode if in the last line of the buffer
+    local last_line = vim.fn.getpos('$')[2]
+    local cur_line = vim.fn.getpos('.')[2]
+    if last_line == cur_line then
+      vim.cmd.startinsert()
+      return
+    end
+
+    -- Look for the first empty line of the buffer, and check if the current
+    -- position is one line above it. If so, go into insert mode.
+    for i = 1, vim.api.nvim_buf_line_count(state.bufnr) do
+      local line =
+        vim.fn.trim(vim.api.nvim_buf_get_lines(state.bufnr, i - 1, i, false)[1])
+      if line == '' and i <= cur_line + 1 then
+        vim.cmd.startinsert()
+        break
+      end
+    end
   end
 end
 
