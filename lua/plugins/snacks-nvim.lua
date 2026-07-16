@@ -567,3 +567,19 @@ vim.api.nvim_create_autocmd('User', {
     end)
   end,
 })
+
+-- Close orgagenda when closing the dashboard
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'SnacksDashboardClosed',
+  once = true,
+  callback = function()
+    for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+      local bufnr = vim.api.nvim_win_get_buf(win)
+
+      -- This finds the buffer with a name that contains "orgagenda"
+      if vim.api.nvim_buf_get_name(bufnr):match 'orgagenda' then
+        vim.api.nvim_win_close(win, true)
+      end
+    end
+  end,
+})
