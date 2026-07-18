@@ -59,24 +59,6 @@ require('org-roam').setup {
 require('org-bullets').setup()
 require('org-virtual-clocktime').setup()
 
--- Clocks keymaps
-vim.keymap.set('n', '<leader>kk', function()
-  require('orgmode.api.agenda').tags { match_query = 'clocks' }
-end, { desc = 'Access clocks' })
-
--- Clocks search
-vim.keymap.set('n', '<leader>ks', function()
-  require('orgmode.api.agenda').open_by_key 's'
-end, { desc = 'Search clock by keyword' })
-
-vim.keymap.set('n', '<leader>kj', function()
-  require('orgmode').clock:org_clock_goto()
-end, { desc = 'Go to current clock' })
-
-vim.keymap.set('n', '<leader>ki', function()
-  require('orgmode').clock:org_clock_in()
-end, { desc = 'Clock in' })
-
 -- Go to the current clock and execute "func" in it, then save the file and
 -- come back. If there is no current clock, do nothing.
 ---@param callable function?
@@ -110,22 +92,3 @@ local go_save_return = function(callable)
     )
   end
 end
-
-vim.keymap.set('n', '<leader>ko', function()
-  go_save_return(function()
-    require('orgmode').clock:org_clock_out()
-  end)
-end, { desc = 'Clock out' })
-
-vim.keymap.set('n', '<leader>kq', function()
-  go_save_return(function()
-    require('orgmode').clock:org_clock_cancel()
-  end)
-end, { desc = 'Cancel clock' })
-
-vim.keymap.set('n', '<leader>kr', function()
-  go_save_return()
-end, { desc = 'Refresh clock' })
-
--- Refresh the orgmode clock so its status appears in the lua line
-require('orgmode').clock:init()

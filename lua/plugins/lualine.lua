@@ -120,10 +120,6 @@ require('lualine').setup {
       end,
     },
     lualine_x = {
-      function()
-        -- Show the current total clocktime in orgmode
-        return require('orgmode').statusline_debounced()
-      end,
       'encoding',
       'fileformat',
       'filetype',

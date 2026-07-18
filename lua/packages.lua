@@ -136,6 +136,7 @@ require 'local_plugins.floating_term'
 require 'local_plugins.local_diff'
 require 'local_plugins.mng_colorschemes'
 require 'local_plugins.mng_plugs'
+require 'local_plugins.time_tracker'
 
 -- Activate nvim plugins
 vim.cmd.packadd { args = { 'nvim.undotree' }, bang = true }
