@@ -523,6 +523,19 @@ vim.keymap.set('n', '<leader>uu', function()
   require('undotree').open()
 end, { desc = 'Toggle Undotree window' })
 
+-- Autocmd for match_parens
+vim.api.nvim_create_autocmd('VimEnter', {
+  once = true,
+  callback = function()
+    old_highlight = vim.api.nvim_get_hl(0, { name = 'MatchParen' })
+    vim.api.nvim_set_hl(0, 'MatchParen', {
+      reverse = true,
+      update = true,
+    })
+    match_parens = true
+  end,
+})
+
 -- Picker for orgmode saved links
 vim.keymap.set('n', '<leader>oll', function()
   -- Retrieve orgmode links and put them in items for the picker
