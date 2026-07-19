@@ -51,8 +51,12 @@ local function clocks_lines()
     return cached_tracker_file
   end
 
+  -- If the file does not exist, create it
   if vim.fn.filereadable(tracker_file) == 0 then
-    return
+    local file = io.open(tracker_file, 'w')
+    if file then
+      file:close()
+    end
   end
 
   cached_tracker_file = vim.fn.readfile(tracker_file)
@@ -73,7 +77,7 @@ end
 ---@param clock_name string
 ---@param time number?
 local function write_clock_file(clock_name, time)
-  -- Check if file exists
+  -- Check if file exists. If it does not, create it
   if vim.fn.filewritable(tracker_file) == 0 then
     local file = io.open(tracker_file, 'w')
     if file then
@@ -191,16 +195,77 @@ end
 ---@return table<string, integer>?
 local function notify_clock(clock_name)
   local total_times = assert(read_clock(clock_name))
+  local lines = assert(clocks_lines())
+  local last_label = split_line(lines[#lines])
 
+  -- Notify the information and indicate the active clock with an asterisk
   for label, _ in pairs(total_times) do
     vim.notify(
-      ('%s: %s'):format(label, effort_clock(label), vim.log.levels.INFO)
+      ('%s%s: %s'):format(
+        last_label == label and '*' or '',
+        label,
+        effort_clock(label),
+        vim.log.levels.INFO
+      )
     )
   end
 end
 
+-- Adjust all effort clocks by generic label
+---@param lines string[]
+---@param curr_time number
+---@return string[]?
+local function adjust_generic(lines, curr_time)
+  local e_lines = efforts_lines()
+  if e_lines == nil then
+    return
+  end
+
+  -- Calculate the time from the last two lines
+  local flabel, first = split_line(lines[#lines - 1])
+  local slabel, second = split_line(lines[#lines])
+  assert(slabel == 'generic' and flabel == 'generic')
+
+  -- Now that we have the info, remove the "generic" labels from the list
+  -- Slice the table by using unpack
+  lines = { unpack(lines, 1, #lines - 2) }
+  vim.fn.writefile(lines, tracker_file, 's')
+  cached_tracker_file = nil
+
+  local dt = second - first
+
+  local total_effort = 0
+  local effort_table = {}
+  for i, line in ipairs(e_lines) do
+    -- Ignore the header
+    if i > 1 then
+      -- Get values
+      local elab, effst = assert(split_line(line))
+      if effst ~= nil then
+        -- Log the efforts
+        local eff = to_seconds(effst)
+        total_effort = total_effort + eff
+        effort_table[elab] = eff
+      end
+    end
+  end
+
+  -- Calculate proportions and write
+  for elab, _ in pairs(effort_table) do
+    local prop_effort = math.floor(effort_table[elab] * dt / total_effort)
+
+    -- The trick is to write one line with the current time and another with
+    -- the proportional effort
+    table.insert(lines, ('%s,%s'):format(elab, curr_time))
+    table.insert(lines, ('%s,%s'):format(elab, curr_time + prop_effort))
+  end
+
+  return lines
+end
+
 -- Stops the current clock
 ---@param verbose boolean?
+---@return nil
 local function stop_clock(verbose)
   -- Make sure the value will be updated immediately
   last_update_value = nil
@@ -237,49 +302,7 @@ local function stop_clock(verbose)
     -- If the label is "generic" divide it proportionally by the effort listed
     -- in the effort_file after closing it.
     if label == 'generic' then
-      local e_lines = efforts_lines()
-      if e_lines == nil then
-        return
-      end
-
-      -- Calculate the time from the last two lines
-      local flabel, first = split_line(lines[#lines - 1])
-      local slabel, second = split_line(lines[#lines])
-      assert(slabel == 'generic' and flabel == 'generic')
-
-      -- Now that we have the info, remove the "generic" labels from the list
-      -- Slice the table by using unpack
-      lines = { unpack(lines, 1, #lines - 2) }
-      vim.fn.writefile(lines, tracker_file, 's')
-      cached_tracker_file = nil
-
-      local dt = second - first
-
-      local total_effort = 0
-      local effort_table = {}
-      for i, line in ipairs(e_lines) do
-        -- Ignore the header
-        if i > 1 then
-          -- Get values
-          local elab, effst = assert(split_line(line))
-          if effst ~= nil then
-            -- Log the efforts
-            local eff = to_seconds(effst)
-            total_effort = total_effort + eff
-            effort_table[elab] = eff
-          end
-        end
-      end
-
-      -- Calculate proportions and write
-      for elab, _ in pairs(effort_table) do
-        local prop_effort = math.floor(effort_table[elab] * dt / total_effort)
-
-        -- The trick is to write one line with the current time and another with
-        -- the proportional effort
-        write_clock_file(elab, curr_time)
-        write_clock_file(elab, curr_time + prop_effort)
-      end
+      adjust_generic(lines, curr_time)
     end
   end
 end
@@ -346,35 +369,58 @@ end
 ---@return nil
 local function adjust_clock(label)
   -- Deal with input
-  local adjustment = vim.fn.input 'Adjust by minutes: '
+
+  -- Give time context for the prompt if possible
+  local adjustment
+  local context_clock = effort_clock(label)
+  if context_clock == nil then
+    adjustment = vim.fn.input(('Adjust %s by minutes: '):format(label))
+  else
+    adjustment =
+      vim.fn.input(('Adjust %s by minutes [%s]: '):format(label, context_clock))
+  end
+
+  -- If adjustment is empty, exit
   if #adjustment == '' then
     return
   end
-  local add_minutes = tonumber(adjustment)
 
-  local lines = clocks_lines()
+  -- If add_minutes it is nil, exit
+  local add_minutes = tonumber(adjustment)
+  if add_minutes == nil or add_minutes == 0 then
+    return
+  end
+
+  local lines = assert(clocks_lines())
   local last_line
   if #lines % 2 == 1 then
-    assert(lines)
-
     -- Active clock, save the last line and remove it from the file
     last_line = lines[#lines]
     lines = { unpack(lines, 1, #lines - 1) }
     vim.fn.writefile(lines, tracker_file, 's')
-    cached_tracker_file = nil
   end
 
   local curr_time = os.time()
-  write_clock_file(label, curr_time)
-  write_clock_file(label, curr_time + add_minutes * 60)
+  table.insert(lines, ('%s,%s'):format(label, curr_time))
+  table.insert(lines, ('%s,%s'):format(label, curr_time + add_minutes * 60))
+
+  -- If the label is "generic", adjust in other clocks
+  if label == 'generic' then
+    local ret = adjust_generic(lines, curr_time)
+    if ret ~= nil then
+      lines = ret
+    end
+  end
 
   -- If there was an active clock, reinstate it
   if last_line ~= nil then
-    vim.fn.writefile(last_line, tracker_file, 'as')
+    table.insert(lines, last_line)
+    vim.fn.writefile(lines, tracker_file, 's')
   end
 
   -- Make the lualine update immediately
   last_update_value = nil
+  cached_tracker_file = nil
 end
 
 -- Delete the clocks file
@@ -508,7 +554,7 @@ vim.keymap.set('n', '<leader>kl', function()
 end, { desc = 'List clocks' })
 
 vim.keymap.set('n', '<leader>kj', function()
-  clock_selector(adjust_clock)
+  clock_selector(adjust_clock, 'generic')
 end, { desc = 'Adjust clocks' })
 
 vim.keymap.set('n', '<leader>kt', function()
