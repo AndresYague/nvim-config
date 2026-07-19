@@ -55,7 +55,8 @@ local function clocks_lines()
     return
   end
 
-  return vim.fn.readfile(tracker_file)
+  cached_tracker_file = vim.fn.readfile(tracker_file)
+  return cached_tracker_file
 end
 
 -- Function to read the efforts file
@@ -138,7 +139,7 @@ local function read_clock(clock_name)
     -- Collect the time differences
     local dt = 0
     for i, t in ipairs(times) do
-      dt = dt + (-1) ^ i * t
+      dt = dt + (-1) ^ (i % 2) * t
     end
     total_times[label] = dt
   end
@@ -340,6 +341,42 @@ local function notify_elapsed_time()
   )
 end
 
+-- Adjust clocks by an amount in miutes
+---@param label string
+---@return nil
+local function adjust_clock(label)
+  -- Deal with input
+  local adjustment = vim.fn.input 'Adjust by minutes: '
+  if #adjustment == '' then
+    return
+  end
+  local add_minutes = tonumber(adjustment)
+
+  local lines = clocks_lines()
+  local last_line
+  if #lines % 2 == 1 then
+    assert(lines)
+
+    -- Active clock, save the last line and remove it from the file
+    last_line = lines[#lines]
+    lines = { unpack(lines, 1, #lines - 1) }
+    vim.fn.writefile(lines, tracker_file, 's')
+    cached_tracker_file = nil
+  end
+
+  local curr_time = os.time()
+  write_clock_file(label, curr_time)
+  write_clock_file(label, curr_time + add_minutes * 60)
+
+  -- If there was an active clock, reinstate it
+  if last_line ~= nil then
+    vim.fn.writefile(last_line, tracker_file, 'as')
+  end
+
+  -- Make the lualine update immediately
+  last_update_value = nil
+end
+
 -- Delete the clocks file
 ---@return nil
 local function clear_clocks()
@@ -469,6 +506,10 @@ end, { desc = 'Clock out' })
 vim.keymap.set('n', '<leader>kl', function()
   clock_selector(notify_clock, 'all')
 end, { desc = 'List clocks' })
+
+vim.keymap.set('n', '<leader>kj', function()
+  clock_selector(adjust_clock)
+end, { desc = 'Adjust clocks' })
 
 vim.keymap.set('n', '<leader>kt', function()
   notify_elapsed_time()
