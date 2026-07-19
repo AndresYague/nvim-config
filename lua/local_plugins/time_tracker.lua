@@ -27,21 +27,42 @@ local effort_file = vim.fs.joinpath(vim.fn.stdpath 'config', 'clocks.csv')
 ---@param seconds number
 ---@return string
 local function format_time(seconds)
+  local sign = seconds < 0 and '-' or ''
+  seconds = math.abs(seconds)
+
   local hours = math.floor(seconds / 3600)
   local minutes = math.floor(seconds % 3600 / 60)
 
-  return string.format('%02d:%02d', hours, minutes)
+  return string.format('%s%02d:%02d', sign, hours, minutes)
 end
 
 -- Transform a HH:MM format into seconds
 ---@param clock_str string
----@return number
+---@return number?
 local function to_seconds(clock_str)
-  local index_colon = assert(clock_str:find ':')
+  if clock_str == '' then
+    return 0
+  end
+
+  local index_colon = clock_str:find ':'
+
+  -- If not a `HH:MM` format, it is minutes
+  if index_colon == nil then
+    return tonumber(clock_str) * 60
+  end
+
+  -- Do we have a negative amount?
+  local is_negative = clock_str:sub(1, 1) == '-'
+  if is_negative then
+    clock_str = clock_str:sub(2)
+    index_colon = index_colon - 1
+  end
+
   local hours = tonumber(clock_str:sub(1, index_colon - 1))
   local minutes = tonumber(clock_str:sub(index_colon + 1))
+  local seconds = hours * 3600 + minutes * 60
 
-  return hours * 3600 + minutes * 60
+  return is_negative and -seconds or seconds
 end
 
 -- Function to read the clocks file
@@ -243,7 +264,7 @@ local function adjust_generic(lines, curr_time)
       local elab, effst = assert(split_line(line))
       if effst ~= nil then
         -- Log the efforts
-        local eff = to_seconds(effst)
+        local eff = assert(to_seconds(effst))
         total_effort = total_effort + eff
         effort_table[elab] = eff
       end
@@ -374,10 +395,10 @@ local function adjust_clock(label)
   local adjustment
   local context_clock = effort_clock(label)
   if context_clock == nil then
-    adjustment = vim.fn.input(('Adjust %s by minutes: '):format(label))
+    adjustment = vim.fn.input(('Adjust %s by HH:MM: '):format(label))
   else
     adjustment =
-      vim.fn.input(('Adjust %s by minutes [%s]: '):format(label, context_clock))
+      vim.fn.input(('Adjust %s by HH:MM [%s]: '):format(label, context_clock))
   end
 
   -- If adjustment is empty, exit
@@ -385,9 +406,11 @@ local function adjust_clock(label)
     return
   end
 
+  -- If clock format, transform it
+  local add_seconds = to_seconds(adjustment)
+
   -- If add_minutes it is nil, exit
-  local add_minutes = tonumber(adjustment)
-  if add_minutes == nil or add_minutes == 0 then
+  if add_seconds == nil or add_seconds == 0 then
     return
   end
 
@@ -402,7 +425,7 @@ local function adjust_clock(label)
 
   local curr_time = os.time()
   table.insert(lines, ('%s,%s'):format(label, curr_time))
-  table.insert(lines, ('%s,%s'):format(label, curr_time + add_minutes * 60))
+  table.insert(lines, ('%s,%s'):format(label, curr_time + add_seconds))
 
   -- If the label is "generic", adjust in other clocks
   if label == 'generic' then
@@ -415,8 +438,10 @@ local function adjust_clock(label)
   -- If there was an active clock, reinstate it
   if last_line ~= nil then
     table.insert(lines, last_line)
-    vim.fn.writefile(lines, tracker_file, 's')
   end
+
+  -- Write data
+  vim.fn.writefile(lines, tracker_file, 's')
 
   -- Make the lualine update immediately
   last_update_value = nil
