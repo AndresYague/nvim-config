@@ -395,10 +395,10 @@ local function adjust_clock(label)
   local adjustment
   local context_clock = effort_clock(label)
   if context_clock == nil then
-    adjustment = vim.fn.input(('Adjust %s by HH:MM: '):format(label))
+    adjustment = vim.fn.input(('Adjust %s by HH:MM or minutes: '):format(label))
   else
     adjustment =
-      vim.fn.input(('Adjust %s by HH:MM [%s]: '):format(label, context_clock))
+      vim.fn.input(('Adjust %s by HH:MM or minutes [%s]: '):format(label, context_clock))
   end
 
   -- If adjustment is empty, exit
