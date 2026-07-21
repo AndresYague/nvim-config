@@ -217,7 +217,7 @@ end
 local function notify_clock(clock_name)
   local total_times = assert(read_clock(clock_name))
   local lines = assert(clocks_lines())
-  local last_label = split_line(lines[#lines])
+  local last_label = (#lines % 2 == 1) and split_line(lines[#lines]) or ''
 
   -- Notify the information and indicate the active clock with an asterisk
   for label, _ in pairs(total_times) do
@@ -397,8 +397,9 @@ local function adjust_clock(label)
   if context_clock == nil then
     adjustment = vim.fn.input(('Adjust %s by HH:MM or minutes: '):format(label))
   else
-    adjustment =
-      vim.fn.input(('Adjust %s by HH:MM or minutes [%s]: '):format(label, context_clock))
+    adjustment = vim.fn.input(
+      ('Adjust %s by HH:MM or minutes [%s]: '):format(label, context_clock)
+    )
   end
 
   -- If adjustment is empty, exit
@@ -452,7 +453,7 @@ end
 ---@return nil
 local function clear_clocks()
   -- Make sure the user wants to delete the clocks
-  local a = vim.fn.input 'Do you really want to delete the clocks? (y/[n]): '
+  local a = vim.fn.input 'Do you really want to reset all the clocks? (y/[n]): '
   if a ~= 'y' then
     return
   end
@@ -470,6 +471,62 @@ local function clear_clocks()
       vim.log.levels.ERROR
     )
   end
+end
+
+-- Add a new clock
+---@return nil
+local function add_clock()
+  local elines = efforts_lines()
+
+  -- If the file does not exist, create it
+  if elines == nil then
+    local file = io.open(effort_file, 'w')
+    if file then
+      file:close()
+    end
+
+    -- Write the header on the top of the file
+    vim.fn.writefile('name,effort\n', effort_file, 's')
+    elines = {}
+  end
+
+  local line = vim.fn.input 'Clock name: '
+  if line == '' then
+    return
+  end
+
+  local effort = vim.fn.input 'Effort in HH:MM (optional): '
+  line = effort:find ':' and line .. (',%s'):format(effort) or line
+
+  vim.fn.writefile(line .. '\n', effort_file, 'as')
+end
+
+-- Remove a clock
+---@param label string
+---@return nil
+local function remove_clock(label)
+  -- If no label provided, get out
+  if label == nil then
+    return
+  end
+
+  -- If no file, get out
+  local elines = efforts_lines()
+  if elines == nil then
+    return
+  end
+
+  -- If there is a label, remove it from the lines
+  for i, line in ipairs(elines) do
+    local lab = split_line(line)
+    if lab == label then
+      table.remove(elines, i)
+      break
+    end
+  end
+
+  -- Save the file
+  vim.fn.writefile(elines, effort_file, 's')
 end
 
 -- Picker for the clocks
@@ -586,6 +643,14 @@ vim.keymap.set('n', '<leader>kt', function()
   notify_elapsed_time()
 end, { desc = 'Total time elapsed' })
 
-vim.keymap.set('n', '<leader>kd', function()
+vim.keymap.set('n', '<leader>kr', function()
   clear_clocks()
-end, { desc = 'Restart/Delete all clocks' })
+end, { desc = 'Reset clocks' })
+
+vim.keymap.set('n', '<leader>ka', function()
+  add_clock()
+end, { desc = 'Add clock' })
+
+vim.keymap.set('n', '<leader>kd', function()
+  clock_selector(remove_clock)
+end, { desc = 'Delete clock' })
