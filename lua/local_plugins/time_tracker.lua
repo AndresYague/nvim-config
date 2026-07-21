@@ -106,8 +106,12 @@ local function write_clock_file(clock_name, time)
     end
   end
 
+  -- Write data
   time = time or os.time()
   vim.fn.writefile({ clock_name .. ',' .. time }, tracker_file, 'as')
+
+  -- Make the lualine update immediately
+  last_update_value = nil
   cached_tracker_file = nil
 end
 
@@ -232,7 +236,8 @@ local function notify_clock(clock_name)
   end
 end
 
--- Adjust all effort clocks by generic label
+-- Return the lines for the tracker file by adjusting all effort clocks by
+-- generic label proportionally
 ---@param lines string[]
 ---@param curr_time number
 ---@return string[]?
@@ -250,8 +255,6 @@ local function adjust_generic(lines, curr_time)
   -- Now that we have the info, remove the "generic" labels from the list
   -- Slice the table by using unpack
   lines = { unpack(lines, 1, #lines - 2) }
-  vim.fn.writefile(lines, tracker_file, 's')
-  cached_tracker_file = nil
 
   local dt = second - first
 
@@ -315,7 +318,6 @@ local function stop_clock(verbose)
 
     -- Save current time for later
     local curr_time = os.time()
-    write_clock_file(label, curr_time)
 
     -- Insert the new line in the table
     table.insert(lines, ('%s,%s'):format(label, curr_time))
@@ -323,9 +325,19 @@ local function stop_clock(verbose)
     -- If the label is "generic" divide it proportionally by the effort listed
     -- in the effort_file after closing it.
     if label == 'generic' then
-      adjust_generic(lines, curr_time)
+      local ret = adjust_generic(lines, curr_time)
+      if ret ~= nil then
+        lines = ret
+      end
     end
   end
+
+  -- Write data
+  vim.fn.writefile(lines, tracker_file, 's')
+
+  -- Make the lualine update immediately
+  last_update_value = nil
+  cached_tracker_file = nil
 end
 
 -- Start the named clock
@@ -355,8 +367,10 @@ local function active_clock(cache_opts)
     end
   end
 
-  -- Otherwise update time
+  -- Otherwise update time, and make sure we will
+  -- read the tracker_file
   last_update_time = curr_time
+  cached_tracker_file = nil
 
   --- Return nothing if there is no info
   local lines = clocks_lines()
@@ -421,7 +435,6 @@ local function adjust_clock(label)
     -- Active clock, save the last line and remove it from the file
     last_line = lines[#lines]
     lines = { unpack(lines, 1, #lines - 1) }
-    vim.fn.writefile(lines, tracker_file, 's')
   end
 
   local curr_time = os.time()
