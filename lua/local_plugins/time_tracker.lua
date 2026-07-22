@@ -23,7 +23,7 @@ local last_update_value = nil
 local tracker_file = vim.fs.joinpath(vim.fn.stdpath 'data', 'clocks.csv')
 local effort_file = vim.fs.joinpath(vim.fn.stdpath 'config', 'clocks.csv')
 
--- Format the time in seconds into hours and minutes
+-- Format the time in seconds into HH:MM
 ---@param seconds number
 ---@return string
 local function format_time(seconds)
@@ -184,7 +184,7 @@ local function effort_clock(label)
 
   -- Remember the simple format if we need to use it, because it would be our
   -- last updated value as well most of the time, store it there
-  local show_format = dt and format_time(dt) or ''
+  local show_format = dt and format_time(dt) or '00:00'
 
   -- Get the effort lines (if none, return simple format)
   local elines = efforts_lines()
