@@ -57,7 +57,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- When you move your cursor, the highlights will be cleared (the second
     -- autocommand).
     -- Only do so if the lsp client supports it
-    ---@diagnostic disable-next-line: need-check-nil
     if client.server_capabilities.documentHighlightProvider then
       local highlight_augroup =
         vim.api.nvim_create_augroup('lsp-highlight', { clear = false })

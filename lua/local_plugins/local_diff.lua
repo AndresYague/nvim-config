@@ -128,10 +128,8 @@ local diff_selection = function()
   return nil
 end
 
----@param mode string
 ---@return nil
----@diagnostic disable-next-line: unused-local
-_G.diffthis = function(mode)
+_G.diffthis = function()
   -- Get the selections
   add_selection()
 

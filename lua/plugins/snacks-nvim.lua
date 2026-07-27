@@ -205,7 +205,6 @@ Snacks.setup {
           local list = vim.api.nvim_cmd({
             cmd = '!',
             args = { 'rg --type-list' },
-            ---@diagnostic disable-next-line: missing-fields
             mods = { silent = true },
           }, { output = true })
 
