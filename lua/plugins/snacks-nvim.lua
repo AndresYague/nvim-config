@@ -581,8 +581,8 @@ vim.api.nvim_create_autocmd('User', {
       vim.cmd 'Org agenda t'
 
       -- Remove line numbers in this window
-      vim.cmd 'set nonumber'
-      vim.cmd 'set norelativenumber'
+      vim.wo.number = false
+      vim.wo.relativenumber = false
     end
 
     vim.schedule(function()
@@ -606,5 +606,9 @@ vim.api.nvim_create_autocmd('User', {
         vim.api.nvim_win_close(win, true)
       end
     end
+
+    -- Turn line numbers on again
+    vim.wo.number = true
+    vim.wo.relativenumber = true
   end,
 })
