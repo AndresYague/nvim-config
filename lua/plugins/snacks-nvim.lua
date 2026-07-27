@@ -43,7 +43,18 @@ Snacks.setup {
           icon = ' ',
           key = '/',
           desc = 'Find Text',
-          action = ":lua Snacks.dashboard.pick('live_grep')",
+          -- Use my own filter_type picker here as well
+          action = function()
+            Snacks.picker.grep {
+              win = {
+                input = {
+                  keys = {
+                    ['<c-t>'] = { 'filter_type', mode = { 'i', 'n' } },
+                  },
+                },
+              },
+            }
+          end,
         },
         {
           icon = '󰸗 ',
