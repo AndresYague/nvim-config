@@ -565,7 +565,25 @@ vim.api.nvim_create_autocmd('User', {
   callback = function()
     local dashboard_win = vim.api.nvim_get_current_win()
 
-    vim.cmd 'Org agenda t'
+    -- Count how many TODOs we have.
+    local n_todos = 0
+    for _, file in ipairs(require('orgmode.api').load()) do
+      for _, headline in ipairs(file.headlines) do
+        if headline.todo_type == 'TODO' then
+          n_todos = n_todos + 1
+        end
+      end
+    end
+
+    -- Only open if the agenda has todo items at all
+    if n_todos > 0 then
+      -- Open org agenda
+      vim.cmd 'Org agenda t'
+
+      -- Remove line numbers in this window
+      vim.cmd 'set nonumber'
+      vim.cmd 'set norelativenumber'
+    end
 
     vim.schedule(function()
       if vim.api.nvim_win_is_valid(dashboard_win) then
