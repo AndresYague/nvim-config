@@ -566,6 +566,10 @@ vim.keymap.set('n', '<leader>oll', function()
   }
 end, { desc = 'List links' })
 
+-- Remember the options for below
+local opt_number = vim.wo.number
+local opt_relative_number = vim.wo.number
+
 -- Dashboard autocmd
 -- This autocmd opens the Org agenda todo-list as a split in the dashboard
 -- It only does it once
@@ -618,7 +622,7 @@ vim.api.nvim_create_autocmd('User', {
     end
 
     -- Turn line numbers on again
-    vim.wo.number = true
-    vim.wo.relativenumber = true
+    vim.wo.number = opt_number
+    vim.wo.relativenumber = opt_relative_number
   end,
 })
