@@ -198,7 +198,10 @@ local function effort_clock(label)
     if i > 1 then
       local elab, eff = split_line(line)
       if eff ~= nil then
-        total_eff = total_eff + read_clock(elab)[elab]
+        local elab_dt = read_clock(elab)[elab]
+        if elab_dt ~= nil then
+          total_eff = total_eff + elab_dt
+        end
       end
     end
   end
