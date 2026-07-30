@@ -560,9 +560,9 @@ end
 
 -- Picker for the clocks
 ---@param fun function
----@param extra_clock string?
+---@param extra_clocks string[]?
 ---@return nil
-local function clock_selector(fun, extra_clock)
+local function clock_selector(fun, extra_clocks)
   local lines = efforts_lines()
   if lines == nil then
     return
@@ -572,10 +572,12 @@ local function clock_selector(fun, extra_clock)
   local labels = {}
 
   -- Add the extra_clock option if given
-  if extra_clock then
-    table.insert(labels, {
-      text = extra_clock,
-    })
+  if extra_clocks then
+    for _, extra_clock in ipairs(extra_clocks) do
+      table.insert(labels, {
+        text = extra_clock,
+      })
+    end
   end
 
   for i, line in ipairs(lines) do
@@ -621,7 +623,20 @@ local function clock_selector(fun, extra_clock)
     },
     preview = function(ctx)
       local label = ctx.item.text
-      if label == extra_clock then
+      local label_found = false
+
+      -- If clock in extra_clocks then don't try to
+      -- get the effort
+      if extra_clocks then
+        for _, extra_clock in ipairs(extra_clocks) do
+          if extra_clock:find(label) then
+            label_found = true
+            break
+          end
+        end
+      end
+
+      if label_found then
         ctx.preview:set_lines { nil }
       else
         ctx.preview:set_lines { effort_clock(label) }
@@ -653,7 +668,7 @@ lualine.setup(lualine_config)
 -- Keymaps!
 
 vim.keymap.set('n', '<leader>ki', function()
-  clock_selector(start_clock, 'generic')
+  clock_selector(start_clock, { 'generic' })
 end, { desc = 'Clock in' })
 
 vim.keymap.set('n', '<leader>ko', function()
@@ -661,11 +676,11 @@ vim.keymap.set('n', '<leader>ko', function()
 end, { desc = 'Clock out' })
 
 vim.keymap.set('n', '<leader>kl', function()
-  clock_selector(notify_clock, 'all')
+  clock_selector(notify_clock, { 'all' })
 end, { desc = 'List clocks' })
 
 vim.keymap.set('n', '<leader>kj', function()
-  clock_selector(adjust_clock, 'generic')
+  clock_selector(adjust_clock, { 'generic' })
 end, { desc = 'Adjust clocks' })
 
 vim.keymap.set('n', '<leader>kt', function()
