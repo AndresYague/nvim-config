@@ -192,6 +192,17 @@ local function effort_clock(label)
     return show_format
   end
 
+  -- Find the total effort time in case we have an effort label to show
+  local total_eff = 0
+  for i, line in ipairs(elines) do
+    if i > 1 then
+      local elab, eff = split_line(line)
+      if eff ~= nil then
+        total_eff = total_eff + read_clock(elab)[elab]
+      end
+    end
+  end
+
   -- If we find the specific effort, show it, otherwise use the simple format
   for i, line in ipairs(elines) do
     if i > 1 then
@@ -202,8 +213,13 @@ local function effort_clock(label)
         else
           -- In this case our last update value is the new format
           -- Show the effort if no time has been added either
-          show_format = dt and ('%s / %s'):format(format_time(dt), eff)
-            or ('00:00 / %s'):format(eff)
+          show_format = dt
+              and ('%s / %s (%s TE)'):format(
+                format_time(dt),
+                eff,
+                format_time(total_eff)
+              )
+            or ('00:00 / %s (%s TE)'):format(eff, format_time(total_eff))
 
           return show_format
         end
