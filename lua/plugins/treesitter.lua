@@ -28,6 +28,7 @@ local parsers = {
   'markdown_inline',
   'printf',
   'python',
+  'qmljs',
   'query',
   'regex',
   'scss',
