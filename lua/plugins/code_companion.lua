@@ -3,7 +3,7 @@ require('codecompanion').setup {
     chat = {
       adapter = {
         name = 'ollama',
-        model = 'qwen2.5-coder:14b',
+        model = 'qwen3-coder:30b',
       },
       inline = {
         enabled = false,
