@@ -531,6 +531,7 @@ local function add_clock()
   line = effort:find ':' and line .. (',%s'):format(effort) or line
 
   vim.fn.writefile(line .. '\n', effort_file, 'as')
+  vim.notify(('Added clock: %s'):format(line), vim.log.levels.INFO)
 end
 
 -- Remove a clock
@@ -553,6 +554,7 @@ local function remove_clock(label)
     local lab = split_line(line)
     if lab == label then
       table.remove(elines, i)
+      vim.notify(('Removed clock: %s'):format(label), vim.log.levels.INFO)
       break
     end
   end
