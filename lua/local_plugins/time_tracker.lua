@@ -23,6 +23,12 @@ local last_update_value = nil
 local tracker_file = vim.fs.joinpath(vim.fn.stdpath 'data', 'clocks.csv')
 local effort_file = vim.fs.joinpath(vim.fn.stdpath 'config', 'clocks.csv')
 
+---@param time integer?
+---@return string
+local function formatted_date(time)
+  return os.date('%Y/%m/%d %H:%M:%S\n', time)
+end
+
 -- Format the time in seconds into HH:MM
 ---@param seconds number
 ---@return string
@@ -108,7 +114,11 @@ local function write_clock_file(clock_name, time)
 
   -- Write data
   time = time or os.time()
-  vim.fn.writefile({ clock_name .. ',' .. time }, tracker_file, 'as')
+  vim.fn.writefile(
+    ('%s,%s,%s'):format(clock_name, time, formatted_date(time)),
+    tracker_file,
+    'as'
+  )
 
   -- Make the lualine update immediately
   last_update_value = nil
@@ -127,7 +137,9 @@ local function split_line(line)
   if split == nil then
     return line, nil
   else
-    return line:sub(1, split - 1), line:sub(split + 1)
+    -- If line can be split further, be careful
+    local more_split = line:find(',', split + 1) or line:len() + 1
+    return line:sub(1, split - 1), line:sub(split + 1, more_split - 1)
   end
 end
 
@@ -339,7 +351,10 @@ local function stop_clock(verbose)
     local curr_time = os.time()
 
     -- Insert the new line in the table
-    table.insert(lines, ('%s,%s'):format(label, curr_time))
+    table.insert(
+      lines,
+      ('%s,%s,%s'):format(label, curr_time, formatted_date(curr_time))
+    )
 
     -- If the label is "generic" divide it proportionally by the effort listed
     -- in the effort_file after closing it.
@@ -457,8 +472,18 @@ local function adjust_clock(label)
   end
 
   local curr_time = os.time()
-  table.insert(lines, ('%s,%s'):format(label, curr_time))
-  table.insert(lines, ('%s,%s'):format(label, curr_time + add_seconds))
+  table.insert(
+    lines,
+    ('%s,%s,%s'):format(label, curr_time, formatted_date(curr_time))
+  )
+  table.insert(
+    lines,
+    ('%s,%s,%s'):format(
+      label,
+      curr_time + add_seconds,
+      formatted_date(curr_time + add_seconds)
+    )
+  )
 
   -- If the label is "generic", adjust in other clocks
   if label == 'generic' then
