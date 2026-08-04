@@ -26,7 +26,7 @@ local effort_file = vim.fs.joinpath(vim.fn.stdpath 'config', 'clocks.csv')
 ---@param time integer?
 ---@return string
 local function formatted_date(time)
-  return os.date('%Y/%m/%d %H:%M:%S\n', time)
+  return os.date('%Y/%m/%d %H:%M:%S', time)
 end
 
 -- Format the time in seconds into HH:MM
@@ -98,31 +98,6 @@ local function efforts_lines()
   end
 
   return vim.fn.readfile(effort_file)
-end
-
--- Function to write to the clocks file
----@param clock_name string
----@param time number?
-local function write_clock_file(clock_name, time)
-  -- Check if file exists. If it does not, create it
-  if vim.fn.filewritable(tracker_file) == 0 then
-    local file = io.open(tracker_file, 'w')
-    if file then
-      file:close()
-    end
-  end
-
-  -- Write data
-  time = time or os.time()
-  vim.fn.writefile(
-    ('%s,%s,%s'):format(clock_name, time, formatted_date(time)),
-    tracker_file,
-    'as'
-  )
-
-  -- Make the lualine update immediately
-  last_update_value = nil
-  cached_tracker_file = nil
 end
 
 -- Split the line and return the values
@@ -283,7 +258,7 @@ local function notify_clock(clock_name)
 
       -- If no date information or not the right clock, ignore this line
       if date ~= nil and lab == clock_name then
-        -- Strip the line from the last '\n'
+        -- Strip the line from the last '\n' if it's there
         if date:sub(date:len(), date:len()) == '\n' then
           date = date:sub(1, date:len() - 1)
         end
@@ -339,8 +314,18 @@ local function adjust_generic(lines, curr_time)
 
     -- The trick is to write one line with the current time and another with
     -- the proportional effort
-    table.insert(lines, ('%s,%s'):format(elab, curr_time))
-    table.insert(lines, ('%s,%s'):format(elab, curr_time + prop_effort))
+    table.insert(
+      lines,
+      ('%s,%s,%s gs'):format(elab, curr_time, formatted_date(curr_time))
+    )
+    table.insert(
+      lines,
+      ('%s,%s,%s ge'):format(
+        elab,
+        curr_time + prop_effort,
+        formatted_date(curr_time + prop_effort)
+      )
+    )
   end
 
   return lines
@@ -381,7 +366,7 @@ local function stop_clock(verbose)
     -- Insert the new line in the table
     table.insert(
       lines,
-      ('%s,%s,%s'):format(label, curr_time, formatted_date(curr_time))
+      ('%s,%s,%s e'):format(label, curr_time, formatted_date(curr_time))
     )
 
     -- If the label is "generic" divide it proportionally by the effort listed
@@ -412,7 +397,26 @@ local function start_clock(clock_name)
   stop_clock()
 
   -- Start the new clock
-  write_clock_file(clock_name)
+
+  -- Check if file exists. If it does not, create it
+  if vim.fn.filewritable(tracker_file) == 0 then
+    local file = io.open(tracker_file, 'w')
+    if file then
+      file:close()
+    end
+  end
+
+  -- Write data
+  local curr_time = os.time()
+  vim.fn.writefile(
+    ('%s,%s,%s s'):format(clock_name, curr_time, formatted_date(curr_time)),
+    tracker_file,
+    'as'
+  )
+
+  -- Make the lualine update immediately
+  last_update_value = nil
+  cached_tracker_file = nil
 end
 
 -- Get active clock / effort
@@ -502,11 +506,11 @@ local function adjust_clock(label)
   local curr_time = os.time()
   table.insert(
     lines,
-    ('%s,%s,%s'):format(label, curr_time, formatted_date(curr_time))
+    ('%s,%s,%s s'):format(label, curr_time, formatted_date(curr_time))
   )
   table.insert(
     lines,
-    ('%s,%s,%s'):format(
+    ('%s,%s,%s e'):format(
       label,
       curr_time + add_seconds,
       formatted_date(curr_time + add_seconds)
