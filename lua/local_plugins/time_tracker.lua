@@ -127,7 +127,7 @@ end
 
 -- Split the line and return the values
 ---@param line string
----@return string?, string?
+---@return string?, string?, string?
 local function split_line(line)
   if #line == 0 then
     return
@@ -138,14 +138,22 @@ local function split_line(line)
     return line, nil
   else
     -- If line can be split further, be careful
-    local more_split = line:find(',', split + 1) or line:len() + 1
-    return line:sub(1, split - 1), line:sub(split + 1, more_split - 1)
+    local second_split = line:find(',', split + 1) or line:len() + 1
+    if second_split == nil then
+      return line:sub(1, split - 1), line:sub(split + 1)
+    else
+      return line:sub(1, split - 1),
+        line:sub(split + 1, second_split - 1),
+        line:sub(second_split + 1)
+    end
   end
 end
 
 -- Query the clock file, return a table with the queried clock and the time
 -- tallied + elapsed (if it is still running). If the 'all' clock is given,
 -- return all existing clocks.
+---@param clock_name string
+---@return table?
 local function read_clock(clock_name)
   local lines = clocks_lines()
   if lines == nil then
@@ -209,7 +217,7 @@ local function effort_clock(label)
   for i, line in ipairs(elines) do
     if i > 1 then
       local elab, eff = split_line(line)
-      if eff ~= nil then
+      if elab ~= nil and eff ~= nil then
         local elab_dt = read_clock(elab)[elab]
         if elab_dt ~= nil then
           total_eff = total_eff + elab_dt
@@ -250,7 +258,7 @@ end
 ---@param clock_name string?
 ---@return table<string, integer>?
 local function notify_clock(clock_name)
-  local total_times = assert(read_clock(clock_name))
+  local total_times = assert(read_clock(assert(clock_name)))
   local lines = assert(clocks_lines())
   local last_label = (#lines % 2 == 1) and split_line(lines[#lines]) or ''
 
@@ -264,6 +272,26 @@ local function notify_clock(clock_name)
         vim.log.levels.INFO
       )
     )
+  end
+
+  -- If a specific clock was asked for, also return all lines where there is
+  -- a date specified
+  if clock_name ~= 'all' then
+    -- Look for all instances of the clock label and retrieve the date
+    for _, line in ipairs(lines) do
+      local lab, _, date = split_line(line)
+
+      -- If no date information or not the right clock, ignore this line
+      if date ~= nil and lab == clock_name then
+        -- Strip the line from the last '\n'
+        if date:sub(date:len(), date:len()) == '\n' then
+          date = date:sub(1, date:len() - 1)
+        end
+
+        -- Notify the date
+        vim.notify(date, vim.log.levels.INFO)
+      end
+    end
   end
 end
 
