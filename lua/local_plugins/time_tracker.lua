@@ -409,7 +409,7 @@ local function start_clock(clock_name)
   -- Write data
   local curr_time = os.time()
   vim.fn.writefile(
-    ('%s,%s,%s s'):format(clock_name, curr_time, formatted_date(curr_time)),
+    { ('%s,%s,%s s'):format(clock_name, curr_time, formatted_date(curr_time)) },
     tracker_file,
     'as'
   )
