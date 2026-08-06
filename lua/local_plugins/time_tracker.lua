@@ -26,7 +26,10 @@ local effort_file = vim.fs.joinpath(vim.fn.stdpath 'config', 'clocks.csv')
 ---@param time integer?
 ---@return string
 local function formatted_date(time)
-  return os.date('%Y/%m/%d %H:%M:%S', time)
+  local date = os.date('%Y/%m/%d %H:%M:%S', time)
+  assert(type(date) == 'string')
+
+  return date
 end
 
 -- Format the time in seconds into HH:MM
@@ -229,6 +232,75 @@ local function effort_clock(label)
   return show_format
 end
 
+---@param date_lines string[]
+---@return nil
+local function date_picker(date_lines)
+  local unique_dates = { { text = 'all', value = {} } }
+  local today = os.date '%Y/%m/%d'
+
+  -- Find the unique dates
+  for _, date_str in ipairs(date_lines) do
+    if #date_str == 0 then
+      goto continue
+    end
+
+    -- Mark today
+    local extract_day = date_str:sub(1, 10)
+    if extract_day == today then
+      extract_day = extract_day .. ' (today)'
+    end
+
+    local found = false
+
+    for _, uniq in ipairs(unique_dates) do
+      if extract_day == uniq.text then
+        found = true
+        table.insert(uniq.value, date_str)
+        break
+      end
+    end
+
+    if not found then
+      table.insert(
+        unique_dates,
+        2,
+        { text = extract_day, value = { date_str } }
+      )
+    end
+
+    table.insert(unique_dates[1].value, date_str)
+    ::continue::
+  end
+
+  -- Picker to show all the times for the selected date
+  Snacks.picker.pick {
+    items = unique_dates,
+    format = 'text',
+    layout = 'dropdown',
+
+    -- This preview already shows what the user will see
+    preview = function(ctx)
+      local label = ctx.item.text
+      for _, uniq in ipairs(unique_dates) do
+        if uniq.text == label then
+          ctx.preview:set_lines(uniq.value)
+          break
+        end
+      end
+    end,
+
+    -- Just use vim.notify with the chosen date
+    confirm = function(picker, choice)
+      picker:close()
+      if choice then
+        for _, value in ipairs(choice.value) do
+          vim.notify(value, vim.log.levels.INFO)
+        end
+      end
+    end,
+  }
+end
+
 -- Read information from add_times and notify it in a nice format
 ---@param clock_name string?
 ---@return table<string, integer>?
@@ -253,6 +325,7 @@ local function notify_clock(clock_name)
   -- a date specified
   if clock_name ~= 'all' then
     -- Look for all instances of the clock label and retrieve the date
+    local date_lines = {}
     for _, line in ipairs(lines) do
       local lab, _, date = split_line(line)
 
@@ -263,9 +336,12 @@ local function notify_clock(clock_name)
           date = date:sub(1, date:len() - 1)
         end
 
-        -- Notify the date
-        vim.notify(date, vim.log.levels.INFO)
+        table.insert(date_lines, date)
       end
+    end
+
+    if #date_lines ~= 0 then
+      date_picker(date_lines)
     end
   end
 end
