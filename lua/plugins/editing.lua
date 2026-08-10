@@ -85,7 +85,22 @@ cmp.setup {
 
 -- `/` cmdline setup.
 cmp.setup.cmdline('/', {
-  mapping = cmp.mapping.preset.cmdline(),
+  mapping = cmp.mapping.preset.cmdline {
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+  },
   sources = {
     { name = 'buffer' },
   },
@@ -93,7 +108,22 @@ cmp.setup.cmdline('/', {
 
 -- `:` cmdline setup.
 cmp.setup.cmdline(':', {
-  mapping = cmp.mapping.preset.cmdline(),
+  mapping = cmp.mapping.preset.cmdline {
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+  },
   sources = cmp.config.sources({
     { name = 'path' },
   }, {
