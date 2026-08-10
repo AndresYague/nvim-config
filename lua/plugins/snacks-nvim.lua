@@ -70,7 +70,7 @@ Snacks.setup {
         },
         {
           icon = '󰎜 ',
-          key = 'p',
+          key = 'c',
           desc = 'Orgmode Capture task',
           action = ':Org capture t',
         },
