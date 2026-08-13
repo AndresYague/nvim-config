@@ -95,6 +95,9 @@ vim.pack.add {
   -- snacks
   'https://github.com/folke/snacks.nvim',
 
+  -- time tracker
+  'https://codeberg.org/AndresYague/time-tracker.nvim.git',
+
   -- treesitter
   'https://github.com/nvim-treesitter/nvim-treesitter-context',
   {
@@ -125,6 +128,7 @@ require 'plugins.picker'
 require 'plugins.previewers'
 require 'plugins.quicklist'
 require 'plugins.remote-sshfs'
+require 'plugins.time-tracker'
 require 'plugins.treesitter'
 require 'plugins.ui2'
 require 'plugins.vcs'
@@ -135,7 +139,6 @@ require 'local_plugins.floating_term'
 require 'local_plugins.local_diff'
 require 'local_plugins.mng_colorschemes'
 require 'local_plugins.mng_plugs'
-require 'local_plugins.time_tracker'
 
 -- Activate nvim plugins
 vim.cmd.packadd { args = { 'nvim.undotree' }, bang = true }

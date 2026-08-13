@@ -120,6 +120,12 @@ require('lualine').setup {
       end,
     },
     lualine_x = {
+      function()
+        return require('time-tracker').active_clock {
+          use_cache = false,
+          seconds = 10,
+        }
+      end,
       'encoding',
       'fileformat',
       'filetype',
