@@ -71,6 +71,8 @@ vim.keymap.set('n', '<leader>bo', function()
 end, { desc = 'Buffer delete others' })
 
 -- Window navigation
+
+-- Terminal mode
 vim.keymap.set(
   't',
   '<C-k>',
@@ -96,7 +98,7 @@ vim.keymap.set(
   { desc = 'Go to left window' }
 )
 
--- Other window keymaps
+-- Normal mode keymaps
 vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Go to upper window' })
 vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Go to lower window' })
 vim.keymap.set('n', '<C-h>', '<C-w>h', { desc = 'Go to left window' })
@@ -150,23 +152,18 @@ end, { desc = 'Open terminal horizontally (cwd)' })
 -- Move line up and down
 vim.keymap.set(
   'n',
-  '<M-down>',
-  "<cmd>execute 'move .+' . v:count1<cr>==",
+  '<S-M-j>',
+  '<esc><cmd>m .+1<cr>==',
   { desc = 'Move Down' }
 )
-vim.keymap.set(
-  'n',
-  '<M-up>',
-  "<cmd>execute 'move .-' . (v:count1 + 1)<cr>==",
-  { desc = 'Move Up' }
-)
+vim.keymap.set('n', '<S-M-k>', '<esc><cmd>m .-2<cr>==', { desc = 'Move Up' })
 vim.keymap.set(
   'i',
-  '<M-down>',
+  '<S-M-j>',
   '<esc><cmd>m .+1<cr>==gi',
   { desc = 'Move Down' }
 )
-vim.keymap.set('i', '<M-up>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move Up' })
+vim.keymap.set('i', '<S-M-k>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move Up' })
 
 -- Make j and k move visual lines
 vim.keymap.set('n', 'j', 'gj', { desc = 'Line Down' })
