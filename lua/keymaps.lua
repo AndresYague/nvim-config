@@ -150,12 +150,7 @@ vim.keymap.set('n', '<leader>th', function()
 end, { desc = 'Open terminal horizontally (cwd)' })
 
 -- Move line up and down
-vim.keymap.set(
-  'n',
-  '<S-M-j>',
-  '<esc><cmd>m .+1<cr>==',
-  { desc = 'Move Down' }
-)
+vim.keymap.set('n', '<S-M-j>', '<esc><cmd>m .+1<cr>==', { desc = 'Move Down' })
 vim.keymap.set('n', '<S-M-k>', '<esc><cmd>m .-2<cr>==', { desc = 'Move Up' })
 vim.keymap.set(
   'i',
@@ -168,6 +163,9 @@ vim.keymap.set('i', '<S-M-k>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move Up' })
 -- Make j and k move visual lines
 vim.keymap.set('n', 'j', 'gj', { desc = 'Line Down' })
 vim.keymap.set('n', 'k', 'gk', { desc = 'Line Up' })
+
+-- Make gp go to the other pair (I don't like %)
+vim.keymap.set({ 'n', 'o', 'x' }, 'gp', '%', { desc = 'Jump to pair' })
 
 -- Clear all the marks
 vim.keymap.set(
