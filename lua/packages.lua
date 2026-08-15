@@ -89,9 +89,6 @@ vim.pack.add {
   -- quicklist
   'https://github.com/stevearc/quicker.nvim',
 
-  -- remote-sshfs
-  'https://github.com/AndresYague/remote-sshfs.nvim.git',
-
   -- snacks
   'https://github.com/folke/snacks.nvim',
 
@@ -127,7 +124,6 @@ require 'plugins.others'
 require 'plugins.picker'
 require 'plugins.previewers'
 require 'plugins.quicklist'
-require 'plugins.remote-sshfs'
 require 'plugins.time-tracker'
 require 'plugins.treesitter'
 require 'plugins.ui2'
@@ -145,3 +141,16 @@ require 'local_plugins.transpose_words'
 vim.cmd.packadd { args = { 'nvim.undotree' }, bang = true }
 vim.cmd.packadd { args = { 'termdebug' }, bang = true }
 vim.cmd.packadd { args = { 'nvim.difftool' }, bang = true }
+
+-- Slow plugins are activated only when used
+
+-- Activate remote-sshfs only when it will be used
+vim.keymap.set('n', '<leader>r', function()
+  -- Delete this keymap
+  vim.keymap.del('n', '<leader>r')
+
+  vim.pack.add {
+    'https://github.com/AndresYague/remote-sshfs.nvim.git',
+  }
+  require 'plugins.remote-sshfs'
+end, { desc = 'Load remote-sshfs' })

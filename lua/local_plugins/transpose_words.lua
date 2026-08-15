@@ -46,7 +46,7 @@ local function swap_words()
   local col = vim.api.nvim_win_get_cursor(0)[2] + 1
 
   -- Move the cursor to the next word and get it as well
-  vim.api.nvim_feedkeys('w', 'x', false)
+  vim.api.nvim_feedkeys('w', 'nx', false)
   local nword = vim.fn.expand '<cword>'
 
   -- Return if empty or the words are identical
