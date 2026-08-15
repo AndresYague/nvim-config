@@ -5,11 +5,19 @@ import argparse
 import numpy as np
 
 
-def pretty_print(info: dict[str, dict[str, list[float]]], n_print: int = 10) -> None:
+def pretty_print(
+    info: dict[str, dict[str, list[float]]], n_print: int = 10, sort_elapsed=False
+) -> None:
     """Sort and print the information."""
-    # Create a new dictionary with the statistics
-    sorted_keys = sorted(info.keys(), reverse=True, key=lambda x: info[x]["self"])
+    # Sort the keys by self time or elapsed time
+    if sort_elapsed:
+        sort_type = "elapsed"
+    else:
+        sort_type = "self"
 
+    sorted_keys = sorted(info.keys(), reverse=True, key=lambda x: info[x][sort_type])
+
+    # Create a new dictionary with the statistics
     info_stats: dict[str, dict[str, dict[str, float]]] = {}
     for key in sorted_keys:
         info_stats[key] = {}
@@ -22,10 +30,12 @@ def pretty_print(info: dict[str, dict[str, list[float]]], n_print: int = 10) -> 
             "std": np.std(info[key]["self"]),
         }
 
+    # Save the total self time to print out percentages
     total_time = 0.0
     for key in sorted_keys:
         total_time += info_stats[key]["self"]["mean"]
 
+    # Printing block
     s = ""
     for i, key in enumerate(sorted_keys):
         if i == n_print:
@@ -81,8 +91,12 @@ def main() -> None:
     """Orchestrate file reading."""
     parser = argparse.ArgumentParser()
     parser.add_argument("file", nargs=1)
+    parser.add_argument("-e", "--elapsed", action="store_true")
+    parser.add_argument("-n", "--n_lines", type=int)
 
-    pretty_print(parse_file(parser.parse_args().file[0]))
+    args = parser.parse_args()
+    n_lines = args.n_lines if args.n_lines else 10
+    pretty_print(parse_file(args.file[0]), n_print=n_lines, sort_elapsed=args.elapsed)
 
 
 if __name__ == "__main__":
