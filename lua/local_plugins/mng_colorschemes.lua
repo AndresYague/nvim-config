@@ -1,19 +1,11 @@
 -- Attempt to save and load the latest colorscheme
 
-local priority = ''
-
 -- Find where we save the colorscheme file
 local cs_path =
   vim.fs.joinpath(vim.fs.abspath(vim.fn.stdpath 'config'), 'colorscheme.txt')
 
 -- When requiring this file, read the color
-local fread = io.open(cs_path, 'r')
-if fread then
-  for line in fread:lines() do
-    priority = line
-    break
-  end
-end
+local _, priority = pcall(io.lines(cs_path))
 
 -- When leaving neovim, write the current color
 vim.api.nvim_create_autocmd('VimLeave', {

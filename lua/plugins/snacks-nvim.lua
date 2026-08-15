@@ -580,17 +580,20 @@ vim.api.nvim_create_autocmd('User', {
     local dashboard_win = vim.api.nvim_get_current_win()
 
     -- Count how many TODOs we have.
-    local n_todos = 0
+    local are_there_todos = false
     for _, file in ipairs(require('orgmode.api').load()) do
       for _, headline in ipairs(file.headlines) do
         if headline.todo_type == 'TODO' then
-          n_todos = n_todos + 1
+          are_there_todos = true
+          goto exit_loops
         end
       end
     end
 
+    ::exit_loops::
+
     -- Only open if the agenda has todo items at all
-    if n_todos > 0 then
+    if are_there_todos then
       -- Open org agenda
       vim.cmd 'Org agenda t'
 

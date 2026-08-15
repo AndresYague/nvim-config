@@ -34,14 +34,6 @@ vim.pack.add {
   'https://github.com/rebelot/kanagawa.nvim',
   'https://github.com/rose-pine/neovim',
 
-  -- code_companion
-  'https://github.com/olimorris/codecompanion.nvim',
-
-  -- editing
-  'https://github.com/folke/todo-comments.nvim',
-  'https://github.com/windwp/nvim-autopairs',
-  'https://github.com/ysmb-wtsg/in-and-out.nvim',
-
   -- vcs
   'https://github.com/lewis6991/gitsigns.nvim',
   'https://github.com/tpope/vim-fugitive',
@@ -61,12 +53,6 @@ vim.pack.add {
   'https://github.com/chipsenkbeil/org-roam.nvim.git',
   'https://github.com/nvim-orgmode/org-bullets.nvim',
   'https://github.com/nvim-orgmode/orgmode',
-
-  -- multicursor
-  {
-    src = 'https://github.com/jake-stewart/multicursor.nvim',
-    version = '1.0',
-  },
 
   -- oil
   'https://github.com/stevearc/oil.nvim',
@@ -95,13 +81,6 @@ vim.pack.add {
   -- time tracker
   'https://codeberg.org/AndresYague/time-tracker.nvim.git',
 
-  -- treesitter
-  'https://github.com/nvim-treesitter/nvim-treesitter-context',
-  {
-    src = 'https://github.com/nvim-treesitter/nvim-treesitter-textobjects',
-    version = 'main',
-  },
-
   -- vimdocs
   'https://github.com/ibhagwan/ts-vimdoc.nvim',
 
@@ -109,15 +88,11 @@ vim.pack.add {
   'https://github.com/folke/which-key.nvim',
 }
 
--- Make sure snacks-nvim and lsp_setup load ASAP
+-- Make sure snacks-nvim loads first
 require 'plugins.snacks-nvim'
-require 'plugins.lsp_setup' -- Cannot be named just "lsp" for mks to work well
 
-require 'plugins.code_companion'
 require 'plugins.colorschemes'
-require 'plugins.editing'
 require 'plugins.lualine'
-require 'plugins.multicursor'
 require 'plugins.oil'
 require 'plugins.orgmode'
 require 'plugins.others'
@@ -125,7 +100,6 @@ require 'plugins.picker'
 require 'plugins.previewers'
 require 'plugins.quicklist'
 require 'plugins.time-tracker'
-require 'plugins.treesitter'
 require 'plugins.ui2'
 require 'plugins.vcs'
 require 'plugins.which-key'
@@ -142,15 +116,41 @@ vim.cmd.packadd { args = { 'nvim.undotree' }, bang = true }
 vim.cmd.packadd { args = { 'termdebug' }, bang = true }
 vim.cmd.packadd { args = { 'nvim.difftool' }, bang = true }
 
--- Slow plugins are activated only when used
+-- Slow plugins are activated after doing nothing for updatetime (250 ms)
+vim.api.nvim_create_autocmd('CursorHold', {
+  once = true,
+  callback = function()
+    vim.pack.add {
+      -- code_companion
+      'https://github.com/olimorris/codecompanion.nvim',
 
--- Activate remote-sshfs only when it will be used
-vim.keymap.set('n', '<leader>r', function()
-  -- Delete this keymap
-  vim.keymap.del('n', '<leader>r')
+      -- editing
+      'https://github.com/folke/todo-comments.nvim',
+      'https://github.com/windwp/nvim-autopairs',
+      'https://github.com/ysmb-wtsg/in-and-out.nvim',
 
-  vim.pack.add {
-    'https://github.com/AndresYague/remote-sshfs.nvim.git',
-  }
-  require 'plugins.remote-sshfs'
-end, { desc = 'Load remote-sshfs' })
+      -- multicursor
+      {
+        src = 'https://github.com/jake-stewart/multicursor.nvim',
+        version = '1.0',
+      },
+
+      -- remote-sshfs
+      'https://github.com/AndresYague/remote-sshfs.nvim.git',
+
+      -- treesitter
+      'https://github.com/nvim-treesitter/nvim-treesitter-context',
+      {
+        src = 'https://github.com/nvim-treesitter/nvim-treesitter-textobjects',
+        version = 'main',
+      },
+    }
+
+    require 'plugins.code_companion'
+    require 'plugins.editing'
+    require 'plugins.lsp_setup' -- Cannot be "lsp" for make session to work well
+    require 'plugins.multicursor'
+    require 'plugins.remote-sshfs'
+    require 'plugins.treesitter'
+  end,
+})
