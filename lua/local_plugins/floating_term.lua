@@ -1,15 +1,9 @@
 -- Save the buffer and window information
-local state = {}
+local state = { bufnr = -1 }
 
 ---Close or open the floating terminal, handle the buffer creation
 ---@param relsize number Relative window size
 local toggle_floating_terminal = function(relsize)
-  -- Reset state
-  if not state.bufnr or not vim.api.nvim_buf_is_loaded(state.bufnr) then
-    state.is_open = false
-    state.bufnr = -1
-  end
-
   -- If the window is open, close it
   if vim.api.nvim_win_is_valid(state.win_id or -1) then
     vim.api.nvim_win_close(state.win_id, true)
@@ -66,23 +60,6 @@ local relsize = 0.8
 
 -- Floating terminal
 vim.keymap.set('n', '<C-Space>', function()
-  toggle_floating_terminal(relsize)
-
-  -- Create autocmd to close the window when leaving it
-  -- Doing it inside of the keymap so we can retrieve state.bufnr
-  -- so the autocmd only listens to the floating terminal
-  vim.api.nvim_create_autocmd({ 'WinLeave' }, {
-    group = vim.api.nvim_create_augroup('FloatingTerm', { clear = true }),
-    buffer = state.bufnr,
-    callback = function()
-      toggle_floating_terminal(relsize)
-    end,
-    desc = 'Close floating terminal when leaving the window',
-  })
-end, { desc = 'Toggle floating terminal (cwd)' })
-
--- Allow also the ergonomic one
-vim.keymap.set('n', '<Space>tt', function()
   toggle_floating_terminal(relsize)
 
   -- Create autocmd to close the window when leaving it

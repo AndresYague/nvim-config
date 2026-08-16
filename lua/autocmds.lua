@@ -22,6 +22,22 @@ local ignore_errors = function(ignore_table, success, err_str)
   end
 end
 
+-- Clear all terminal buffers when entering neovim
+vim.api.nvim_create_autocmd('VimEnter', {
+  group = vim.api.nvim_create_augroup('Remove terminals', { clear = true }),
+  callback = function()
+
+    -- Use vim.schedule to give buffers a chance to load
+    vim.schedule(function()
+      for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+        if vim.api.nvim_buf_get_name(buf):match 'term://' then
+          vim.api.nvim_buf_delete(buf, { force = true })
+        end
+      end
+    end)
+  end,
+})
+
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.hl.on_yank()`
@@ -133,8 +149,7 @@ vim.api.nvim_create_autocmd('VimEnter', {
   group = register_aug,
   callback = function()
     ('abcdefghijklmnopqrstuvwxyz'):gsub('.', function(letter)
-      local content = vim.fn.getreg(letter)
-      if content:len() > 0 then
+      if vim.fn.getreg(letter):len() > 0 then
         register_keymap(letter)
       end
     end)
@@ -144,6 +159,8 @@ vim.api.nvim_create_autocmd('RecordingLeave', {
   group = register_aug,
   callback = function()
     local letter = vim.fn.reg_recording()
-    register_keymap(letter)
+    if vim.fn.getreg(letter):len() > 0 then
+      register_keymap(letter)
+    end
   end,
 })
