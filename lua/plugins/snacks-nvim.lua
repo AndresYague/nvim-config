@@ -481,7 +481,7 @@ vim.api.nvim_create_autocmd('User', {
               update = true,
             })
           else
-            assert(old_highlight ~= nil)
+            assert(old_highlight)
             vim.api.nvim_set_hl(0, 'MatchParen', old_highlight)
           end
 
@@ -527,9 +527,23 @@ vim.keymap.set('n', '<leader>uu', function()
   require('undotree').open()
 end, { desc = 'Toggle Undotree window' })
 
--- Autocmd for match_parens
-vim.api.nvim_create_autocmd('VimEnter', {
-  once = true,
+-- Autocmds for match_parens
+local paren_group =
+  vim.api.nvim_create_augroup('MatchParenGroup', { clear = true })
+
+-- This clears the previous colorscheme change before modifying the colorscheme
+vim.api.nvim_create_autocmd('ColorSchemePre', {
+  group = paren_group,
+  callback = function()
+    if match_parens then
+      assert(old_highlight)
+      vim.api.nvim_set_hl(0, 'MatchParen', old_highlight)
+      match_parens = false
+    end
+  end,
+})
+vim.api.nvim_create_autocmd('ColorScheme', {
+  group = paren_group,
   callback = function()
     old_highlight = vim.api.nvim_get_hl(0, { name = 'MatchParen' })
     vim.api.nvim_set_hl(0, 'MatchParen', {
