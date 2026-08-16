@@ -376,25 +376,6 @@ vim.api.nvim_create_autocmd('User', {
       })
       :map '<leader>uM'
 
-    -- Toggle for no neck pain
-    Snacks.toggle
-      .new({
-        id = 'no-neck-pain',
-        name = 'No neck pain',
-        get = function()
-          local state = require('no-neck-pain').state
-          if state then
-            return state.enabled
-          else
-            return false
-          end
-        end,
-        set = function()
-          require('no-neck-pain').toggle()
-        end,
-      })
-      :map '<leader>up'
-
     -- Fully custom toggle for colorizer
     Snacks.toggle
       .new({

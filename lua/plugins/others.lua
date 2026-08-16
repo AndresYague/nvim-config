@@ -29,6 +29,14 @@ require('flash').setup {
   },
 }
 
+require('no-neck-pain').setup {
+  mappings = {
+    -- Set up the toggling map
+    enabled = true,
+    toggle = '<leader>up',
+  },
+}
+
 -- Persistence keymaps
 -- Close current session
 vim.keymap.set('n', '<leader>qq', function()
@@ -109,10 +117,10 @@ vim.keymap.set('n', '<leader>qr', function()
     cmd_restart = cmd_restart .. "; require('snacks').explorer()"
   end
 
-  local no_neck_state = require('no-neck-pain').state
-  if no_neck_state and no_neck_state.enabled then
+  local no_neck = require 'no-neck-pain'
+  if no_neck.state and no_neck.state.enabled then
     -- Close no-neck-pain and open it on the way back
-    require('no-neck-pain').toggle()
+    no_neck.disable()
     cmd_restart = cmd_restart .. "; require('no-neck-pain').toggle()"
   end
 
