@@ -1,4 +1,5 @@
 require('rose-pine').setup {
+  dark_variant = 'moon',
   dim_inactive_windows = true,
 }
 require('nightfox').setup {
