@@ -1,11 +1,15 @@
 -- Hook autocommand to call TSUpdate when treesitter is updated
-vim.api.nvim_create_autocmd('PackChanged', { callback = function(ev)
-  local name, kind = ev.data.spec.name, ev.data.kind
-  if name == 'nvim-treesitter' and kind == 'update' then
-    if not ev.data.active then vim.cmd.packadd('nvim-treesitter') end
-    vim.cmd('TSUpdate')
-  end
-end })
+vim.api.nvim_create_autocmd('PackChanged', {
+  callback = function(ev)
+    local name, kind = ev.data.spec.name, ev.data.kind
+    if name == 'nvim-treesitter' and kind == 'update' then
+      if not ev.data.active then
+        vim.cmd.packadd 'nvim-treesitter'
+      end
+      vim.cmd 'TSUpdate'
+    end
+  end,
+})
 
 vim.pack.add {
 
@@ -109,6 +113,7 @@ require 'plugins.picker'
 require 'plugins.previewers'
 require 'plugins.quicklist'
 require 'plugins.time-tracker'
+require 'plugins.treesitter'
 require 'plugins.ui2'
 require 'plugins.vcs'
 require 'plugins.which-key'
@@ -153,6 +158,13 @@ vim.api.nvim_create_autocmd('CursorHold', {
         src = 'https://github.com/nvim-treesitter/nvim-treesitter-textobjects',
         version = 'main',
       },
+
+      -- treesitter addons
+      'https://github.com/nvim-treesitter/nvim-treesitter-context',
+      {
+        src = 'https://github.com/nvim-treesitter/nvim-treesitter-textobjects',
+        version = 'main',
+      },
     }
 
     require 'plugins.code_companion'
@@ -160,6 +172,6 @@ vim.api.nvim_create_autocmd('CursorHold', {
     require 'plugins.lsp_setup' -- Cannot be "lsp" for make session to work well
     require 'plugins.multicursor'
     require 'plugins.remote-sshfs'
-    require 'plugins.treesitter'
+    require 'plugins.treesitter-addons'
   end,
 })
