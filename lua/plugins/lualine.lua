@@ -122,7 +122,7 @@ require('lualine').setup {
     lualine_x = {
       function()
         return require('time-tracker').active_clock {
-          use_cache = false,
+          use_cache = true,
           seconds = 10,
         }
       end,
