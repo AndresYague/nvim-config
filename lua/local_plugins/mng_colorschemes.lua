@@ -9,7 +9,7 @@ local _, priority = pcall(io.lines(cs_path))
 
 -- When leaving neovim, write the current color
 vim.api.nvim_create_autocmd('VimLeave', {
-  group = vim.api.nvim_create_augroup('load colorscheme', {clear = false}),
+  group = vim.api.nvim_create_augroup('load colorscheme', { clear = false }),
   callback = function()
     local fwrite = io.open(cs_path, 'w+')
     if fwrite then

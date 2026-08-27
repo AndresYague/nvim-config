@@ -86,6 +86,15 @@ vim.api.nvim_create_autocmd('BufWinLeave', {
       vim.keymap.del('n', 'gh')
       vim.keymap.del('n', 'gl')
       vim.keymap.del('n', 'gq')
+
+      -- Remap the old keymaps
+      vim.keymap.set(
+        { 'n', 'o', 'x' },
+        'gh',
+        '0',
+        { desc = 'Go to line start' }
+      )
+      vim.keymap.set({ 'n', 'o', 'x' }, 'gl', '$', { desc = 'Go to line end' })
     end
   end,
   desc = 'Clear the fugitive diffsplit keymaps',
@@ -100,7 +109,7 @@ vim.api.nvim_create_autocmd('DiffUpdated', {
     if vim.o.diff then
       ignore_errors({ 'No such mapping' }, pcall(vim.keymap.del, 'o', 'p'))
     else
-      vim.keymap.set('o', 'p', 'V}', { desc = 'Next empty line' })
+      vim.keymap.set('o', 'p', '}', { desc = 'Next empty line' })
     end
   end,
   desc = 'Clear or add p as operator mode',
