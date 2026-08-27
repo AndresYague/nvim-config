@@ -8,16 +8,21 @@ require('oil').setup {
     ['<BS>'] = { 'actions.parent', mode = 'n' },
     ['<C-c>'] = { 'actions.close', mode = 'n' },
     ['<C-p>'] = 'actions.preview',
+    ['<C-l>'] = 'actions.refresh',
     ['<CR>'] = 'actions.select',
     ['g?'] = { 'actions.show_help', mode = 'n' },
     ['g.'] = { 'actions.toggle_hidden', mode = 'n' },
     ['gs'] = { 'actions.change_sort', mode = 'n' },
     ['<leader>h'] = { 'actions.select', opts = { horizontal = true } },
     ['<leader>v'] = { 'actions.select', opts = { vertical = true } },
+    ['<leader>t'] = { 'actions.select', opts = { tab = true } },
   },
   -- Configuration for the floating action confirmation window
   confirmation = {
     border = 'rounded',
+  },
+  view_options = {
+    show_hidden = true,
   },
 }
 
