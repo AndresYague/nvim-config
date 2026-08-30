@@ -51,11 +51,6 @@ vim.pack.add {
   -- lualine
   'https://github.com/nvim-lualine/lualine.nvim',
 
-  -- orgmode
-  'https://github.com/chipsenkbeil/org-roam.nvim.git',
-  'https://github.com/nvim-orgmode/org-bullets.nvim',
-  'https://github.com/nvim-orgmode/orgmode',
-
   -- oil
   'https://github.com/stevearc/oil.nvim',
 
@@ -99,7 +94,6 @@ require 'plugins.snacks-nvim'
 require 'plugins.colorschemes'
 require 'plugins.lualine'
 require 'plugins.oil'
-require 'plugins.orgmode'
 require 'plugins.others'
 require 'plugins.picker'
 require 'plugins.previewers'
@@ -147,6 +141,11 @@ vim.api.nvim_create_autocmd('CursorHold', {
         version = '1.0',
       },
 
+      -- orgmode
+      'https://github.com/chipsenkbeil/org-roam.nvim.git',
+      'https://github.com/nvim-orgmode/org-bullets.nvim',
+      'https://github.com/nvim-orgmode/orgmode',
+
       -- remote-sshfs
       'https://github.com/AndresYague/remote-sshfs.nvim.git',
 
@@ -169,6 +168,7 @@ vim.api.nvim_create_autocmd('CursorHold', {
     require 'plugins.lsp_setup' -- Cannot be "lsp" for make session to work well
     require 'plugins.multicursor'
     require 'plugins.nvim-cmp'
+    require 'plugins.orgmode'
     require 'plugins.remote-sshfs'
     require 'plugins.treesitter-addons'
   end,

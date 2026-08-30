@@ -566,42 +566,14 @@ local opt_number = vim.wo.number
 local opt_relative_number = vim.wo.number
 
 -- Dashboard autocmd
--- This autocmd opens the Org agenda todo-list as a split in the dashboard
--- It only does it once
+-- This triggers a cursor change which will start the countdown for CursorHold
+-- at some point, the snacks dashboard buffer is otherwise static.
+-- It only happens once
 vim.api.nvim_create_autocmd('User', {
   pattern = 'SnacksDashboardOpened',
   once = true,
   callback = function()
-    local dashboard_win = vim.api.nvim_get_current_win()
-
-    -- Count how many TODOs we have.
-    local are_there_todos = false
-    for _, file in ipairs(require('orgmode.api').load()) do
-      for _, headline in ipairs(file.headlines) do
-        if headline.todo_type == 'TODO' then
-          are_there_todos = true
-          goto exit_loops
-        end
-      end
-    end
-
-    ::exit_loops::
-
-    -- Only open if the agenda has todo items at all
-    if are_there_todos then
-      -- Open org agenda
-      vim.cmd 'Org agenda t'
-
-      -- Remove line numbers in this window
-      vim.wo.number = false
-      vim.wo.relativenumber = false
-    end
-
-    vim.schedule(function()
-      if vim.api.nvim_win_is_valid(dashboard_win) then
-        vim.api.nvim_set_current_win(dashboard_win)
-      end
-    end)
+    vim.api.nvim_feedkeys('lh', 'nx', false)
   end,
 })
 
