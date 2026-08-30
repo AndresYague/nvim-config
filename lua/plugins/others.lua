@@ -114,18 +114,18 @@ vim.keymap.set('n', '<leader>qr', function()
   -- Do not break backwards compatibility. NOTE: Requires persistence.
   local cmd_restart = nil
   if vim.fn.has 'nvim-0.12.5' == 0 then
-    cmd_restart = "lua require('persistence').load()"
+    cmd_restart = "lua require('persistence').load();"
   end
 
   if explorer_was_open then
-    cmd_restart = (cmd_restart or '') .. "; require('snacks').explorer()"
+    cmd_restart = (cmd_restart or 'lua ') .. "require('snacks').explorer();"
   end
 
   local no_neck = require 'no-neck-pain'
   if no_neck.state and no_neck.state.enabled then
     -- Close no-neck-pain and open it on the way back
     no_neck.disable()
-    cmd_restart = (cmd_restart or '') .. "; require('no-neck-pain').toggle()"
+    cmd_restart = (cmd_restart or 'lua ') .. "require('no-neck-pain').toggle()"
   end
 
   vim.cmd.restart(cmd_restart)
