@@ -26,6 +26,11 @@ vim.pack.add {
     src = 'https://github.com/nvim-treesitter/nvim-treesitter',
     version = 'main',
   },
+  'https://github.com/nvim-treesitter/nvim-treesitter-context',
+  {
+    src = 'https://github.com/nvim-treesitter/nvim-treesitter-textobjects',
+    version = 'main',
+  },
   --[[ ================================================================= ]]
 
   -- colorschemes
@@ -40,16 +45,14 @@ vim.pack.add {
   'https://github.com/lewis6991/gitsigns.nvim',
   'https://github.com/tpope/vim-fugitive',
 
-  -- lsp_setup
-  'https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim',
-  'https://github.com/folke/lazydev.nvim',
-  'https://github.com/mason-org/mason-lspconfig.nvim',
-  'https://github.com/mason-org/mason.nvim',
-  'https://github.com/neovim/nvim-lspconfig',
-  'https://github.com/nvimtools/none-ls.nvim', -- Using this for fortls
-
   -- lualine
   'https://github.com/nvim-lualine/lualine.nvim',
+
+  -- multicursor
+  {
+    src = 'https://github.com/jake-stewart/multicursor.nvim',
+    version = '1.0',
+  },
 
   -- oil
   'https://github.com/stevearc/oil.nvim',
@@ -81,6 +84,13 @@ vim.pack.add {
   -- time tracker
   'https://codeberg.org/AndresYague/time-tracker.nvim.git',
 
+  -- treesitter addons
+  'https://github.com/nvim-treesitter/nvim-treesitter-context',
+  {
+    src = 'https://github.com/nvim-treesitter/nvim-treesitter-textobjects',
+    version = 'main',
+  },
+
   -- vimdocs
   'https://github.com/ibhagwan/ts-vimdoc.nvim',
 
@@ -93,6 +103,7 @@ require 'plugins.snacks-nvim'
 
 require 'plugins.colorschemes'
 require 'plugins.lualine'
+require 'plugins.multicursor'
 require 'plugins.oil'
 require 'plugins.others'
 require 'plugins.picker'
@@ -100,6 +111,7 @@ require 'plugins.previewers'
 require 'plugins.quicklist'
 require 'plugins.time-tracker'
 require 'plugins.treesitter'
+require 'plugins.treesitter-addons'
 require 'plugins.ui2'
 require 'plugins.vcs'
 require 'plugins.which-key'
@@ -124,6 +136,14 @@ vim.api.nvim_create_autocmd('CursorHold', {
       -- code_companion
       'https://github.com/olimorris/codecompanion.nvim',
 
+      -- lsp_setup
+      'https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim',
+      'https://github.com/folke/lazydev.nvim',
+      'https://github.com/mason-org/mason-lspconfig.nvim',
+      'https://github.com/mason-org/mason.nvim',
+      'https://github.com/neovim/nvim-lspconfig',
+      'https://github.com/nvimtools/none-ls.nvim', -- Using this for fortls
+
       -- nvim-cmp
       'https://github.com/hrsh7th/nvim-cmp',
       'https://github.com/L3MON4D3/LuaSnip', -- Snippet engine
@@ -135,12 +155,6 @@ vim.api.nvim_create_autocmd('CursorHold', {
       'https://github.com/rafamadriz/friendly-snippets',
       'https://github.com/saadparwaiz1/cmp_luasnip', -- Snippet source
 
-      -- multicursor
-      {
-        src = 'https://github.com/jake-stewart/multicursor.nvim',
-        version = '1.0',
-      },
-
       -- orgmode
       'https://github.com/chipsenkbeil/org-roam.nvim.git',
       'https://github.com/nvim-orgmode/org-bullets.nvim',
@@ -148,28 +162,12 @@ vim.api.nvim_create_autocmd('CursorHold', {
 
       -- remote-sshfs
       'https://github.com/AndresYague/remote-sshfs.nvim.git',
-
-      -- treesitter
-      'https://github.com/nvim-treesitter/nvim-treesitter-context',
-      {
-        src = 'https://github.com/nvim-treesitter/nvim-treesitter-textobjects',
-        version = 'main',
-      },
-
-      -- treesitter addons
-      'https://github.com/nvim-treesitter/nvim-treesitter-context',
-      {
-        src = 'https://github.com/nvim-treesitter/nvim-treesitter-textobjects',
-        version = 'main',
-      },
     }
 
     require 'plugins.code_companion'
     require 'plugins.lsp_setup' -- Cannot be "lsp" for make session to work well
-    require 'plugins.multicursor'
     require 'plugins.nvim-cmp'
     require 'plugins.orgmode'
     require 'plugins.remote-sshfs'
-    require 'plugins.treesitter-addons'
   end,
 })
