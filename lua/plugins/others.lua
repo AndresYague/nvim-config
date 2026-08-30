@@ -37,6 +37,24 @@ require('no-neck-pain').setup {
   },
 }
 
+
+require('nvim-autopairs').setup {}
+
+require('todo-comments').setup {}
+
+-- "TODO" search keymaps
+vim.keymap.set('n', ']t', function()
+  require('todo-comments').jump_next()
+end, { desc = 'Next todo comment' })
+vim.keymap.set('n', '[t', function()
+  require('todo-comments').jump_prev()
+end, { desc = 'Previous todo comment' })
+
+-- "in-and-out" keymaps
+vim.keymap.set('i', '<C-H>', function()
+  require('in-and-out').in_and_out()
+end)
+
 -- Persistence keymaps
 -- Close current session
 vim.keymap.set('n', '<leader>qq', function()

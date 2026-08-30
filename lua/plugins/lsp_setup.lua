@@ -50,6 +50,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- Go to type definition
     map('gy', vim.lsp.buf.type_definition, 'type definition', { 'n', 'x' })
 
+    -- Format code
+    map('<leader>cf', vim.lsp.buf.format, 'Format buffer', { 'n', 'x' })
+
     -- The following two autocommands are used to highlight references of the
     -- word under your cursor when your cursor rests there for a little while.
     -- See `:help CursorHold` for information about when this is executed

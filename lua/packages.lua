@@ -21,17 +21,6 @@ vim.pack.add {
     version = 'master',
   },
 
-  -- nvim-cmp (editing)
-  'https://github.com/L3MON4D3/LuaSnip', -- Snippet engine
-  'https://github.com/hrsh7th/cmp-buffer', -- Buffer text source
-  'https://github.com/hrsh7th/cmp-cmdline', -- command line
-  'https://github.com/hrsh7th/cmp-nvim-lsp', -- LSP source
-  'https://github.com/hrsh7th/cmp-omni', -- omni
-  'https://github.com/hrsh7th/cmp-path', -- File system paths source
-  'https://github.com/hrsh7th/nvim-cmp',
-  'https://github.com/rafamadriz/friendly-snippets',
-  'https://github.com/saadparwaiz1/cmp_luasnip', -- Snippet source
-
   -- treesitter
   {
     src = 'https://github.com/nvim-treesitter/nvim-treesitter',
@@ -76,7 +65,10 @@ vim.pack.add {
   'https://codeberg.org/AndresYague/persistence.nvim',
   'https://codeberg.org/AndresYague/print-debug.nvim',
   'https://github.com/folke/flash.nvim',
+  'https://github.com/folke/todo-comments.nvim',
   'https://github.com/kylechui/nvim-surround',
+  'https://github.com/windwp/nvim-autopairs',
+  'https://github.com/ysmb-wtsg/in-and-out.nvim',
   {
     src = 'https://codeberg.org/AndresYague/no-neck-pain.nvim',
     version = 'my_main',
@@ -138,10 +130,16 @@ vim.api.nvim_create_autocmd('CursorHold', {
       -- code_companion
       'https://github.com/olimorris/codecompanion.nvim',
 
-      -- editing
-      'https://github.com/folke/todo-comments.nvim',
-      'https://github.com/windwp/nvim-autopairs',
-      'https://github.com/ysmb-wtsg/in-and-out.nvim',
+      -- nvim-cmp
+      'https://github.com/hrsh7th/nvim-cmp',
+      'https://github.com/L3MON4D3/LuaSnip', -- Snippet engine
+      'https://github.com/hrsh7th/cmp-buffer', -- Buffer text source
+      'https://github.com/hrsh7th/cmp-cmdline', -- command line
+      'https://github.com/hrsh7th/cmp-nvim-lsp', -- LSP source
+      'https://github.com/hrsh7th/cmp-omni', -- omni
+      'https://github.com/hrsh7th/cmp-path', -- File system paths source
+      'https://github.com/rafamadriz/friendly-snippets',
+      'https://github.com/saadparwaiz1/cmp_luasnip', -- Snippet source
 
       -- multicursor
       {
@@ -168,9 +166,9 @@ vim.api.nvim_create_autocmd('CursorHold', {
     }
 
     require 'plugins.code_companion'
-    require 'plugins.editing'
     require 'plugins.lsp_setup' -- Cannot be "lsp" for make session to work well
     require 'plugins.multicursor'
+    require 'plugins.nvim-cmp'
     require 'plugins.remote-sshfs'
     require 'plugins.treesitter-addons'
   end,
