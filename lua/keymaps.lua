@@ -9,9 +9,6 @@ vim.keymap.set(
   { desc = 'Paste over selections without losing initially yanked text' }
 )
 
--- Do not move the cursor after J
-vim.keymap.set('n', 'J', 'mzJ`z', { desc = 'Join [count] lines' })
-
 -- Replace word under cursor
 vim.keymap.set(
   'n',

@@ -561,10 +561,6 @@ vim.keymap.set('n', '<leader>oll', function()
   }
 end, { desc = 'List links' })
 
--- Remember the options for below
-local opt_number = vim.wo.number
-local opt_relative_number = vim.wo.number
-
 -- Dashboard autocmd
 -- This triggers a cursor change which will start the countdown for CursorHold
 -- at some point, the snacks dashboard buffer is otherwise static.
@@ -576,6 +572,10 @@ vim.api.nvim_create_autocmd('User', {
     vim.api.nvim_feedkeys('lh', 'nx', false)
   end,
 })
+
+-- Remember the options for below
+local opt_number = vim.wo.number
+local opt_relative_number = vim.wo.number
 
 -- Close orgagenda when closing the dashboard
 vim.api.nvim_create_autocmd('User', {

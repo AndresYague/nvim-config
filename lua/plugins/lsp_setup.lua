@@ -11,7 +11,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(event)
     local client = assert(vim.lsp.get_client_by_id(event.data.client_id))
     -- Uncomment to enable inlay hints automatically
-    -- vim.lsp.inlay_hint.enable()
+    vim.lsp.inlay_hint.enable()
 
     -- This ensures that whenever you call hover in an LSP buffer,
     -- it uses rounded borders
