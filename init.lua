@@ -1,3 +1,6 @@
+-- Enable the loader, it may help. This has to be on top.
+vim.loader.enable()
+
 -- Load all the options
 require 'options'
 
