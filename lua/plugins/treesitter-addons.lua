@@ -53,7 +53,7 @@ vim.keymap.set('n', '<leader>cS', function()
   require('nvim-treesitter-textobjects.swap').swap_previous '@parameter.inner'
 end, { desc = 'Swap previous' })
 
--- Function and classes selections
+-- Textobject selections
 vim.keymap.set({ 'x', 'o' }, 'af', function()
   require('nvim-treesitter-textobjects.select').select_textobject(
     '@function.outer',
@@ -78,6 +78,32 @@ vim.keymap.set({ 'x', 'o' }, 'ic', function()
     'textobjects'
   )
 end, { desc = 'Inside class' })
+
+vim.keymap.set({ 'x', 'o' }, 'ao', function()
+  require('nvim-treesitter-textobjects.select').select_textobject(
+    '@loop.outer',
+    'textobjects'
+  )
+end, { desc = 'Around loop' })
+vim.keymap.set({ 'x', 'o' }, 'io', function()
+  require('nvim-treesitter-textobjects.select').select_textobject(
+    '@loop.inner',
+    'textobjects'
+  )
+end, { desc = 'Inside loop' })
+
+vim.keymap.set({ 'x', 'o' }, 'ak', function()
+  require('nvim-treesitter-textobjects.select').select_textobject(
+    '@conditional.outer',
+    'textobjects'
+  )
+end, { desc = 'Around conditional' })
+vim.keymap.set({ 'x', 'o' }, 'ik', function()
+  require('nvim-treesitter-textobjects.select').select_textobject(
+    '@conditional.inner',
+    'textobjects'
+  )
+end, { desc = 'Inside conditional' })
 
 -- Block selections
 vim.keymap.set({ 'x', 'o' }, 'al', function()
