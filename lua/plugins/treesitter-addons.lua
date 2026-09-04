@@ -173,7 +173,6 @@ vim.keymap.set({ 'n', 'x', 'o' }, '[L', function()
 end, { desc = 'Previous block end' })
 
 -- Loops
--- You can also pass a list to group multiple queries.
 vim.keymap.set({ 'n', 'x', 'o' }, ']o', function()
   require('nvim-treesitter-textobjects.move').goto_next_start(
     { '@loop.inner', '@loop.outer' },
@@ -200,26 +199,25 @@ vim.keymap.set({ 'n', 'x', 'o' }, '[O', function()
 end, { desc = 'Previous loop end' })
 
 -- Conditionals
--- You can also pass a list to group multiple queries.
-vim.keymap.set({ 'n', 'x', 'o' }, ']c', function()
+vim.keymap.set({ 'n', 'x', 'o' }, ']k', function()
   require('nvim-treesitter-textobjects.move').goto_next_start(
     { '@conditional.inner', '@conditional.outer' },
     'textobjects'
   )
 end, { desc = 'Next conditional start' })
-vim.keymap.set({ 'n', 'x', 'o' }, ']C', function()
+vim.keymap.set({ 'n', 'x', 'o' }, ']K', function()
   require('nvim-treesitter-textobjects.move').goto_next_end(
     { '@conditional.inner', '@conditional.outer' },
     'textobjects'
   )
 end, { desc = 'Next conditional end' })
-vim.keymap.set({ 'n', 'x', 'o' }, '[c', function()
+vim.keymap.set({ 'n', 'x', 'o' }, '[k', function()
   require('nvim-treesitter-textobjects.move').goto_previous_start(
     { '@conditional.inner', '@conditional.outer' },
     'textobjects'
   )
 end, { desc = 'Previous conditional start' })
-vim.keymap.set({ 'n', 'x', 'o' }, '[C', function()
+vim.keymap.set({ 'n', 'x', 'o' }, '[K', function()
   require('nvim-treesitter-textobjects.move').goto_previous_end(
     { '@conditional.inner', '@conditional.outer' },
     'textobjects'

@@ -48,12 +48,6 @@ vim.pack.add {
   -- lualine
   'https://github.com/nvim-lualine/lualine.nvim',
 
-  -- multicursor
-  {
-    src = 'https://github.com/jake-stewart/multicursor.nvim',
-    version = '1.0',
-  },
-
   -- oil
   'https://github.com/stevearc/oil.nvim',
 
@@ -101,9 +95,20 @@ vim.pack.add {
 -- Make sure snacks-nvim loads first
 require 'plugins.snacks-nvim'
 
+-- Load multicursor only if nvim-0.13
+if vim.fn.has 'nvim-0.13.0' == 0 then
+  vim.pack.add {
+    -- multicursor
+    {
+      src = 'https://github.com/jake-stewart/multicursor.nvim',
+      version = '1.0',
+    },
+  }
+  require 'plugins.multicursor'
+end
+
 require 'plugins.colorschemes'
 require 'plugins.lualine'
-require 'plugins.multicursor'
 require 'plugins.oil'
 require 'plugins.others'
 require 'plugins.picker'

@@ -234,3 +234,55 @@ vim.keymap.set(
   ':vimgrep <C-R><C-W> **/*',
   { desc = 'Find string using vimgrep' }
 )
+
+-- For nvim 0.13
+if vim.fn.has 'nvim-0.13.0' == 1 then
+  -- Multicursors
+
+  -- Put adding cursor in M-q to be consistent with the
+  -- other keybinds
+  vim.keymap.set('n', '<M-q>', 'Q', { desc = 'Add cursor' })
+
+  -- Clear multicursors without using C-L which we already have
+  -- for switching between windows...
+  local function clear_test()
+    vim.api.nvim_buf_clear_namespace(
+      0,
+      vim.api.nvim_create_namespace 'nvim.multicursor',
+      0,
+      -1
+    )
+  end
+
+  vim.keymap.set('n', '<M-l>', function()
+    clear_test()
+  end, { desc = 'Clear multicursors' })
+
+  -- Add multicursor here and jump to next or previous match of word
+  -- under cursor
+  vim.keymap.set(
+    'n',
+    '<M-n>',
+    'Q*:noh<ESC>',
+    { desc = 'Cursor and next match' }
+  )
+  vim.keymap.set(
+    'n',
+    '<M-p>',
+    'Q#:noh<ESC>',
+    { desc = 'Cursor and previous match' }
+  )
+  vim.keymap.set(
+    'n',
+    '<M-N>',
+    '*:noh<ESC>1Q<C-O>',
+    { desc = 'Cursor on all matches ' }
+  )
+
+  -- Add multicursor here and move up or down
+  vim.keymap.set('n', '<M-j>', 'Qj', { desc = 'Cursor and down' })
+  vim.keymap.set('n', '<M-k>', 'Qk', { desc = 'Cursor and up' })
+
+  -- Follow toggle
+  vim.keymap.set('n', '<M-f>', 'q=', { desc = 'Cursor toggle follow' })
+end
