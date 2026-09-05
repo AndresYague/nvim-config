@@ -47,6 +47,11 @@ vim.pack.add {
 
   -- lualine
   'https://github.com/nvim-lualine/lualine.nvim',
+  {
+    src = 'https://github.com/justinhj/battery.nvim',
+    version = 'main',
+  },
+
 
   -- oil
   'https://github.com/stevearc/oil.nvim',

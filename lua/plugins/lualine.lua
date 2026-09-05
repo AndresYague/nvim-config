@@ -1,3 +1,13 @@
+require('battery').setup {
+  update_rate_seconds = 60,
+  show_status_when_no_battery = false,
+  show_plugged_icon = true,
+  show_unplugged_icon = true,
+  show_percent = true,
+  vertical_icons = false,
+  multiple_battery_selection = 0,
+}
+
 require('lualine').setup {
   options = {
     icons_enabled = true,
@@ -116,6 +126,8 @@ require('lualine').setup {
         return records
       end,
       function()
+        -- Needs to be called inside of a function because we are lazy-loading
+        -- the plugin
         return require('remote-sshfs.statusline').status()
       end,
     },
@@ -131,7 +143,10 @@ require('lualine').setup {
       'filetype',
     },
     lualine_y = { 'selectioncount', 'progress', 'location' },
-    lualine_z = { { 'datetime', style = '%a %d-%m-%y %H:%M' } },
+    lualine_z = {
+      { 'datetime', style = '%a %d-%m-%y %H:%M' },
+      require('battery').get_status_line,
+    },
   },
   inactive_sections = {},
   tabline = {},
