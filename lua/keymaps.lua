@@ -235,6 +235,43 @@ vim.keymap.set(
   { desc = 'Find string using vimgrep' }
 )
 
+-- count: vim.v.count1
+-- When doing a linewise "put" command, keep the column
+vim.keymap.set('n', 'p', function()
+  -- Save the old position to restore it
+  local pos = vim.api.nvim_win_get_cursor(0)
+  local reg = vim.v.register
+
+  vim.api.nvim_feedkeys(
+    vim.v.count1 .. '"' .. reg .. 'p',
+    'nx',
+    false
+  )
+
+  -- In this case it is a linewise put command
+  if vim.fn.getregtype(reg) == 'V' then
+    vim.api.nvim_win_set_cursor(0, { pos[1] + 1, pos[2] })
+  end
+end)
+
+vim.keymap.set('n', 'P', function()
+  -- Save the old position to restore it
+  local pos = vim.api.nvim_win_get_cursor(0)
+  local reg = vim.v.register
+
+  vim.api.nvim_feedkeys(
+    vim.v.count1 .. '"' .. reg .. 'P',
+    'nx',
+    false
+  )
+
+  -- In this case it is a linewise put command
+  -- because it is P, we actually just stay in the same position
+  if vim.fn.getregtype(reg) == 'V' then
+    vim.api.nvim_win_set_cursor(0, pos)
+  end
+end)
+
 -- For nvim 0.13
 if vim.fn.has 'nvim-0.13.0' == 1 then
   -- Multicursors
