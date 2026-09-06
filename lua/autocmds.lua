@@ -26,7 +26,6 @@ end
 vim.api.nvim_create_autocmd('VimEnter', {
   group = vim.api.nvim_create_augroup('Remove terminals', { clear = true }),
   callback = function()
-
     -- Use vim.schedule to give buffers a chance to load
     vim.schedule(function()
       for _, buf in ipairs(vim.api.nvim_list_bufs()) do
@@ -38,16 +37,34 @@ vim.api.nvim_create_autocmd('VimEnter', {
   end,
 })
 
--- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
---  See `:help vim.hl.on_yank()`
-vim.api.nvim_create_autocmd('TextYankPost', {
-  desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
-  callback = function()
-    vim.hl.on_yank()
-  end,
-})
+-- Highlight when yanking or putting (copying or pasting) text
+-- before nvim 0.13.0 there is only on_yank
+if vim.fn.has 'nvim-0.13.0' == 1 then
+  local highlight_put_yank =
+    vim.api.nvim_create_augroup('highlight-put-yank', { clear = true })
+  vim.api.nvim_create_autocmd('TextYankPost', {
+    desc = 'Highlight when yanking (copying) text',
+    group = highlight_put_yank,
+    callback = function()
+      vim.hl.hl_op()
+    end,
+  })
+  vim.api.nvim_create_autocmd('TextPutPost', {
+    desc = 'Highlight when putting text',
+    group = highlight_put_yank,
+    callback = function()
+      vim.hl.hl_op()
+    end,
+  })
+else
+  vim.api.nvim_create_autocmd('TextYankPost', {
+    desc = 'Highlight when yanking (copying) text',
+    group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
+    callback = function()
+      vim.hl.on_yank()
+    end,
+  })
+end
 
 -- fugitive keybinds with autocmd
 local fugitive_group = vim.api.nvim_create_augroup('fugitive-commands', {
@@ -173,3 +190,69 @@ vim.api.nvim_create_autocmd('RecordingLeave', {
     end
   end,
 })
+
+-- When doing a linewise "put" command, keep the column like in emacs. Prefer
+-- the autocmd, but TextPutPre and TextPutPost does not exist before 0.13
+if vim.fn.has 'nvim-0.13.0' == 1 then
+  local put_table = {
+    put_position = { 0, 0 },
+    put_register = '',
+    put_augroup = vim.api.nvim_create_augroup('PutAugroup', { clear = true }),
+  }
+  vim.api.nvim_create_autocmd('TextPutPre', {
+    group = put_table.put_augroup,
+    callback = function()
+      put_table.put_register = vim.v.register
+      if vim.fn.getregtype(put_table.put_register) == 'V' then
+        put_table.put_position = vim.api.nvim_win_get_cursor(0)
+      end
+    end,
+  })
+  vim.api.nvim_create_autocmd('TextPutPost', {
+    group = put_table.put_augroup,
+    callback = function()
+      local operator = vim.v.event.operator
+      vim.print(operator)
+      if vim.fn.getregtype(put_table.put_register) == 'V' then
+        if operator == 'p' then
+          vim.api.nvim_win_set_cursor(
+            0,
+            { put_table.put_position[1] + 1, put_table.put_position[2] }
+          )
+        else
+          vim.api.nvim_win_set_cursor(
+            0,
+            { put_table.put_position[1], put_table.put_position[2] }
+          )
+        end
+      end
+    end,
+  })
+else
+  vim.keymap.set('n', 'p', function()
+    -- Save the old position to restore it
+    local pos = vim.api.nvim_win_get_cursor(0)
+    local reg = vim.v.register
+
+    vim.api.nvim_feedkeys(vim.v.count1 .. '"' .. reg .. 'p', 'nx', false)
+
+    -- In this case it is a linewise put command
+    if vim.fn.getregtype(reg) == 'V' then
+      vim.api.nvim_win_set_cursor(0, { pos[1] + 1, pos[2] })
+    end
+  end)
+
+  vim.keymap.set('n', 'P', function()
+    -- Save the old position to restore it
+    local pos = vim.api.nvim_win_get_cursor(0)
+    local reg = vim.v.register
+
+    vim.api.nvim_feedkeys(vim.v.count1 .. '"' .. reg .. 'P', 'nx', false)
+
+    -- In this case it is a linewise put command
+    -- because it is P, we actually just stay in the same position
+    if vim.fn.getregtype(reg) == 'V' then
+      vim.api.nvim_win_set_cursor(0, pos)
+    end
+  end)
+end

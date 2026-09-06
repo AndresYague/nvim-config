@@ -235,43 +235,6 @@ vim.keymap.set(
   { desc = 'Find string using vimgrep' }
 )
 
--- count: vim.v.count1
--- When doing a linewise "put" command, keep the column
-vim.keymap.set('n', 'p', function()
-  -- Save the old position to restore it
-  local pos = vim.api.nvim_win_get_cursor(0)
-  local reg = vim.v.register
-
-  vim.api.nvim_feedkeys(
-    vim.v.count1 .. '"' .. reg .. 'p',
-    'nx',
-    false
-  )
-
-  -- In this case it is a linewise put command
-  if vim.fn.getregtype(reg) == 'V' then
-    vim.api.nvim_win_set_cursor(0, { pos[1] + 1, pos[2] })
-  end
-end)
-
-vim.keymap.set('n', 'P', function()
-  -- Save the old position to restore it
-  local pos = vim.api.nvim_win_get_cursor(0)
-  local reg = vim.v.register
-
-  vim.api.nvim_feedkeys(
-    vim.v.count1 .. '"' .. reg .. 'P',
-    'nx',
-    false
-  )
-
-  -- In this case it is a linewise put command
-  -- because it is P, we actually just stay in the same position
-  if vim.fn.getregtype(reg) == 'V' then
-    vim.api.nvim_win_set_cursor(0, pos)
-  end
-end)
-
 -- For nvim 0.13
 if vim.fn.has 'nvim-0.13.0' == 1 then
   -- Multicursors
@@ -282,17 +245,13 @@ if vim.fn.has 'nvim-0.13.0' == 1 then
 
   -- Clear multicursors without using C-L which we already have
   -- for switching between windows...
-  local function clear_test()
+  vim.keymap.set('n', '<M-l>', function()
     vim.api.nvim_buf_clear_namespace(
       0,
       vim.api.nvim_create_namespace 'nvim.multicursor',
       0,
       -1
     )
-  end
-
-  vim.keymap.set('n', '<M-l>', function()
-    clear_test()
   end, { desc = 'Clear multicursors' })
 
   -- Add multicursor here and jump to next or previous match of word
