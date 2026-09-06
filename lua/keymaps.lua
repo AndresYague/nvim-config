@@ -256,24 +256,18 @@ if vim.fn.has 'nvim-0.13.0' == 1 then
 
   -- Add multicursor here and jump to next or previous match of word
   -- under cursor
-  vim.keymap.set(
-    'n',
-    '<M-n>',
-    'Q*:noh<ESC>',
-    { desc = 'Cursor and next match' }
-  )
-  vim.keymap.set(
-    'n',
-    '<M-p>',
-    'Q#:noh<ESC>',
-    { desc = 'Cursor and previous match' }
-  )
-  vim.keymap.set(
-    'n',
-    '<M-N>',
-    '*:noh<ESC>1Q<C-O>',
-    { desc = 'Cursor on all matches ' }
-  )
+  vim.keymap.set('n', '<M-n>', function()
+    vim.api.nvim_feedkeys('Q*', 'nx', false)
+    vim.cmd.nohlsearch()
+  end, { desc = 'Cursor and next match' })
+  vim.keymap.set('n', '<M-p>', function()
+    vim.api.nvim_feedkeys('Q#', 'nx', false)
+    vim.cmd.nohlsearch()
+  end, { desc = 'Cursor and previous match' })
+  vim.keymap.set('n', '<M-N>', function()
+    vim.api.nvim_feedkeys('*1Q<C-O>', 'nx', true)
+    vim.cmd.nohlsearch()
+  end, { desc = 'Cursor on all matches ' })
 
   -- Add multicursor here and move up or down
   vim.keymap.set('n', '<M-j>', 'Qj', { desc = 'Cursor and down' })
