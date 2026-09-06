@@ -138,7 +138,12 @@ vim.cmd.packadd { args = { 'nvim.undotree' }, bang = true }
 vim.cmd.packadd { args = { 'termdebug' }, bang = true }
 vim.cmd.packadd { args = { 'nvim.difftool' }, bang = true }
 
--- Slow plugins are activated after doing nothing for updatetime (250 ms)
+-- Slow plugins are activated after doing nothing for the updatetime here
+-- Restores to the previous updatetime after firing
+local use_updatetime = 250
+
+local save_updatetime = vim.o.updatetime
+vim.o.updatetime = use_updatetime
 vim.api.nvim_create_autocmd('CursorHold', {
   once = true,
   callback = function()
@@ -179,5 +184,7 @@ vim.api.nvim_create_autocmd('CursorHold', {
     require 'plugins.nvim-cmp'
     require 'plugins.orgmode'
     require 'plugins.remote-sshfs'
+
+    vim.o.updatetime = save_updatetime
   end,
 })
