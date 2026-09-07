@@ -114,9 +114,8 @@ local find_plugins_in_file = function()
         if node:type() == 'string_content' then
           if is_source then
             table.insert(plugin_names, plug_name_parse_TS(name))
-          else
-            is_source = true
           end
+          is_source = true
         end
       end
     end

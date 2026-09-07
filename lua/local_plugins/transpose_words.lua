@@ -1,10 +1,12 @@
----@param word string word to find index
+-- Find beginning and end indices of the word
+---@param word string word to find index of
 ---@param line string line to find word in
----@param col integer?,integer? cursor index 1-indexed
+---@param col integer? cursor index 1-indexed
+---@return integer?, integer?
 local function get_word_index(word, line, col)
-  -- Find where the current word is
   local find_b, find_e = assert(line:find(word, 1, true))
   local w_index_b, w_index_e = find_b, find_e
+  col = col or 1
 
   local i = 0
   while find_b < col do
