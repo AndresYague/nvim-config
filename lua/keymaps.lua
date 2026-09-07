@@ -1,5 +1,17 @@
 -- Clear highlights on search when pressing <Esc> in normal mode
-vim.keymap.set('n', '<Esc>', vim.cmd.nohlsearch)
+vim.keymap.set('n', '<Esc>', function()
+  -- Remove the multicursor only once hlsearch is off
+  if vim.fn.has 'nvim-0.13.0' == 1 and vim.v.hlsearch == 0 then
+    vim.api.nvim_buf_clear_namespace(
+      0,
+      vim.api.nvim_create_namespace 'nvim.multicursor',
+      0,
+      -1
+    )
+  end
+
+  vim.cmd.nohlsearch()
+end, { desc = 'Remove multicursors or searhc highlight' })
 
 -- Paste over selections without losing initially yanked text
 vim.keymap.set(
@@ -245,7 +257,7 @@ if vim.fn.has 'nvim-0.13.0' == 1 then
 
   -- Clear multicursors without using C-L which we already have
   -- for switching between windows...
-  vim.keymap.set('n', '<M-l>', function()
+  vim.keymap.set('n', '<M-c>', function()
     vim.api.nvim_buf_clear_namespace(
       0,
       vim.api.nvim_create_namespace 'nvim.multicursor',
@@ -311,8 +323,63 @@ if vim.fn.has 'nvim-0.13.0' == 1 then
   end, { desc = 'Cursor on match' })
 
   -- Add multicursor here and move up or down
-  vim.keymap.set('n', '<M-j>', 'Qj', { desc = 'Cursor and down' })
-  vim.keymap.set('n', '<M-k>', 'Qk', { desc = 'Cursor and up' })
+  -- Make sure we skip blank space
+  vim.keymap.set('n', '<M-j>', function()
+    local pos = vim.api.nvim_win_get_cursor(0)
+    local nlines = 1
+    while true do
+      local lines = vim.api.nvim_buf_get_lines(
+        0,
+        pos[1] + nlines - 2,
+        pos[1] + nlines,
+        false
+      )
+
+      -- End of file
+      if lines == nil then
+        break
+      end
+
+      -- Check if the line can hold that cursor
+      if #lines[2] >= pos[2] then
+        vim.api.nvim_feedkeys('2q=Q' .. nlines .. 'j', 'n', false)
+        return
+      end
+
+      -- Increase nlines
+      nlines = nlines + 1
+    end
+  end, { desc = 'Cursor and down' })
+  vim.keymap.set('n', '<M-k>', function()
+    local pos = vim.api.nvim_win_get_cursor(0)
+    local nlines = 1
+    while true do
+      local lines = vim.api.nvim_buf_get_lines(
+        0,
+        pos[1] - nlines - 1,
+        pos[1] - nlines,
+        false
+      )
+
+      -- End of file
+      if lines == nil then
+        break
+      end
+
+      -- Check if the line can hold that cursor
+      if #lines[1] >= pos[2] then
+        vim.api.nvim_feedkeys('2q=Q' .. nlines .. 'k', 'n', false)
+        return
+      end
+
+      -- Increase nlines
+      nlines = nlines + 1
+    end
+  end, { desc = 'Cursor and up' })
+
+  -- Cycle main cursor with h and l, make sure to turn off follow-mode
+  vim.keymap.set('n', '<M-l>', '2q=]C', { desc = 'Cursor and down' })
+  vim.keymap.set('n', '<M-h>', '2q=[C', { desc = 'Cursor and up' })
 
   -- Follow toggle
   vim.keymap.set('n', '<M-f>', 'q=', { desc = 'Cursor toggle follow' })
