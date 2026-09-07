@@ -163,9 +163,8 @@ vim.api.nvim_create_autocmd({ 'BufUnload', 'BufWinLeave' }, {
 local register_keymap = function(letter)
   vim.keymap.set('n', '<leader>m' .. letter, function()
     vim.notify(
-      vim.fn.getreg(letter),
-      vim.log.levels.INFO,
-      { title = 'Register ' .. letter .. ': ' }
+      'Register ' .. letter .. ': ' .. vim.fn.getreg(letter),
+      vim.log.levels.INFO
     )
   end, { desc = 'Echo @' .. letter })
 end
@@ -185,7 +184,7 @@ vim.api.nvim_create_autocmd('RecordingLeave', {
   group = register_aug,
   callback = function()
     local letter = vim.fn.reg_recording()
-    if vim.fn.getreg(letter):len() > 0 then
+    if #vim.v.event.regcontents > 0 then
       register_keymap(letter)
     end
   end,

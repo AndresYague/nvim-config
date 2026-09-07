@@ -216,7 +216,7 @@ vim.keymap.set('n', '<leader>m<space>', function()
   ('abcdefghijklmnopqrstuvwxyz'):gsub('.', function(letter)
     if vim.fn.getreg(letter):len() > 0 then
       vim.fn.setreg(letter, '')
-      vim.keymap.del('n', '<leader>m' .. letter)
+      pcall(vim.keymap.del, 'n', '<leader>m' .. letter)
     end
   end)
 
