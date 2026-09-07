@@ -7,8 +7,8 @@ require 'options'
 -- Load keymaps they have to come before loading which-key
 require 'keymaps'
 
--- Add all plugins
-require 'packages'
-
 -- Load autocommands
 require 'autocmds'
+
+-- Add all plugins
+require 'packages'

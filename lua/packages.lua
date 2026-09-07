@@ -99,7 +99,7 @@ vim.pack.add {
 -- Make sure snacks-nvim loads first
 require 'plugins.snacks-nvim'
 
--- Load multicursor only if nvim-0.13
+-- Load multicursor only if below nvim-0.13
 if vim.fn.has 'nvim-0.13.0' == 0 then
   vim.pack.add {
     -- multicursor
@@ -131,6 +131,7 @@ require 'local_plugins.local_diff'
 require 'local_plugins.mng_colorschemes'
 require 'local_plugins.mng_plugs'
 require 'local_plugins.transpose_words'
+require 'local_plugins.multicursor'
 
 -- Activate nvim plugins
 vim.cmd.packadd { args = { 'nvim.undotree' }, bang = true }

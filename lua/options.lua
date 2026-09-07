@@ -90,7 +90,3 @@ vim.o.confirm = true
 
 -- Set conceallevel
 vim.o.conceallevel = 2
-
-if vim.fn.has 'nvim-0.13.0' == 1 then
-  vim.api.nvim_set_hl(0, 'MCursor', { reverse = true })
-end
