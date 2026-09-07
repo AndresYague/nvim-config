@@ -52,7 +52,6 @@ vim.pack.add {
     version = 'main',
   },
 
-
   -- oil
   'https://github.com/stevearc/oil.nvim',
 

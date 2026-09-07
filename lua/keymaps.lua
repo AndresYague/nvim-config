@@ -241,7 +241,7 @@ if vim.fn.has 'nvim-0.13.0' == 1 then
 
   -- Put adding cursor in M-q to be consistent with the
   -- other keybinds
-  vim.keymap.set('n', '<M-q>', 'Q', { desc = 'Add cursor' })
+  vim.keymap.set({ 'n', 'x' }, '<M-q>', 'Q', { desc = 'Add cursor' })
 
   -- Clear multicursors without using C-L which we already have
   -- for switching between windows...
@@ -265,9 +265,50 @@ if vim.fn.has 'nvim-0.13.0' == 1 then
     vim.cmd.nohlsearch()
   end, { desc = 'Cursor and previous match' })
   vim.keymap.set('n', '<M-N>', function()
-    vim.api.nvim_feedkeys('*1Q<C-O>', 'nx', true)
+    local put_mcs =
+      vim.api.nvim_replace_termcodes('*1Q<C-O>q=', true, false, true)
+    vim.api.nvim_feedkeys(put_mcs, 'nx', false)
     vim.cmd.nohlsearch()
   end, { desc = 'Cursor on all matches ' })
+
+  -- Match in visual selection
+  vim.keymap.set('x', '<M-m>', function()
+    -- Ask for match to user
+    local match = vim.fn.input { prompt = 'Match: ' }
+
+    local mode = vim.fn.mode()
+    local region_pos =
+      vim.fn.getregionpos(vim.fn.getpos 'v', vim.fn.getpos '.', { type = mode })
+
+    -- Before anything else, we have to exit visual mode
+    local escape_to_normal =
+      vim.api.nvim_replace_termcodes('<C-\\><C-N>', true, false, true)
+    vim.api.nvim_feedkeys(escape_to_normal, 'nx', false)
+
+    for _, reg_pos in ipairs(region_pos) do
+      -- Grab the text region
+      local region = vim.fn.getregion(reg_pos[1], reg_pos[2], { type = mode })
+
+      -- Search for matches
+      local idx = region[1]:find(match, 1, true)
+      while idx do
+        -- Define the position for the multicursor from the correct row and
+        -- column
+        local pos = { reg_pos[1][2], reg_pos[1][3] - 2 + idx }
+
+        -- Add the cursor
+        vim.api.nvim_mcursor(0, pos)
+
+        -- Move the main cursor to this position
+        vim.api.nvim_win_set_cursor(0, pos)
+        idx = region[1]:find(match, idx + 1, true)
+      end
+    end
+
+    -- Put in follow mode, this will effectively eliminate the last cursor
+    -- because the main cursor will be on top.
+    vim.api.nvim_feedkeys('q=', 'n', false)
+  end, { desc = 'Cursor on match' })
 
   -- Add multicursor here and move up or down
   vim.keymap.set('n', '<M-j>', 'Qj', { desc = 'Cursor and down' })
