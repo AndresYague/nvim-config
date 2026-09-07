@@ -1,13 +1,17 @@
+local function clear_mc()
+  vim.api.nvim_buf_clear_namespace(
+    0,
+    vim.api.nvim_create_namespace 'nvim.multicursor',
+    0,
+    -1
+  )
+end
+
 -- Clear highlights on search when pressing <Esc> in normal mode
 vim.keymap.set('n', '<Esc>', function()
   -- Remove the multicursor only once hlsearch is off
   if vim.fn.has 'nvim-0.13.0' == 1 and vim.v.hlsearch == 0 then
-    vim.api.nvim_buf_clear_namespace(
-      0,
-      vim.api.nvim_create_namespace 'nvim.multicursor',
-      0,
-      -1
-    )
+    clear_mc()
   end
 
   vim.cmd.nohlsearch()
@@ -251,29 +255,49 @@ vim.keymap.set(
 if vim.fn.has 'nvim-0.13.0' == 1 then
   -- Multicursors
 
-  -- Put adding cursor in M-q to be consistent with the
-  -- other keybinds
-  vim.keymap.set({ 'n', 'x' }, '<M-q>', 'Q', { desc = 'Add cursor' })
+  -- Put adding cursor in M-q to be consistent with the other keybinds
+  -- When removing a cursor, jump to the next one.
+  vim.keymap.set({ 'n', 'x' }, '<M-q>', function()
+    local cpos = vim.api.nvim_win_get_cursor(0)
+    local mc_space = vim.api.nvim_create_namespace 'nvim.multicursor'
+
+    -- Look for extmarks from the cursor position
+    local mc_list = vim.api.nvim_buf_get_extmarks(
+      0,
+      mc_space,
+      { cpos[1] - 1, cpos[2] },
+      { cpos[1] - 1, cpos[2] + 1 },
+      {}
+    )
+
+    if #mc_list == 0 then
+      -- No cursor to remove, just toggle
+      vim.api.nvim_feedkeys('Q', 'n', false)
+    else
+      -- Move the cursor and remove the previous one
+      local mc = mc_list[1]
+      if cpos[1] - 1 == mc[2] and cpos[2] == mc[3] then
+        vim.api.nvim_feedkeys(']C', 'nx', false)
+        vim.api.nvim_buf_del_extmark(0, mc_space, mc[1])
+      end
+    end
+  end, { desc = 'Add cursor' })
 
   -- Clear multicursors without using C-L which we already have
   -- for switching between windows...
   vim.keymap.set('n', '<M-c>', function()
-    vim.api.nvim_buf_clear_namespace(
-      0,
-      vim.api.nvim_create_namespace 'nvim.multicursor',
-      0,
-      -1
-    )
+    clear_mc()
   end, { desc = 'Clear multicursors' })
 
   -- Add multicursor here and jump to next or previous match of word
-  -- under cursor
+  -- under cursor. Position initial cursor at the start of the word as well
+  -- with lb
   vim.keymap.set('n', '<M-n>', function()
-    vim.api.nvim_feedkeys('Q*', 'nx', false)
+    vim.api.nvim_feedkeys('lbQ*', 'nx', false)
     vim.cmd.nohlsearch()
   end, { desc = 'Cursor and next match' })
   vim.keymap.set('n', '<M-p>', function()
-    vim.api.nvim_feedkeys('Q#', 'nx', false)
+    vim.api.nvim_feedkeys('lbQ#', 'nx', false)
     vim.cmd.nohlsearch()
   end, { desc = 'Cursor and previous match' })
   vim.keymap.set('n', '<M-N>', function()
