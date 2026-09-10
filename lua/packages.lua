@@ -131,7 +131,7 @@ require 'local_plugins.local_diff'
 require 'local_plugins.mng_colorschemes'
 require 'local_plugins.mng_plugs'
 require 'local_plugins.transpose_words'
-require 'local_plugins.multicursor'
+require 'local_plugins.multicursor.multicursor'
 
 -- Activate nvim plugins
 vim.cmd.packadd { args = { 'nvim.undotree' }, bang = true }

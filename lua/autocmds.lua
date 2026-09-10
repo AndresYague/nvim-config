@@ -198,6 +198,7 @@ if vim.fn.has 'nvim-0.13.0' == 1 then
     put_register = '',
     put_augroup = vim.api.nvim_create_augroup('PutAugroup', { clear = true }),
   }
+  -- Before putting the text, remember where we were if in a linewise operation
   vim.api.nvim_create_autocmd('TextPutPre', {
     group = put_table.put_augroup,
     callback = function()
@@ -207,6 +208,7 @@ if vim.fn.has 'nvim-0.13.0' == 1 then
       end
     end,
   })
+  -- After putting the text, move cursor to the remembered column
   vim.api.nvim_create_autocmd('TextPutPost', {
     group = put_table.put_augroup,
     callback = function()
@@ -214,11 +216,13 @@ if vim.fn.has 'nvim-0.13.0' == 1 then
       vim.print(operator)
       if vim.fn.getregtype(put_table.put_register) == 'V' then
         if operator == 'p' then
+          -- Go one line down
           vim.api.nvim_win_set_cursor(
             0,
             { put_table.put_position[1] + 1, put_table.put_position[2] }
           )
         else
+          -- If the operator was P, we just stay in the same position
           vim.api.nvim_win_set_cursor(
             0,
             { put_table.put_position[1], put_table.put_position[2] }
