@@ -1,4 +1,4 @@
-M = {}
+local M = {}
 
 -- Add gutter visual info on where there are new cursors
 

@@ -63,6 +63,12 @@ Snacks.setup {
           action = ':Org agenda a',
         },
         {
+          icon = '󱁉 ',
+          key = 'p',
+          desc = 'Org roam find node',
+          action = ":lua require('org-roam').api.find_node()",
+        },
+        {
           icon = ' ',
           key = 't',
           desc = 'Orgmode Todo',

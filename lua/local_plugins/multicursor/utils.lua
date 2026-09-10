@@ -1,4 +1,4 @@
-M = {}
+local M = {}
 
 local gutter = require 'local_plugins.multicursor.gutter'
 
