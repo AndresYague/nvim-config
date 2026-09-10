@@ -37,7 +37,6 @@ require('no-neck-pain').setup {
   },
 }
 
-
 require('nvim-autopairs').setup {}
 
 require('todo-comments').setup {}
@@ -73,8 +72,7 @@ vim.keymap.set('n', '<leader>qq', function()
     end
   end
 
-  -- Save the session before quitting
-  require('persistence').save()
+  -- Quit all
   vim.cmd.qa()
 end, { desc = 'Quit current session' })
 -- load the session for the current directory
