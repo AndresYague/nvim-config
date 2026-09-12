@@ -33,6 +33,9 @@ end
 -- Swap the current word with the next one. Do so by looking at the closest
 -- word in front of the cursor and behind the cursor
 local function swap_words()
+  -- Cursor position before changes
+  local cpos = vim.api.nvim_win_get_cursor(0)
+
   -- Line to perform operations in
   local line = vim.api.nvim_get_current_line()
 
@@ -43,9 +46,6 @@ local function swap_words()
   if #cword == 0 then
     return
   end
-
-  -- Get the current cursor column before moving the cursor below
-  local col = vim.api.nvim_win_get_cursor(0)[2] + 1
 
   -- Move the cursor to the next word and get it as well
   vim.api.nvim_feedkeys('w', 'nx', false)
@@ -59,7 +59,7 @@ local function swap_words()
   -- Now change the words
 
   -- Find the words indices
-  local b1, e1 = get_word_index(cword, line, col)
+  local b1, e1 = get_word_index(cword, line, cpos[2] + 1)
   local b2, e2 =
     get_word_index(nword, line, vim.api.nvim_win_get_cursor(0)[2] + 1)
 
@@ -75,6 +75,9 @@ local function swap_words()
     .. line:sub(e2 + 1)
 
   vim.api.nvim_set_current_line(line)
+
+  -- Return the cursor position to the starting point
+  vim.api.nvim_win_set_cursor(0, cpos)
 end
 
 vim.keymap.set('n', '<M-t>', swap_words)
