@@ -22,7 +22,6 @@ vim.api.nvim_set_hl(0, 'MCursor', { reverse = true })
 -- Put adding cursor in M-q to be consistent with the other keybinds
 -- When removing a cursor, jump to the next one.
 vim.keymap.set({ 'n', 'x' }, '<M-q>', function()
-  local cpos = vim.api.nvim_win_get_cursor(0)
   local mc_space = vim.api.nvim_create_namespace 'nvim.multicursor'
   local mc_list = utils.mc_below_cursor()
 
@@ -30,13 +29,10 @@ vim.keymap.set({ 'n', 'x' }, '<M-q>', function()
     -- No cursor to remove, just toggle
     vim.api.nvim_feedkeys('Q', 'nx', false)
   else
-    -- Move the cursor and remove the previous one
-    local mc = mc_list[1]
-    if cpos[1] - 1 == mc[2] and cpos[2] == mc[3] then
-      vim.api.nvim_feedkeys(']C', 'nx', false)
-      vim.api.nvim_buf_del_extmark(0, mc_space, mc[1])
-      gutter.clear_gutter()
-    end
+    -- Remove extmark and move cursor to closest remaining cursor
+    vim.api.nvim_buf_del_extmark(0, mc_space, mc_list[1][1])
+    utils.move_cursor_to_nearest_mc()
+    gutter.clear_gutter()
   end
 
   gutter.add_gutter()
@@ -70,49 +66,23 @@ vim.keymap.set('n', '<M-p>', function()
   gutter.add_gutter()
 end, { desc = 'Cursor and previous match' })
 vim.keymap.set('n', '<M-N>', function()
-  local put_mcs =
-    vim.api.nvim_replace_termcodes('*1Q<C-O>q=', true, false, true)
-  vim.api.nvim_feedkeys(put_mcs, 'nx', false)
+  vim.api.nvim_feedkeys('*1Q[Cq=', 'nx', false)
   vim.cmd.nohlsearch()
   gutter.add_gutter()
 end, { desc = 'Cursor on all matches ' })
 
 -- Match in visual selection
 vim.keymap.set('x', '<M-m>', function()
-  -- Ask for match to user
-  local match = vim.fn.input { prompt = 'Match: ' }
+  -- Ask for match to user, put it in the last-pattern register
+  vim.fn.setreg('/', vim.fn.escape(vim.fn.input { prompt = 'Match: ' }, '.\\'))
 
-  local mode = vim.fn.mode()
-  local region_pos =
-    vim.fn.getregionpos(vim.fn.getpos 'v', vim.fn.getpos '.', { type = mode })
+  -- Create the new cursors
+  vim.api.nvim_feedkeys('1Q', 'nx', false)
 
-  -- Before anything else, we have to exit visual mode
-  local escape_to_normal =
-    vim.api.nvim_replace_termcodes('<C-\\><C-N>', true, false, true)
-  vim.api.nvim_feedkeys(escape_to_normal, 'nx', false)
+  -- Move cursor without leaving trace
+  utils.move_cursor_to_nearest_mc()
 
-  for _, reg_pos in ipairs(region_pos) do
-    -- Grab the text region
-    local region = vim.fn.getregion(reg_pos[1], reg_pos[2], { type = mode })
-
-    -- Search for matches
-    local idx = region[1]:find(match, 1, true)
-    while idx do
-      -- Define the position for the multicursor from the correct row and
-      -- column
-      local pos = { reg_pos[1][2], reg_pos[1][3] - 2 + idx }
-
-      -- Add the cursor
-      vim.api.nvim_mcursor(0, pos)
-
-      -- Move the main cursor to this position
-      vim.api.nvim_win_set_cursor(0, pos)
-      idx = region[1]:find(match, idx + 1, true)
-    end
-  end
-
-  -- Put in follow mode, this will effectively eliminate the last cursor
-  -- because the main cursor will be on top.
+  -- Put them in follow mode
   vim.api.nvim_feedkeys('q=', 'nx', false)
   gutter.add_gutter()
 end, { desc = 'Cursor on match' })
