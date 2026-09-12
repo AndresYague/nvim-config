@@ -56,4 +56,27 @@ M.move_cursor_to_nearest_mc = function()
   end
 end
 
+---@alias match
+---| '*' # Go to next
+---| '#' # Go to previous
+
+-- Helper to jump to the next or previous match
+---@param jump_mode match
+---@return nil
+M.jump_to_match = function(jump_mode)
+  -- Save column before jump
+  local column = vim.api.nvim_win_get_cursor(0)[2]
+
+  if #M.mc_below_cursor() == 0 then
+    vim.api.nvim_feedkeys('2q=Q' .. jump_mode .. '1q=', 'nx', false)
+  else
+    vim.api.nvim_feedkeys('2q=' .. jump_mode .. '1q=', 'nx', false)
+  end
+
+  -- Set cursor back to the same column but different row
+  local row = vim.api.nvim_win_get_cursor(0)[1]
+  vim.api.nvim_win_set_cursor(0, {row, column})
+  vim.cmd.nohlsearch()
+end
+
 return M

@@ -20,7 +20,7 @@ end, { desc = 'Remove multicursors or search highlight' })
 vim.api.nvim_set_hl(0, 'MCursor', { reverse = true })
 
 -- Put adding cursor in M-q to be consistent with the other keybinds
--- When removing a cursor, jump to the next one.
+-- When removing a cursor, jump to the closest one.
 vim.keymap.set({ 'n', 'x' }, '<M-q>', function()
   local mc_space = vim.api.nvim_create_namespace 'nvim.multicursor'
   local mc_list = utils.mc_below_cursor()
@@ -48,25 +48,15 @@ end, { desc = 'Clear multicursors' })
 -- under cursor. Position initial cursor at the start of the word as well
 -- with lb
 vim.keymap.set('n', '<M-n>', function()
-  if #utils.mc_below_cursor() == 0 then
-    vim.api.nvim_feedkeys('lbQ*', 'nx', false)
-  else
-    vim.api.nvim_feedkeys('*', 'nx', false)
-  end
-  vim.cmd.nohlsearch()
+  utils.jump_to_match '*'
   gutter.add_gutter()
 end, { desc = 'Cursor and next match' })
 vim.keymap.set('n', '<M-p>', function()
-  if #utils.mc_below_cursor() == 0 then
-    vim.api.nvim_feedkeys('lbQ#', 'nx', false)
-  else
-    vim.api.nvim_feedkeys('#', 'nx', false)
-  end
-  vim.cmd.nohlsearch()
+  utils.jump_to_match '#'
   gutter.add_gutter()
 end, { desc = 'Cursor and previous match' })
 vim.keymap.set('n', '<M-N>', function()
-  vim.api.nvim_feedkeys('*1Q[Cq=', 'nx', false)
+  vim.api.nvim_feedkeys('2q=*1Q[C1q=', 'nx', false)
   vim.cmd.nohlsearch()
   gutter.add_gutter()
 end, { desc = 'Cursor on all matches ' })
@@ -103,7 +93,7 @@ vim.keymap.set('n', '<M-j>', function()
 
     -- Check if the line can hold that cursor
     if #lines[2] >= pos[2] then
-      vim.api.nvim_feedkeys('2q=Q' .. nlines .. 'j', 'nx', false)
+      vim.api.nvim_feedkeys('2q=Q' .. nlines .. 'j1q=', 'nx', false)
       gutter.add_gutter()
       return
     end
@@ -126,7 +116,7 @@ vim.keymap.set('n', '<M-k>', function()
 
     -- Check if the line can hold that cursor
     if #lines[1] >= pos[2] then
-      vim.api.nvim_feedkeys('2q=Q' .. nlines .. 'k', 'nx', false)
+      vim.api.nvim_feedkeys('2q=Q' .. nlines .. 'k1q=', 'nx', false)
       gutter.add_gutter()
       return
     end
@@ -137,8 +127,9 @@ vim.keymap.set('n', '<M-k>', function()
 end, { desc = 'Cursor and up' })
 
 -- Cycle main cursor with h and l, make sure to turn off follow-mode
-vim.keymap.set('n', '<M-l>', '2q=]C', { desc = 'Next cursor' })
-vim.keymap.set('n', '<M-h>', '2q=[C', { desc = 'Previous cursor' })
+-- and then back in
+vim.keymap.set('n', '<M-l>', '2q=]C1q=', { desc = 'Next cursor' })
+vim.keymap.set('n', '<M-h>', '2q=[C1q=', { desc = 'Previous cursor' })
 
 -- Follow toggle
 vim.keymap.set('n', '<M-f>', 'q=', { desc = 'Cursor toggle follow' })

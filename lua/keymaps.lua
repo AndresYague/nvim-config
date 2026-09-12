@@ -6,14 +6,6 @@ vim.keymap.set(
   { desc = 'Remove search highlight' }
 )
 
--- Paste over selections without losing initially yanked text
-vim.keymap.set(
-  'x',
-  'p',
-  '"_dP', -- Put new selection in blackhole buffer
-  { desc = 'Paste over selections without losing initially yanked text' }
-)
-
 -- Replace word under cursor
 vim.keymap.set(
   'n',
