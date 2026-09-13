@@ -1,5 +1,23 @@
 local Snacks = require 'snacks'
 
+---Small function to find suitable font for current filetype, return two
+---optional values: the filetype and the prompt, both are strings
+---@return string?, string?
+local function grep_prompt()
+  local ft = vim.o.filetype
+  local prompt = nil
+  if ft then
+    local icon = require('nvim-web-devicons').get_icon_by_filetype(ft, {})
+    if icon then
+      prompt = icon .. '  '
+    else
+      prompt = ft .. ' '
+    end
+  end
+
+  return ft, prompt
+end
+
 -- Top Pickers & Explorer
 vim.keymap.set({ 'n' }, '<leader>fs', function()
   Snacks.picker.smart()
@@ -8,7 +26,10 @@ vim.keymap.set({ 'n' }, '<leader>,', function()
   Snacks.picker.buffers()
 end, { desc = 'Buffers' })
 vim.keymap.set({ 'n' }, '<leader>/', function()
+  local ft, prompt = grep_prompt()
   Snacks.picker.grep {
+    ft = ft,
+    prompt = prompt or ' ',
     win = {
       input = {
         keys = {
@@ -92,7 +113,10 @@ vim.keymap.set({ 'n' }, '<leader>sg', function()
   }
 end, { desc = 'Grep' })
 vim.keymap.set({ 'n', 'x' }, '<leader>sw', function()
+  local ft, prompt = grep_prompt()
   Snacks.picker.grep_word {
+    ft = ft,
+    prompt = prompt or ' ',
     win = {
       input = {
         keys = {
