@@ -19,10 +19,10 @@ local toggle_floating_terminal = function(relsize)
       relative = 'editor',
 
       -- Center window and give it the desired relative size to the editor
-      row = math.floor(vim.o.lines * (1 - relsize) * 0.5),
-      col = math.floor(vim.o.columns * (1 - relsize) * 0.5),
-      height = math.floor(vim.o.lines * relsize),
-      width = math.floor(vim.o.columns * relsize),
+      row = math.floor(vim.opt.lines:get() * (1 - relsize) * 0.5),
+      col = math.floor(vim.opt.columns:get() * (1 - relsize) * 0.5),
+      height = math.floor(vim.opt.lines:get() * relsize),
+      width = math.floor(vim.opt.columns:get() * relsize),
       border = 'rounded',
       style = 'minimal',
     })

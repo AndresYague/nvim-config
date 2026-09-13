@@ -4,7 +4,7 @@ local Snacks = require 'snacks'
 ---optional values: the filetype and the prompt, both are strings
 ---@return string?, string?
 local function grep_prompt()
-  local ft = vim.o.filetype
+  local ft = vim.opt.filetype:get()
   local prompt = nil
   if ft then
     local icon = require('nvim-web-devicons').get_icon_by_filetype(ft, {})

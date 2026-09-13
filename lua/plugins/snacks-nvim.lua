@@ -299,7 +299,7 @@ vim.api.nvim_create_autocmd('User', {
     Snacks.toggle
       .option('conceallevel', {
         off = 0,
-        on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2,
+        on = vim.opt.conceallevel:get() > 0 and vim.opt.conceallevel:get() or 2,
       })
       :map '<leader>uc'
     Snacks.toggle.treesitter():map '<leader>uT'
@@ -485,13 +485,13 @@ vim.api.nvim_create_autocmd('User', {
         id = 'virtual_edit',
         name = 'Virtual Edit',
         get = function()
-          return vim.o.virtualedit == 'all'
+          return vim.opt.virtualedit:get() == 'all'
         end,
         set = function(is_disabled)
           if is_disabled then
-            vim.o.virtualedit = 'all'
+            vim.opt.virtualedit = 'all'
           else
-            vim.o.virtualedit = ''
+            vim.opt.virtualedit = ''
           end
         end,
       })

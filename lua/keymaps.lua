@@ -132,16 +132,16 @@ vim.keymap.set(
 )
 
 vim.keymap.set('n', '<leader>t|', function()
-  vim.cmd.vsplit { args = { 'term://%:p:h//' .. vim.o.shell } }
+  vim.cmd.vsplit { args = { 'term://%:p:h//' .. vim.opt.shell:get() } }
 end, { desc = 'Open terminal vertically (file location)' })
 vim.keymap.set('n', '<leader>tv', function()
-  vim.cmd.vsplit { args = { 'term://' .. vim.o.shell } }
+  vim.cmd.vsplit { args = { 'term://' .. vim.opt.shell:get() } }
 end, { desc = 'Open terminal vertically (cwd)' })
 vim.keymap.set('n', '<leader>t-', function()
-  vim.cmd.split { args = { 'term://%:p:h//' .. vim.o.shell } }
+  vim.cmd.split { args = { 'term://%:p:h//' .. vim.opt.shell:get() } }
 end, { desc = 'Open terminal horizontally (file location)' })
 vim.keymap.set('n', '<leader>th', function()
-  vim.cmd.split { args = { 'term://' .. vim.o.shell } }
+  vim.cmd.split { args = { 'term://' .. vim.opt.shell:get() } }
 end, { desc = 'Open terminal horizontally (cwd)' })
 
 -- Move line up and down

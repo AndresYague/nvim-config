@@ -78,10 +78,10 @@ require('quicker').setup {
   trim_leading_whitespace = 'common',
   -- Maximum width of the filename column
   max_filename_width = function()
-    return math.floor(math.min(95, vim.o.columns / 2))
+    return math.floor(math.min(95, vim.opt.columns:get() / 2))
   end,
   -- How far the header should extend to the right
-  header_length = function(type, start_col)
-    return vim.o.columns - start_col
+  header_length = function(_, start_col)
+    return vim.opt.columns:get() - start_col
   end,
 }

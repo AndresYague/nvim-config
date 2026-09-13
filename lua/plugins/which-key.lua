@@ -1,6 +1,6 @@
 require('which-key').setup {
   -- delay between pressing a key and opening which-key (milliseconds)
-  -- this setting is independent of vim.o.timeoutlen
+  -- this setting is independent of vim.opt.timeoutlen
   delay = 250,
   preset = 'helix',
   icons = {

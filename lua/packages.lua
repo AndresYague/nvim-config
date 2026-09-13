@@ -142,8 +142,8 @@ vim.cmd.packadd { args = { 'nvim.difftool' }, bang = true }
 -- Restores to the previous updatetime after firing
 local use_updatetime = 250
 
-local save_updatetime = vim.o.updatetime
-vim.o.updatetime = use_updatetime
+local save_updatetime = vim.opt.updatetime:get()
+vim.opt.updatetime = use_updatetime
 vim.api.nvim_create_autocmd('CursorHold', {
   once = true,
   callback = function()
@@ -185,6 +185,6 @@ vim.api.nvim_create_autocmd('CursorHold', {
     require 'plugins.orgmode'
     require 'plugins.remote-sshfs'
 
-    vim.o.updatetime = save_updatetime
+    vim.opt.updatetime = save_updatetime
   end,
 })
