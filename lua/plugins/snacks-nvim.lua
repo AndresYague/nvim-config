@@ -201,6 +201,7 @@ Snacks.setup {
   -- Pickers
   picker = {
     enabled = true,
+    layout = 'ivy',
     win = {
       input = {
         keys = {
