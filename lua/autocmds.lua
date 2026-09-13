@@ -123,7 +123,7 @@ vim.api.nvim_create_autocmd('DiffUpdated', {
     clear = true,
   }),
   callback = function()
-    if vim.o.diff then
+    if vim.opt.diff:get() then
       ignore_errors({ 'No such mapping' }, pcall(vim.keymap.del, 'o', 'p'))
     else
       vim.keymap.set('o', 'p', '}', { desc = 'Next empty line' })

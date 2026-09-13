@@ -31,7 +31,7 @@ require('orgmode').setup {
     vim.api.nvim_buf_set_name(bufnr, name)
 
     local prct = 0.15
-    local height = math.floor((vim.o.lines * prct))
+    local height = math.floor((vim.opt.lines:get() * prct))
 
     vim.api.nvim_open_win(bufnr, true, {
       height = height,
@@ -48,7 +48,7 @@ require('org-bullets').setup()
 
 -- Open todos if dashboard still open
 vim.schedule(function()
-  if vim.o.filetype == 'snacks_dashboard' then
+  if vim.opt.filetype:get() == 'snacks_dashboard' then
     local dashboard_win = vim.api.nvim_get_current_win()
 
     -- Count how many TODOs we have.
