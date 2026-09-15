@@ -16,12 +16,13 @@ vim.keymap.set('n', '<Esc>', function()
   vim.cmd.nohlsearch()
 end, { desc = 'Remove multicursors or search highlight' })
 
--- Make secondary cursors hl stand out better
-vim.api.nvim_set_hl(0, 'MCursor', { reverse = true })
-
 -- Put adding cursor in M-q to be consistent with the other keybinds
 -- When removing a cursor, jump to the closest one.
 vim.keymap.set({ 'n', 'x' }, '<M-q>', function()
+  -- Force stop follow mode to avoid weird where Q this keymap is applied
+  -- to more than one position
+  vim.api.nvim_feedkeys('2q=', 'nx', false)
+
   local mc_space = vim.api.nvim_create_namespace 'nvim.multicursor'
   local mc_list = utils.mc_below_cursor()
 
@@ -92,8 +93,13 @@ vim.keymap.set('n', '<M-j>', function()
     end
 
     -- Check if the line can hold that cursor
+    -- Do not use Q if there is already a cursor below
     if #lines[2] >= pos[2] then
-      vim.api.nvim_feedkeys('2q=Q' .. nlines .. 'j1q=', 'nx', false)
+      vim.api.nvim_feedkeys('2q=', 'nx', false)
+      if #utils.mc_below_cursor() == 0 then
+        vim.api.nvim_feedkeys('Q', 'nx', false)
+      end
+      vim.api.nvim_feedkeys(nlines .. 'j1q=', 'nx', false)
       gutter.add_gutter()
       return
     end
@@ -115,8 +121,13 @@ vim.keymap.set('n', '<M-k>', function()
     end
 
     -- Check if the line can hold that cursor
+    -- Do not use Q if there is already a cursor below
     if #lines[1] >= pos[2] then
-      vim.api.nvim_feedkeys('2q=Q' .. nlines .. 'k1q=', 'nx', false)
+      vim.api.nvim_feedkeys('2q=', 'nx', false)
+      if #utils.mc_below_cursor() == 0 then
+        vim.api.nvim_feedkeys('Q', 'nx', false)
+      end
+      vim.api.nvim_feedkeys(nlines .. 'k1q=', 'nx', false)
       gutter.add_gutter()
       return
     end
