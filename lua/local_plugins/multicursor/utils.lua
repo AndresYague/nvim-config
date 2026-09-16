@@ -66,6 +66,7 @@ end
 M.jump_to_match = function(jump_mode)
   -- Save column before jump
   local column = vim.api.nvim_win_get_cursor(0)[2]
+  local cword = vim.fn.expand '<cword>'
 
   if #M.mc_below_cursor() == 0 then
     vim.api.nvim_feedkeys('2q=Q' .. jump_mode .. '1q=', 'nx', false)
@@ -73,9 +74,29 @@ M.jump_to_match = function(jump_mode)
     vim.api.nvim_feedkeys('2q=' .. jump_mode .. '1q=', 'nx', false)
   end
 
-  -- Set cursor back to the same column but different row
+  -- Set cursor back to the same column but different row, unless that brings
+  -- the cursor to a different word
+
+  -- Current position before changing
+  local cpos = vim.api.nvim_win_get_cursor(0)
+
+  -- Move cursor
   local row = vim.api.nvim_win_get_cursor(0)[1]
-  vim.api.nvim_win_set_cursor(0, {row, column})
+  vim.api.nvim_win_set_cursor(0, { row, column })
+
+  -- If the word has changed, bring the cursor back
+  if vim.fn.expand '<cword>' ~= cword then
+    vim.api.nvim_win_set_cursor(0, cpos)
+  else
+    -- Check if we are actually in the word anyway
+    local cletter =
+      vim.api.nvim_buf_get_text(0, row - 1, column, row - 1, column + 1, {})[1]
+
+    if cletter:match '%w' == nil then
+      vim.api.nvim_win_set_cursor(0, cpos)
+    end
+  end
+
   vim.cmd.nohlsearch()
 end
 
