@@ -80,4 +80,5 @@ local function swap_words()
   vim.api.nvim_win_set_cursor(0, cpos)
 end
 
+-- Swap words with M-t like in emacs
 vim.keymap.set('n', '<M-t>', swap_words)
