@@ -1,6 +1,5 @@
 -- Add python format to errorformat
--- FIXME: Does not work too well: fix the errorformat
-vim.opt.errorformat:append { '\\ \\ File "%f"\\', 'line %l\\', '%m' }
+vim.opt.errorformat = { '  File "%f"\\, line %l\\, in %m' }
 
 -- Make python add comments on new line
 vim.bo.formatoptions = 'jcroql'
