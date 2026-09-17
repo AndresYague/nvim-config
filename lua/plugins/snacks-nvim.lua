@@ -589,18 +589,6 @@ vim.keymap.set('n', '<leader>oll', function()
   }
 end, { desc = 'List links' })
 
--- Dashboard autocmd
--- This triggers a cursor change which will start the countdown for CursorHold
--- at some point, the snacks dashboard buffer is otherwise static.
--- It only happens once
-vim.api.nvim_create_autocmd('User', {
-  pattern = 'SnacksDashboardOpened',
-  once = true,
-  callback = function()
-    vim.api.nvim_feedkeys('lh', 'nx', false)
-  end,
-})
-
 -- Remember the options for below
 local opt_number = vim.wo.number
 local opt_relative_number = vim.wo.number
