@@ -11,6 +11,23 @@ vim.api.nvim_create_autocmd('PackChanged', {
   end,
 })
 
+-- Loading orgmode if needed before lazy load
+_G.orgmode_loaded = false
+_G.load_orgmode = function()
+  if _G.orgmode_loaded then
+    return
+  end
+
+  vim.pack.add {
+    'https://github.com/chipsenkbeil/org-roam.nvim.git',
+    'https://github.com/nvim-orgmode/org-bullets.nvim',
+    'https://github.com/nvim-orgmode/orgmode',
+  }
+  require 'plugins.orgmode'
+
+  _G.orgmode_loaded = true
+end
+
 vim.pack.add {
 
   --[[ ================================================================= ]]

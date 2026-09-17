@@ -60,25 +60,46 @@ Snacks.setup {
           icon = '󰸗 ',
           key = 'a',
           desc = 'Orgmode Agenda',
-          action = ':Org agenda a',
+          action = function()
+            _G.load_orgmode()
+            vim.schedule(function()
+              vim.cmd 'Org agenda a'
+            end)
+          end,
         },
         {
           icon = '󱁉 ',
           key = 'p',
           desc = 'Org roam find node',
-          action = ":lua require('org-roam').api.find_node()",
+          action = function()
+            _G.load_orgmode()
+            -- Need to schedule so org-roam is fully loaded
+            vim.schedule(function()
+              vim.cmd "lua require('org-roam').api.find_node()"
+            end)
+          end,
         },
         {
           icon = ' ',
           key = 't',
           desc = 'Orgmode Todo',
-          action = ':Org agenda t',
+          action = function()
+            _G.load_orgmode()
+            vim.schedule(function()
+              vim.cmd 'Org agenda t'
+            end)
+          end,
         },
         {
           icon = '󰎜 ',
           key = 'c',
           desc = 'Orgmode Capture task',
-          action = ':Org capture t',
+          action = function()
+            _G.load_orgmode()
+            vim.schedule(function()
+              vim.cmd 'Org capture t'
+            end)
+          end,
         },
         {
           icon = ' ',
