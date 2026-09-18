@@ -91,3 +91,11 @@ vim.opt.concealcursor = 'nc'
 
 -- Set conceallevel
 vim.opt.conceallevel = 0
+
+-- Set whichwrap so l and h also change lines
+vim.opt.whichwrap = {
+  h = true,
+  b = true,
+  l = true,
+  s = true,
+}
