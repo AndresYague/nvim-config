@@ -202,6 +202,8 @@ vim.api.nvim_create_autocmd('CursorHold', {
     require 'plugins.orgmode'
     require 'plugins.remote-sshfs'
 
+    -- Signal that orgmode is loaded
+    _G.orgmode_loaded = true
     vim.opt.updatetime = save_updatetime
   end,
 })

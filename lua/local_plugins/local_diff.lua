@@ -93,6 +93,30 @@ local diff_selection = function()
       return
     end
 
+    -- Break the selections into a list of lines and adjust the second range
+    -- by adding lines as necessary
+    local sel1 = vim.fn.split(current_selections[1], '\n')
+    local sel2 = vim.fn.split(current_selections[2], '\n')
+    if #sel1 ~= #sel2 then
+      local short, long, short_indx
+
+      if #sel1 > #sel2 then
+        short = sel2
+        long = sel1
+        short_indx = 2
+      else
+        short = sel1
+        long = sel2
+        short_indx = 1
+      end
+
+      for _ = 1, #long - #short, 1 do
+        short[#short + 1] = ' '
+      end
+
+      current_selections[short_indx] = table.concat(short, '\n')
+    end
+
     local diff = vim.text.diff(current_selections[1], current_selections[2], {
       result_type = 'indices',
       ignore_cr_at_eol = true,
@@ -198,6 +222,7 @@ _G.diffthis = function()
           hl_group = { hl_bg, hl_fg },
           virt_text_pos = 'overlay',
           end_col = col_end,
+          strict = false,
         })
       )
     end
