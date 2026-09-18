@@ -56,8 +56,8 @@ vim.api.nvim_create_autocmd('FileType', {
     -- Start treesitter for highlighting and folds
     -- assuming the languages in "parsers" got installed
     vim.treesitter.start(args.buf, language)
-    vim.opt.foldmethod = 'expr'
-    vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+    vim.wo.foldmethod = 'expr'
+    vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 
     -- Add indent if it has it
     if vim.treesitter.query.get(language, 'indents') then

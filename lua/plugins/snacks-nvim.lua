@@ -506,7 +506,7 @@ vim.api.nvim_create_autocmd('User', {
         id = 'virtual_edit',
         name = 'Virtual Edit',
         get = function()
-          return vim.opt.virtualedit:get() == 'all'
+          return vim.opt.virtualedit:get()[1] == 'all'
         end,
         set = function(is_disabled)
           if is_disabled then
