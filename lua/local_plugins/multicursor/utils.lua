@@ -65,20 +65,18 @@ end
 ---@return nil
 M.jump_to_match = function(jump_mode)
   -- Save column before jump
-  local column = vim.api.nvim_win_get_cursor(0)[2]
+  local cpos = vim.api.nvim_win_get_cursor(0)
+  local column = cpos[2]
   local cword = vim.fn.expand '<cword>'
 
-  if #M.mc_below_cursor() == 0 then
-    vim.api.nvim_feedkeys('2q=Q' .. jump_mode .. '1q=', 'nx', false)
-  else
-    vim.api.nvim_feedkeys('2q=' .. jump_mode .. '1q=', 'nx', false)
-  end
+  vim.api.nvim_mcursor(0, cpos)
+  vim.api.nvim_feedkeys('2q=' .. jump_mode .. '1q=', 'nx', false)
 
   -- Set cursor back to the same column but different row, unless that brings
   -- the cursor to a different word
 
   -- Current position before changing
-  local cpos = vim.api.nvim_win_get_cursor(0)
+  cpos = vim.api.nvim_win_get_cursor(0)
 
   -- Move cursor
   local row = vim.api.nvim_win_get_cursor(0)[1]

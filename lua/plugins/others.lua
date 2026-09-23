@@ -58,9 +58,9 @@ end)
 -- Close current session
 vim.keymap.set('n', '<leader>qq', function()
   -- Disable no-neck-pain if it was enabled
-  local np_state = require('no-neck-pain').state
-  if np_state and np_state.enabled then
-    require('no-neck-pain').disable()
+  local no_neck = require 'no-neck-pain'
+  if no_neck.state and no_neck.state.enabled then
+    no_neck.disable()
   end
 
   for _, win_id in ipairs(vim.api.nvim_list_wins()) do
