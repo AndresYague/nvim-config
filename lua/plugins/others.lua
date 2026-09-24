@@ -30,6 +30,7 @@ require('flash').setup {
 }
 
 require('no-neck-pain').setup {
+  debug = false,
   mappings = {
     -- Set up the toggling map
     enabled = true,

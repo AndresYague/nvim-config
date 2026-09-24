@@ -19,7 +19,7 @@ _G.load_orgmode = function()
   end
 
   vim.pack.add {
-    'https://github.com/chipsenkbeil/org-roam.nvim.git',
+    'https://github.com/chipsenkbeil/org-roam.nvim',
     'https://github.com/nvim-orgmode/org-bullets.nvim',
     'https://github.com/nvim-orgmode/orgmode',
   }
@@ -97,7 +97,7 @@ vim.pack.add {
   'https://github.com/folke/snacks.nvim',
 
   -- time tracker
-  'https://codeberg.org/AndresYague/time-tracker.nvim.git',
+  'https://codeberg.org/AndresYague/time-tracker.nvim',
 
   -- treesitter addons
   'https://github.com/nvim-treesitter/nvim-treesitter-context',
@@ -188,12 +188,12 @@ vim.api.nvim_create_autocmd('CursorHold', {
       'https://github.com/saadparwaiz1/cmp_luasnip', -- Snippet source
 
       -- orgmode
-      'https://github.com/chipsenkbeil/org-roam.nvim.git',
+      'https://github.com/chipsenkbeil/org-roam.nvim',
       'https://github.com/nvim-orgmode/org-bullets.nvim',
       'https://github.com/nvim-orgmode/orgmode',
 
       -- remote-sshfs
-      'https://github.com/AndresYague/remote-sshfs.nvim.git',
+      'https://github.com/AndresYague/remote-sshfs.nvim',
     }
 
     require 'plugins.code_companion'
