@@ -43,7 +43,18 @@ vim.keymap.set({ 'n' }, '<leader>:', function()
   Snacks.picker.command_history()
 end, { desc = 'Command History' })
 vim.keymap.set({ 'n' }, '<leader>e', function()
+  local no_neck = require 'no-neck-pain'
+  local no_neck_enabled = false
+  if no_neck and no_neck.state and no_neck.state.enabled then
+    no_neck_enabled = true
+    no_neck.disable()
+  end
+
   Snacks.explorer()
+
+  if no_neck_enabled then
+    no_neck.toggle()
+  end
 end, { desc = 'File Explorer' })
 -- find
 vim.keymap.set({ 'n' }, '<leader>fb', function()

@@ -30,11 +30,26 @@ require('flash').setup {
 }
 
 require('no-neck-pain').setup {
-  debug = false,
   mappings = {
     -- Set up the toggling map
     enabled = true,
     toggle = '<leader>up',
+    debug = false,
+  },
+  autocmds = {
+    skipEnteringNoNeckPainBuffer = true,
+  },
+  integrations = {
+    oil = {
+      -- The position of the file manager.
+      ---@type "none"
+      position = 'none',
+    },
+    snacks_picker = {
+      -- The position of the picker explorer.
+      ---@type "left"|"right"
+      position = 'left',
+    },
   },
 }
 
@@ -59,9 +74,11 @@ end)
 -- Close current session
 vim.keymap.set('n', '<leader>qq', function()
   -- Disable no-neck-pain if it was enabled
+  -- Also save persistence session to avoid re-opening side buffers
   local no_neck = require 'no-neck-pain'
-  if no_neck.state and no_neck.state.enabled then
+  if no_neck and no_neck.state and no_neck.state.enabled then
     no_neck.disable()
+    require('persistence').save()
   end
 
   for _, win_id in ipairs(vim.api.nvim_list_wins()) do
@@ -139,7 +156,7 @@ vim.keymap.set('n', '<leader>qr', function()
   end
 
   local no_neck = require 'no-neck-pain'
-  if no_neck.state and no_neck.state.enabled then
+  if no_neck and no_neck.state and no_neck.state.enabled then
     -- Close no-neck-pain and open it on the way back
     no_neck.disable()
     cmd_restart = (cmd_restart or 'lua ') .. "require('no-neck-pain').toggle()"
