@@ -14,17 +14,13 @@ require('flash').setup {
   label = { style = 'overlay', rainbow = { enabled = true } },
   modes = {
     char = {
-      -- jump_labels = true,
       char_actions = function( --[[motion]])
         return {
-          [','] = 'next',
-          [';'] = 'prev',
-          -- If removing these motions, pressing f again does not advance
-          -- the search
-          -- [motion:lower()] = "next",
-          -- [motion:upper()] = "prev",
+          [','] = 'right',
+          [';'] = 'left',
         }
       end,
+      autohide = true,
     },
   },
 }

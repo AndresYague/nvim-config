@@ -57,7 +57,7 @@ end, { desc = 'Cursor on all matches ' })
 -- Match in visual selection
 vim.keymap.set('x', '<M-m>', function()
   -- Ask for match to user, put it in the last-pattern register
-  vim.fn.setreg('/', vim.fn.escape(vim.fn.input { prompt = 'Match: ' }, '.\\'))
+  vim.fn.setreg('/', vim.fn.input { prompt = 'Match: ' })
 
   -- Create the new cursors
   vim.api.nvim_feedkeys('1Q', 'nx', false)
