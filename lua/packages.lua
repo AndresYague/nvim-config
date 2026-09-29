@@ -82,9 +82,10 @@ vim.pack.add {
   'https://github.com/kylechui/nvim-surround',
   'https://github.com/windwp/nvim-autopairs',
   'https://github.com/ysmb-wtsg/in-and-out.nvim',
+  -- 'https://github.com/shortcuts/no-neck-pain.nvim',
   {
-    src = 'https://codeberg.org/AndresYague/no-neck-pain.nvim',
-    version = 'my_main',
+    src = '/home/anzu/Projects/nvim_plugins/no-neck-pain.nvim',
+    version = 'use_this',
   },
 
   -- previewers
