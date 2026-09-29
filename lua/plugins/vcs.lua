@@ -7,6 +7,14 @@ require('gitsigns').setup {
     delay = 300,
     ignore_whitespace = true,
   },
+  signs = {
+    add = { text = '▌' },
+    change = { text = '▐' },
+  },
+  signs_staged = {
+    add = { text = '▌' },
+    change = { text = '▐' },
+  },
 }
 
 -- Keymaps
