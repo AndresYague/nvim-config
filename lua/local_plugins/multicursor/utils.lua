@@ -25,6 +25,32 @@ M.clear_mc = function()
   gutter.clear_gutter()
 end
 
+---Toggle follow mode to `false` if it was active before and to `true`
+---after calling `f(args)`, returning its value
+---@param f function
+---@param args any[]?
+---@return any
+M.follow_context = function(f, args)
+  -- Toggle follow mode off
+  local follow_mode = vim.opt.follow:get()
+  if follow_mode then
+    vim.opt.follow = false
+  end
+
+  -- Call function
+  if args then
+    local ret = f(unpack(args))
+  else
+    local ret = f()
+  end
+
+  if follow_mode then
+    vim.opt.follow = true
+  end
+
+  return ret
+end
+
 M.move_cursor_to_nearest_mc = function()
   local cpos = vim.api.nvim_win_get_cursor(0)
   local mc_list = vim.api.nvim_buf_get_extmarks(
@@ -50,9 +76,12 @@ M.move_cursor_to_nearest_mc = function()
     end
   end
 
-  -- Put cursor there
+  -- Put cursor there (follow mode sensitive)
   if closest.pos then
-    vim.api.nvim_win_set_cursor(0, { closest.pos[2] + 1, closest.pos[3] })
+    M.follow_context(
+      vim.api.nvim_win_set_cursor,
+      { 0, { closest.pos[2] + 1, closest.pos[3] } }
+    )
   end
 end
 
@@ -70,7 +99,7 @@ M.jump_to_match = function(jump_mode)
   local cword = vim.fn.expand '<cword>'
 
   vim.api.nvim_mcursor(0, cpos)
-  vim.api.nvim_feedkeys('2q=' .. jump_mode .. '1q=', 'nx', false)
+  M.follow_context(vim.api.nvim_feedkeys, { jump_mode, 'nx', false })
 
   -- Set cursor back to the same column but different row, unless that brings
   -- the cursor to a different word

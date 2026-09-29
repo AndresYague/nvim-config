@@ -49,7 +49,7 @@ vim.keymap.set('n', '<M-p>', function()
   gutter.add_gutter()
 end, { desc = 'Cursor and previous match' })
 vim.keymap.set('n', '<M-N>', function()
-  vim.api.nvim_feedkeys('2q=*1Q[C1q=', 'nx', false)
+  utils.follow_context(vim.api.nvim_feedkeys, { '*1Q[C', 'nx', false })
   vim.cmd.nohlsearch()
   gutter.add_gutter()
 end, { desc = 'Cursor on all matches ' })
@@ -65,8 +65,7 @@ vim.keymap.set('x', '<M-m>', function()
   -- Move cursor without leaving trace
   utils.move_cursor_to_nearest_mc()
 
-  -- Put them in follow mode
-  vim.api.nvim_feedkeys('q=', 'nx', false)
+  -- Activate the gutter
   gutter.add_gutter()
 end, { desc = 'Cursor on match' })
 
@@ -86,8 +85,12 @@ vim.keymap.set('n', '<M-j>', function()
 
     -- Check if the line can hold that cursor
     if #lines[2] >= pos[2] then
+      -- Set cursor
       vim.api.nvim_mcursor(0, vim.api.nvim_win_get_cursor(0))
-      vim.api.nvim_feedkeys('2q=' .. nlines .. 'j1q=', 'nx', false)
+      utils.follow_context(
+        vim.api.nvim_feedkeys,
+        { nlines .. 'j1', 'nx', false }
+      )
       gutter.add_gutter()
       return
     end
@@ -110,8 +113,12 @@ vim.keymap.set('n', '<M-k>', function()
 
     -- Check if the line can hold that cursor
     if #lines[1] >= pos[2] then
+      -- Set cursor
       vim.api.nvim_mcursor(0, vim.api.nvim_win_get_cursor(0))
-      vim.api.nvim_feedkeys('2q=' .. nlines .. 'k1q=', 'nx', false)
+      utils.follow_context(
+        vim.api.nvim_feedkeys,
+        { nlines .. 'k1', 'nx', false }
+      )
       gutter.add_gutter()
       return
     end
@@ -125,12 +132,15 @@ end, { desc = 'Cursor and up' })
 -- and then back in
 vim.keymap.set('n', '<M-l>', function()
   vim.api.nvim_mcursor(0, vim.api.nvim_win_get_cursor(0))
-  vim.api.nvim_feedkeys('2q=]C1q=', 'nx', false)
+  utils.follow_context(vim.api.nvim_feedkeys, { ']C', 'nx', false })
 end, { desc = 'Next cursor' })
 vim.keymap.set('n', '<M-h>', function()
   vim.api.nvim_mcursor(0, vim.api.nvim_win_get_cursor(0))
-  vim.api.nvim_feedkeys('2q=[C1q=', 'nx', false)
+  utils.follow_context(vim.api.nvim_feedkeys, { '[C', 'nx', false })
 end, { desc = 'Previous cursor' })
 
 -- Follow toggle
 vim.keymap.set('n', '<M-f>', 'q=', { desc = 'Cursor toggle follow' })
+
+-- Set follow mode
+vim.opt.follow = true
