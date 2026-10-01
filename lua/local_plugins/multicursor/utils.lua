@@ -38,10 +38,11 @@ M.follow_context = function(f, args)
   end
 
   -- Call function
+  local ret
   if args then
-    local ret = f(unpack(args))
+    ret = f(unpack(args))
   else
-    local ret = f()
+    ret = f()
   end
 
   if follow_mode then
@@ -83,48 +84,6 @@ M.move_cursor_to_nearest_mc = function()
       { 0, { closest.pos[2] + 1, closest.pos[3] } }
     )
   end
-end
-
----@alias match
----| '*' # Go to next
----| '#' # Go to previous
-
--- Helper to jump to the next or previous match
----@param jump_mode match
----@return nil
-M.jump_to_match = function(jump_mode)
-  -- Save column before jump
-  local cpos = vim.api.nvim_win_get_cursor(0)
-  local column = cpos[2]
-  local cword = vim.fn.expand '<cword>'
-
-  vim.api.nvim_mcursor(0, cpos)
-  M.follow_context(vim.api.nvim_feedkeys, { jump_mode, 'nx', false })
-
-  -- Set cursor back to the same column but different row, unless that brings
-  -- the cursor to a different word
-
-  -- Current position before changing
-  cpos = vim.api.nvim_win_get_cursor(0)
-
-  -- Move cursor
-  local row = vim.api.nvim_win_get_cursor(0)[1]
-  vim.api.nvim_win_set_cursor(0, { row, column })
-
-  -- If the word has changed, bring the cursor back
-  if vim.fn.expand '<cword>' ~= cword then
-    vim.api.nvim_win_set_cursor(0, cpos)
-  else
-    -- Check if we are actually in the word anyway
-    local cletter =
-      vim.api.nvim_buf_get_text(0, row - 1, column, row - 1, column + 1, {})[1]
-
-    if cletter:match '%w' == nil then
-      vim.api.nvim_win_set_cursor(0, cpos)
-    end
-  end
-
-  vim.cmd.nohlsearch()
 end
 
 return M
