@@ -6,10 +6,10 @@ local ret = vim.system({ 'make', '-n' }):wait()
 
 -- If not, try to run this instead
 if ret.code ~= 0 then
-  if vim.fn.filereadable 'CMakeLists.txt' then
+  if vim.fn.filereadable 'CMakeLists.txt' == 1 then
     vim.bo.makeprg = 'cmake --build build -j'
   else
-    vim.bo.makeprg = 'gcc -Wall -Wextra -o '
+    vim.bo.makeprg = 'g++ -Wall -Wextra -o '
       .. vim.fn.expand '%:r'
       .. ' '
       .. vim.fn.expand '%'
