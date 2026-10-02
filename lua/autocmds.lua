@@ -137,7 +137,17 @@ local loadview_g = vim.api.nvim_create_augroup('Loadview', { clear = true })
 vim.api.nvim_create_autocmd('BufWinEnter', {
   group = loadview_g,
   pattern = '?*',
-  command = 'silent! loadview',
+  callback = function()
+    local cwd = vim.uv.cwd()
+    assert(cwd)
+
+    vim.cmd 'silent! loadview'
+
+    -- Do not change directory when loading the view
+    if cwd ~= vim.uv.cwd() then
+      vim.uv.chdir(cwd)
+    end
+  end,
   desc = 'Load this buffer view if it exists',
 })
 vim.api.nvim_create_autocmd({ 'BufUnload', 'BufWinLeave' }, {
