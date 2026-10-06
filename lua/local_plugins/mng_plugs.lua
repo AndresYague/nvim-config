@@ -198,13 +198,10 @@ local plug_sync = function()
     end
   end
 
-  local msg
-  if deleted == 1 then
-    msg = ' plugin removed'
-  else
-    msg = ' plugins removed'
+  -- Only echo if 0 or > 1 plugins where removed
+  if deleted ~= 1 then
+    vim.notify(deleted .. ' plugins removed')
   end
-  vim.notify(deleted .. msg)
 end
 
 -- Keymap to delete plugin under the cursor

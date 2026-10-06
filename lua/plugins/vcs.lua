@@ -9,10 +9,10 @@ require('gitsigns').setup {
   },
   signs = {
     add = { text = '▌' },
-    change = { text = '▐' },
+    change = { text = '▌' },
   },
   signs_staged = {
-    add = { text = '▌' },
+    add = { text = '▐' },
     change = { text = '▐' },
   },
 }

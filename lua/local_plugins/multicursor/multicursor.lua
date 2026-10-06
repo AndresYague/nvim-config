@@ -86,10 +86,9 @@ vim.keymap.set('n', '<M-j>', function()
     -- Check if the line can hold that cursor
     if #lines[2] >= pos[2] then
       -- Set cursor
-      vim.api.nvim_feedkeys('1Q', 'nx', false)
       utils.follow_context(
         vim.api.nvim_feedkeys,
-        { nlines .. 'j1', 'nx', false }
+        { '1Q' .. nlines .. 'j1', 'nx', false }
       )
       gutter.add_gutter()
       return
@@ -114,10 +113,9 @@ vim.keymap.set('n', '<M-k>', function()
     -- Check if the line can hold that cursor
     if #lines[1] >= pos[2] then
       -- Set cursor
-      vim.api.nvim_feedkeys('1Q', 'nx', false)
       utils.follow_context(
         vim.api.nvim_feedkeys,
-        { nlines .. 'k1', 'nx', false }
+        { '1Q' .. nlines .. 'k1', 'nx', false }
       )
       gutter.add_gutter()
       return
