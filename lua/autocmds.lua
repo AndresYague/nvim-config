@@ -161,7 +161,7 @@ vim.api.nvim_create_autocmd({ 'BufUnload', 'BufWinLeave' }, {
 -- Create registers keymaps
 ---@param letter string Register name
 local register_keymap = function(letter)
-  vim.keymap.set('n', '<leader>m' .. letter, function()
+  vim.keymap.set('n', '<leader>r' .. letter, function()
     vim.notify(
       'Register ' .. letter .. ': ' .. vim.fn.getreg(letter),
       vim.log.levels.INFO

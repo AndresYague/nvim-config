@@ -192,16 +192,12 @@ vim.api.nvim_create_autocmd('CursorHold', {
       'https://github.com/chipsenkbeil/org-roam.nvim',
       'https://github.com/nvim-orgmode/org-bullets.nvim',
       'https://github.com/nvim-orgmode/orgmode',
-
-      -- remote-sshfs
-      'https://github.com/AndresYague/remote-sshfs.nvim',
     }
 
     require 'plugins.code_companion'
     require 'plugins.lsp_setup' -- Cannot be "lsp" for make session to work well
     require 'plugins.nvim-cmp'
     require 'plugins.orgmode'
-    require 'plugins.remote-sshfs'
 
     -- Signal that orgmode is loaded
     _G.orgmode_loaded = true

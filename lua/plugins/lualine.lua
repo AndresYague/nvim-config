@@ -125,11 +125,6 @@ require('lualine').setup {
 
         return records
       end,
-      function()
-        -- Needs to be called inside of a function because we are lazy-loading
-        -- the plugin
-        return require('remote-sshfs.statusline').status()
-      end,
     },
     lualine_x = {
       function()
