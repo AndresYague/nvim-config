@@ -62,8 +62,11 @@ vim.keymap.set('x', '<M-m>', function()
   vim.fn.setreg('/', vim.fn.input { prompt = 'Match: ' })
 
   -- Create the new cursors
-  -- FIXME: gn is not really working, could probably remove it?
-  vim.api.nvim_feedkeys('1q=zqgn', 'nx', false)
+  vim.api.nvim_feedkeys('1q=zqn', 'nx', false)
+
+  -- Highlight the match for each, allow the previous commands to
+  -- play out completely (i.e., do not add the 'nx' here)
+  vim.api.nvim_feedkeys('gn', 'n', false)
 
   -- Activate the gutter
   gutter.add_gutter()
