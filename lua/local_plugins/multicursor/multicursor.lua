@@ -141,5 +141,8 @@ end, { desc = 'Previous cursor' })
 -- Follow toggle
 vim.keymap.set('n', '<M-f>', 'q=', { desc = 'Cursor toggle follow' })
 
+-- Align
+vim.keymap.set('n', '<M-a>', utils.align_cursors, { desc = 'Align cursors' })
+
 -- Set follow mode
 vim.opt.follow = true
