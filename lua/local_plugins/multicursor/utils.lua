@@ -91,7 +91,11 @@ end
 --- in the same row)
 M.align_cursors = function()
   local function align(tag, y, x, max_xcoord, mc_namespace)
-    local diff = max_xcoord - x
+    -- FIXME: This currently does not advance the position of further cursors
+    -- on the same line, which is wrong. We should probably pass a table of
+    -- diffs where each row has the same diff and we move all the cursors
+    -- the same.
+    local diff = math.max(max_xcoord - x, 0)
     local line = vim.api.nvim_buf_get_lines(0, y, y + 1, true)[1]
     vim.api.nvim_buf_set_lines(0, y, y + 1, true, {
       string.sub(line, 1, x)
@@ -100,7 +104,6 @@ M.align_cursors = function()
     })
 
     -- Set all the cursors where they were (plus diff)
-    vim.print(tag)
     if tag ~= 0 then
       vim.api.nvim_buf_set_extmark(0, mc_namespace, y, x + diff, {})
     else
@@ -117,16 +120,25 @@ M.align_cursors = function()
     local cpos = vim.api.nvim_win_get_cursor(0)
     mc_list[#mc_list + 1] = { 0, cpos[1] - 1, cpos[2] }
 
+    -- Sort the cursors so the algorithm below works
+    table.sort(mc_list, function(a1, a2)
+      if a1[2] == a2[2] then
+        return a1[3] < a2[3]
+      else
+        return a1[2] < a2[2]
+      end
+    end)
+
     -- Look for the first cursor in every line and record the largest x-position
     local max_xcoord = 0
     local prev_y = 0
     local coord_list = {}
     for _, pos in ipairs(mc_list) do
       if pos[2] ~= prev_y then
-        coord_list[#coord_list + 1] = pos
         max_xcoord = math.max(max_xcoord, pos[3])
       end
 
+      coord_list[#coord_list + 1] = pos
       prev_y = pos[2]
     end
 
